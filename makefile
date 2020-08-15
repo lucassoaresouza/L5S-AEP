@@ -2,21 +2,24 @@ BINFOLDER := bin/
 INCFOLDER := inc/
 SRCFOLDER := src/
 OBJFOLDER := obj/
+INCLUDE_DIRS := /usr/include/SDL2
+LIBRARIES := SDL2
 
 CC := g++
 
-CFLAGS := -W -Wall -ansi -pedantic
+CPPFLAGS := -w -Wall -ansi -pedantic
+LINKER_FLAGS := -lSDL2
 
 SRCFILES := $(wildcard src/*.cpp)
 
 all: $(SRCFILES:src/%.cpp=obj/%.o)
-	$(CC) $(CFLAGS) obj/*.o -o bin/aep
+	$(CC) obj/*.o $(CPPFLAGS) $(LINKER_FLAGS) -o bin/aep
 
 obj/%.o: src/%.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ -I./inc
+	$(CC) -c $< $(CPPFLAGS) $(LINKER_FLAGS) -o $@ -I./inc
 
-run: bin/prog
-	bin/prog
+run: bin/aep
+	bin/aep
 
 .PHONY: clean
 clean:

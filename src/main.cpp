@@ -1,8 +1,13 @@
-# include <iostream>
+#include <iostream>
+#include <string>
+#include "game.hpp"
 
-using namespace std;
+int main(int, char**){
 
-int main(){
-    cout << "Hello World!" << endl;
+    std::string game_name="AEP";
+    std::pair<int,int> window_size(800,600);
+
+    Game& game = Game::initialize(game_name, window_size);
+    game.run();
     return 0;
 }
