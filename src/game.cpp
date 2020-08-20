@@ -12,18 +12,22 @@ Game& Game::get_instance(){
     }
 }
 
-Game& Game::initialize(std::string game_name, std::pair<int, int> window_dimensions){
-    
+Game& Game::initialize(
+    std::string game_name,
+    std::pair<int, int> window_dimensions
+){  
     if(!instance){
         instance = new Game();
         instance->set_information(game_name, window_dimensions);
         instance->init();
     }
-
     return *instance;
 }
 
-void Game::set_information(std::string game_name, std::pair<int, int> window_dimensions){
+void Game::set_information(
+    std::string game_name,
+    std::pair<int, int> window_dimensions
+){
     set_name(game_name);
     set_window_dimensions(window_dimensions);
 }
@@ -32,12 +36,26 @@ void Game::init(){
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0){
         std::cout << "Houve um problema ao inicializar a SDL" << std::endl;
     }
-    window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_dimensions.first, instance->window_dimensions.second, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(
+        name.c_str(),
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        window_dimensions.first,
+        instance->window_dimensions.second,
+        SDL_WINDOW_SHOWN
+    );
     if(!window){
         std::cout << "Houve um problema ao inicializar a janela" << std::endl;
     } else {
         default_surface = SDL_GetWindowSurface(window);
-        SDL_FillRect(default_surface, NULL, SDL_MapRGB(default_surface->format, 0xFF, 0xFF, 0xFF));
+        SDL_FillRect(
+            default_surface,
+            NULL,
+            SDL_MapRGB(
+                default_surface->format,
+                0xFF, 0xFF, 0xFF
+            )
+        );
     }
 }
 
