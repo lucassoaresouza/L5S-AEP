@@ -14,6 +14,7 @@ class GameObject {
         std::pair<int, int> position;
         std::string name = "";
         std::pair<int, int> size;
+        std::string sprite;
 
     public:
         GameObject();
@@ -33,6 +34,10 @@ class GameObject {
         std::pair<int, int> get_size();
         int get_width();
         int get_height();
+
+
+        void set_sprite(std::string path);
+        void load_sprite();
 
 };
 

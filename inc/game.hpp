@@ -7,6 +7,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 #include <string>
+#include <vector>
+#include "gameObject.hpp"
 
 class Game {
 
@@ -15,7 +17,8 @@ class Game {
         std::string name;
         std::pair<int, int> window_dimensions;
         SDL_Window* window =  NULL;
-        SDL_Surface* default_surface = NULL; 
+        SDL_Surface* default_surface = NULL;
+        std::vector<GameObject*> objects;
 
         Game(){};
         void init();
@@ -33,6 +36,11 @@ class Game {
 
         void set_window_dimensions(std::pair<int, int>);
         void set_name(std::string);
+
+        void add_object(GameObject* object);
+        void load_objects();
+        void draw_objects();
+
 };
 
 #endif
