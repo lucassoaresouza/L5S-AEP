@@ -10,6 +10,8 @@
 #include <vector>
 
 #include "gameObject.hpp"
+#include "log.hpp"
+
 
 class Game {
 

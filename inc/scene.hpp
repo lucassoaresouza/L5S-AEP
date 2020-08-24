@@ -8,6 +8,9 @@
 #include <SDL2/SDL_mixer.h>
 #include <string>
 
+#include "log.hpp"
+
+
 class Scene {
     private:
         std::string name="";

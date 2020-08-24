@@ -6,7 +6,7 @@ Game* Game::instance = NULL;
 
 Game& Game::get_instance(){
     if(!instance){
-        std::cout << "Primeiramente inicialize uma instancia" << std::endl;
+        Log().print("Primeiramente inicialize uma instancia");
     } else {
         return *instance;
     }
@@ -34,7 +34,7 @@ void Game::set_information(
 
 void Game::init(){
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0){
-        std::cout << "Houve um problema ao inicializar a SDL" << std::endl;
+        Log().print("Houve um problema ao inicializar a SDL");
     }
     window = SDL_CreateWindow(
         name.c_str(),
@@ -45,7 +45,7 @@ void Game::init(){
         SDL_WINDOW_SHOWN
     );
     if(!window){
-        std::cout << "Houve um problema ao inicializar a janela" << std::endl;
+        Log().print("Houve um problema ao inicializar a janela");
     } else {
         default_surface = SDL_GetWindowSurface(window);
         SDL_FillRect(
@@ -66,7 +66,6 @@ void Game::close(){
 
 void Game::run(){
     SDL_Event e;
-    
     bool quit = false;
     while(!quit){
         while(SDL_PollEvent(&e) != 0){
