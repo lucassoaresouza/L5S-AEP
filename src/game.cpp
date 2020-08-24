@@ -96,13 +96,13 @@ std::pair<int, int> Game::get_window_dimensions(){
 }
 
 void Game::add_object(GameObject* object){
-    objects.push_back(object)
+    objects.push_back(object);
     std::cout << "Objeto adicionado!" << std::endl;
 }
 
 void Game::load_objects(){
     for(auto object : objects){
-        std::cout << "Objeto carregado!" << std:endl;
+        std::cout << "Objeto carregado!" << std::endl;
     }
 }
 

@@ -3,7 +3,8 @@
 #include "game.hpp"
 #include "scene.hpp"
 #include "gameObject.hpp"
-
+#include "log.hpp"
+#include <string>
 
 int main(int, char**){
 

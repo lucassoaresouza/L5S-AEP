@@ -46,11 +46,11 @@ int GameObject::get_height(){
 void GameObject::set_sprite(std::string path){
     sprite = path;
 }
-void GabeObject::load_sprite(){
-    if(sprite){
+void GameObject::load_sprite(){
+    if(!sprite.empty()){
         std::cout << "BOA! TEM SPRITE!" << std::endl;
         std::cout << sprite << std::endl;
     } else {
-        std::cout << "Sprite nao encontrada!"
+        std::cout << "Sprite nao encontrada!";
     }
 }
