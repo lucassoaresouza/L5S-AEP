@@ -8,7 +8,7 @@ LIBRARIES := SDL2
 CC := g++
 
 CPPFLAGS := -w -Wall -ansi -pedantic -std=c++11
-LINKER_FLAGS := -lSDL2
+LINKER_FLAGS := -lSDL2 -lSDL2_image
 
 SRCFILES := $(wildcard src/*.cpp)
 

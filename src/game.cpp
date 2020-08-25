@@ -32,9 +32,11 @@ void Game::set_information(
     set_window_dimensions(window_dimensions);
 }
 
-void Game::init(){
+bool Game::init(){
+    bool success = true;
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0){
         Log().print("Houve um problema ao inicializar a SDL");
+        success = false;
     }
     window = SDL_CreateWindow(
         name.c_str(),
@@ -46,6 +48,7 @@ void Game::init(){
     );
     if(!window){
         Log().print("Houve um problema ao inicializar a janela");
+        success = false;
     } else {
         default_surface = SDL_GetWindowSurface(window);
         SDL_FillRect(
@@ -57,6 +60,12 @@ void Game::init(){
             )
         );
     }
+    int imageFlags = IMG_INIT_PNG;
+    if( !(IMG_Init(imageFlags) & imageFlags)){
+        Log().print("Houve um problema ao inicializar o modulo de imagem da SDL2");
+        success = false;
+    }
+    return success;
 }
 
 void Game::close(){

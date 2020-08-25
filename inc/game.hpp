@@ -24,7 +24,7 @@ class Game {
         std::vector<GameObject*> objects;
 
         Game(){};
-        void init();
+        bool init();
         void set_information(std::string, std::pair<int,int>);
 
     public:
