@@ -12,10 +12,12 @@ int main(int, char**){
 
     std::string object_name="teste";
     std::pair<int, int> object_position(100, 100);
+    Game& game = Game::initialize(game_name, window_size);
 
     GameObject* obj_1 = new GameObject(object_name, object_position);
-
-    Game& game = Game::initialize(game_name, window_size);
+    obj_1->set_sprite("./assets/bots/B-25c.png");
+    game.add_object(obj_1);
+    game.load_objects();
     game.run();
     return 0;
 }

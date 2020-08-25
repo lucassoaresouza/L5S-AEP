@@ -40,8 +40,8 @@ bool Game::init(){
     }
     window = SDL_CreateWindow(
         name.c_str(),
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
         window_dimensions.first,
         instance->window_dimensions.second,
         SDL_WINDOW_SHOWN
@@ -50,15 +50,12 @@ bool Game::init(){
         Log().print("Houve um problema ao inicializar a janela");
         success = false;
     } else {
-        default_surface = SDL_GetWindowSurface(window);
-        SDL_FillRect(
-            default_surface,
-            NULL,
-            SDL_MapRGB(
-                default_surface->format,
-                0xFF, 0xFF, 0xFF
-            )
-        );
+        renderer =  SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        if(renderer == NULL){
+            Log().print("Nao foi possivel criar o renderer!");
+            success = false;
+        }
+        SDL_SetRenderDrawColor(renderer, 0xD3, 0xD3, 0xD3, 0x00);
     }
     int imageFlags = IMG_INIT_PNG;
     if( !(IMG_Init(imageFlags) & imageFlags)){
@@ -69,7 +66,13 @@ bool Game::init(){
 }
 
 void Game::close(){
+    SDL_DestroyTexture(current_texture);
+    current_texture = NULL;
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    window = NULL;
+    renderer = NULL;
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -82,7 +85,9 @@ void Game::run(){
                 quit = true;
             }
         }
-        SDL_UpdateWindowSurface(window);
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, current_texture, NULL, NULL);
+        SDL_RenderPresent(renderer);
     }
     close();
 }
@@ -93,6 +98,10 @@ void Game::set_name(std::string game_name){
 
 std::string Game::get_name(){
     return name;
+}
+
+SDL_Renderer *Game::get_renderer(){
+    return renderer;
 }
 
 void Game::set_window_dimensions(std::pair<int, int> dimensions){
@@ -110,7 +119,7 @@ void Game::add_object(GameObject* object){
 
 void Game::load_objects(){
     for(auto object : objects){
-        std::cout << "Objeto carregado!" << std::endl;
+        current_texture = object->load();
     }
 }
 

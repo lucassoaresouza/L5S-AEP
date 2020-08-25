@@ -19,9 +19,10 @@ class Game {
         static Game* instance;
         std::string name;
         std::pair<int, int> window_dimensions;
-        SDL_Window* window =  NULL;
-        SDL_Surface* default_surface = NULL;
         std::vector<GameObject*> objects;
+        SDL_Window* window =  NULL;
+        SDL_Renderer* renderer = NULL;
+        SDL_Texture* current_texture = NULL;
 
         Game(){};
         bool init();
@@ -36,6 +37,7 @@ class Game {
         
         std::string get_name();
         std::pair<int, int> get_window_dimensions();
+        SDL_Renderer *get_renderer();
 
         void set_window_dimensions(std::pair<int, int>);
         void set_name(std::string);

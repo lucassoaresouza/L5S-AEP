@@ -1,6 +1,6 @@
 #include <iostream>
 #include "gameObject.hpp"
-
+#include "game.hpp"
 
 GameObject::GameObject(){};
 
@@ -46,11 +46,19 @@ int GameObject::get_height(){
 void GameObject::set_sprite(std::string path){
     sprite = path;
 }
-void GameObject::load_sprite(){
-    if(!sprite.empty()){
-        std::cout << "BOA! TEM SPRITE!" << std::endl;
-        std::cout << sprite << std::endl;
+SDL_Texture* GameObject::load(){
+    Game& game = Game::get_instance();
+
+    SDL_Surface * loadedSurface = IMG_Load(sprite.c_str());
+    if(loadedSurface == NULL){
+        Log().print("Nao foi possivel carregar o sprite!");
     } else {
-        std::cout << "Sprite nao encontrada!";
+        texture = SDL_CreateTextureFromSurface(game.get_renderer(), loadedSurface);
+        if(texture == NULL){
+            Log().print(SDL_GetError());
+        }
+        SDL_FreeSurface(loadedSurface);
     }
+    Log().print("Objeto carregado!");
+    return texture;
 }

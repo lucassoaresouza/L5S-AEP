@@ -14,10 +14,11 @@
 class GameObject {
 
     private:
-        std::pair<int, int> position;
         std::string name = "";
+        std::pair<int, int> position;
         std::pair<int, int> size;
         std::string sprite;
+        SDL_Texture* texture = NULL;
 
     public:
         GameObject();
@@ -40,7 +41,7 @@ class GameObject {
 
 
         void set_sprite(std::string path);
-        void load_sprite();
+        SDL_Texture* load();
 
 };
 
