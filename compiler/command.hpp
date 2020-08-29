@@ -5,7 +5,7 @@
 #include <vector>
 #include <stdint.h>
 
-namespace L5SCompiler {
+namespace Compiler {
     class Command{
         private:
             std::string m_name;

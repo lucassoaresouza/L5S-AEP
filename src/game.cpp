@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include <iostream>
 
+using namespace Engine;
 
 Game* Game::instance = NULL;
 

@@ -8,7 +8,7 @@
 
 	using namespace std;
 
-	#define yyterminate() L5SCompiler::Parser::make_END(L5SCompiler::location());
+	#define yyterminate() Compiler::Parser::make_END(Compiler::location());
 
 	#define YY_USER_ACTION m_driver.increaseLocation(yyleng);
 %}
@@ -17,34 +17,34 @@
 %option noyywrap
 %option c++
 %option yyclass="Scanner"
-%option prefix="L5SCompiler_"
+%option prefix="Compiler_"
 
 %%
 
 
 [a-z]+      { 
                 cout << "Scanner: identifier [" << yytext << "]" << endl;
-                return L5SCompiler::Parser::make_STRING(yytext, L5SCompiler::location( /* put location data here if you want */ )); 
+                return Compiler::Parser::make_STRING(yytext, Compiler::location( /* put location data here if you want */ )); 
             }
             
 \(          {
                 cout << "Scanner: '('" << endl;
-                return L5SCompiler::Parser::make_LEFTPAR(L5SCompiler::location());
+                return Compiler::Parser::make_LEFTPAR(Compiler::location());
             }
             
 \)          { 
                 cout << "Scanner: ')'" << endl;
-                return L5SCompiler::Parser::make_RIGHTPAR(L5SCompiler::location());
+                return Compiler::Parser::make_RIGHTPAR(Compiler::location());
             }
             
 ;           {
                 cout << "Scanner: ';'" << endl;
-                return L5SCompiler::Parser::make_SEMICOLON(L5SCompiler::location());
+                return Compiler::Parser::make_SEMICOLON(Compiler::location());
             }
             
 ,           {
                 cout << "Scanner: ','" << endl;
-                return L5SCompiler::Parser::make_COMMA(L5SCompiler::location());
+                return Compiler::Parser::make_COMMA(Compiler::location());
             }
             
 [\n\t ]     {
@@ -54,7 +54,7 @@
 [1-9][0-9]* {
                 cout << "Scanner: decimal number: " << yytext << endl;
                 uint64_t number = strtoull(yytext, 0, 10);
-                return L5SCompiler::Parser::make_NUMBER(number, L5SCompiler::location());
+                return Compiler::Parser::make_NUMBER(number, Compiler::location());
             }
 
 .           { 

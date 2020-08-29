@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-using namespace L5SCompiler;
+using namespace Compiler;
 using std::cout;
 using std::endl;
 

@@ -5,7 +5,7 @@
 #include "scanner.hpp"
 #include "parser.hpp"
 
-namespace L5SCompiler {
+namespace Compiler {
 
     class Command;
 

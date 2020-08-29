@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-using namespace L5SCompiler;
+using namespace Compiler;
 
 Interpreter::Interpreter() :
     m_commands(),

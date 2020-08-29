@@ -3,16 +3,16 @@
 
 #if ! defined(yyFlexLexerOnce)
 #undef yyFlexLexer
-#define yyFlexLexer L5SCompiler_FlexLexer
+#define yyFlexLexer Compiler_FlexLexer
 #include <FlexLexer.h>
 #endif
 
 #undef YY_DECL
-#define YY_DECL L5SCompiler::Parser::symbol_type L5SCompiler::Scanner::get_next_token()
+#define YY_DECL Compiler::Parser::symbol_type Compiler::Scanner::get_next_token()
 
 #include "parser.hpp"
 
-namespace L5SCompiler {
+namespace Compiler {
     class Interpreter;
     class Scanner : public yyFlexLexer {
         private:
@@ -21,7 +21,7 @@ namespace L5SCompiler {
         public:
             Scanner(Interpreter &driver) : m_driver(driver) {}
             virtual ~Scanner(){}
-            virtual L5SCompiler::Parser::symbol_type get_next_token();
+            virtual Compiler::Parser::symbol_type get_next_token();
     };
 }
 

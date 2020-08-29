@@ -6,7 +6,7 @@
 %define api.token.constructor
 %define api.value.type variant
 %define parse.assert
-%define api.namespace { L5SCompiler }
+%define api.namespace { Compiler }
 %code requires
 {
     #include <iostream>
@@ -17,7 +17,7 @@
 
     using namespace std;
 
-    namespace L5SCompiler {
+    namespace Compiler {
         class Scanner;
         class Interpreter;
     }
@@ -31,17 +31,17 @@
     #include "interpreter.hpp"
     #include "location.hh"
 
-    static L5SCompiler::Parser::symbol_type yylex(L5SCompiler::Scanner &scanner, L5SCompiler::Interpreter &driver) {
+    static Compiler::Parser::symbol_type yylex(Compiler::Scanner &scanner, Compiler::Interpreter &driver) {
         return scanner.get_next_token();
     }
 
-    using namespace L5SCompiler;
+    using namespace Compiler;
 }
 
-%lex-param { L5SCompiler::Scanner &scanner }
-%lex-param { L5SCompiler::Interpreter &driver }
-%parse-param { L5SCompiler::Scanner &scanner }
-%parse-param { L5SCompiler::Interpreter &driver }
+%lex-param { Compiler::Scanner &scanner }
+%lex-param { Compiler::Interpreter &driver }
+%parse-param { Compiler::Scanner &scanner }
+%parse-param { Compiler::Interpreter &driver }
 %locations
 %define parse.trace
 %define parse.error verbose
@@ -56,7 +56,7 @@
 %token SEMICOLON "semicolon";
 %token COMMA "comma";
 
-%type< L5SCompiler::Command > command;
+%type< Compiler::Command > command;
 %type< std::vector<uint64_t> > arguments;
 
 %start program
@@ -126,7 +126,7 @@ arguments : NUMBER
 %%
 
 // Bison expects us to provide implementation - otherwise linker complains
-void L5SCompiler::Parser::error(const location &loc , const std::string &message) {
+void Compiler::Parser::error(const location &loc , const std::string &message) {
         
         // Location should be initialized inside scanner action, but is not in this example.
         // Let's grab location directly from driver class.

@@ -4,10 +4,12 @@
 #include <iostream>
 #include <fstream>
 
-class Log{
-    public:
-        static void print(std::string message);
-        static void print(std::string message, bool save);
-};
+namespace Engine{
+    class Log{
+        public:
+            static void print(std::string message);
+            static void print(std::string message, bool save);
+    };
+}
 
 #endif

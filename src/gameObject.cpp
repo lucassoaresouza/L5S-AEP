@@ -2,6 +2,8 @@
 #include "gameObject.hpp"
 #include "game.hpp"
 
+using namespace Engine;
+
 GameObject::GameObject(){};
 
 GameObject::GameObject(

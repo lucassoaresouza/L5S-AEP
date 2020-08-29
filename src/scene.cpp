@@ -1,6 +1,8 @@
 #include <iostream>
 #include "scene.hpp"
 
+using namespace Engine;
+
 Scene::Scene(){};
 
 void Scene::draw(){};

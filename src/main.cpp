@@ -6,6 +6,8 @@
 #include "log.hpp"
 #include <string>
 
+using namespace Engine;
+
 int main(int, char**){
     std::string game_name="AEP";
     std::pair<int,int> window_size(1024,768);

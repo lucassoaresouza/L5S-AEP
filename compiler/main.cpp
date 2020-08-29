@@ -3,7 +3,7 @@
 #include "parser.hpp"
 #include "interpreter.hpp"
 
-using namespace L5SCompiler;
+using namespace Compiler;
 using namespace std;
 
 int main(int argc, char **argv){
