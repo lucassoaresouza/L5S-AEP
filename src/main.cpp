@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include "game.hpp"
-#include "scene.hpp"
-#include "gameObject.hpp"
-#include "log.hpp"
+#include "../engine/inc/game.hpp"
+#include "../engine/inc/scene.hpp"
+#include "../engine/inc/gameObject.hpp"
+#include "../engine/inc/log.hpp"
 #include <string>
 
 using namespace Engine;

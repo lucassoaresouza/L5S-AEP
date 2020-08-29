@@ -1,5 +1,5 @@
 #include <iostream>
-#include "scene.hpp"
+#include "../inc/scene.hpp"
 
 using namespace Engine;
 

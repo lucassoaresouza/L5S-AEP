@@ -1,4 +1,4 @@
-#include "log.hpp"
+#include "../inc/log.hpp"
 
 using namespace Engine;
 
