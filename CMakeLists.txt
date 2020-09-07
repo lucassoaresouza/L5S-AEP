@@ -24,4 +24,4 @@ include_directories(${INCLUDE_DIR})
 # Creating executable and adding libraries to CMake
 add_executable(aep ${SOURCES})
 set_property(TARGET aep PROPERTY CXX_STANDARD 11)
-target_link_libraries(aep engine SDL2 SDL2_image SDL2_ttf SDL2_mixer)
+target_link_libraries(aep engine compiler SDL2 SDL2_image SDL2_ttf SDL2_mixer)

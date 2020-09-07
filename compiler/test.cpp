@@ -1,4 +1,4 @@
-#include "compiler/test.hpp"
+#include "test.hpp"
 #include <iostream>
 
 using namespace Compiler;

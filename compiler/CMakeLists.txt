@@ -5,8 +5,8 @@ set(COMPILER_INCLUDE "${PROJECT_SOURCE_DIR}/compiler")
 set(COMPILER_SRC "${PROJECT_SOURCE_DIR}/compiler")
 file(GLOB_RECURSE SOURCES "${COMPILER_SRC}/*.cpp")
 
+FLEX_TARGET(l5sScanner scanner.ll ${COMPILER_SRC}/scanner.cpp)
 BISON_TARGET(l5sParser parser.yy ${COMPILER_SRC}/parser.cpp)
-FLEX_TARGET(l5sScanner scanner.ll ${COMPILER_SRC}/parser.yy)
 ADD_FLEX_BISON_DEPENDENCY(l5sScanner l5sParser)
 
 include_directories(${COMPILER})
