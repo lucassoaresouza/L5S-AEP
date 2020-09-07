@@ -1,12 +1,18 @@
 #include <iostream>
 #include <string>
+
 #include "../engine/inc/game.hpp"
 #include "../engine/inc/scene.hpp"
 #include "../engine/inc/gameObject.hpp"
 #include "../engine/inc/log.hpp"
-#include <string>
+
+#include "../compiler/interpreter.hpp"
+#include "../compiler/command.hpp"
+#include "../compiler/test.hpp"
 
 using namespace Engine;
+using namespace Compiler;
+using namespace std;
 
 int main(int, char**){
     std::string game_name="AEP";
@@ -20,6 +26,13 @@ int main(int, char**){
     obj_1->set_sprite("./assets/bots/B-25c.png");
     game.add_object(obj_1);
     game.load_objects();
-    game.run();
+    // game.run();
+
+    ola_mano();
+    // Interpreter i;
+    // int res = i.parse();
+    // cout << "Parser finalizado! res: " << res << endl;
+    // return res;
+
     return 0;
 }
