@@ -44,7 +44,7 @@ void Interpreter::addCommand(const Command &cmd){
 
 void Interpreter::increaseLocation(unsigned int loc){
     m_location += loc;
-    cout << "mudando localizador do leito de input:" << loc << ", total = " << m_location << endl;
+    cout << "mudando localizador do leitor de input:" << loc << ", total = " << m_location << endl;
 }
 
 unsigned int Interpreter::location() const {

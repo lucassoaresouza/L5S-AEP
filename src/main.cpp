@@ -1,5 +1,7 @@
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <sstream>
 
 #include "../engine/inc/game.hpp"
 #include "../engine/inc/scene.hpp"
@@ -30,8 +32,10 @@ int main(int, char**){
 
     // return 0;
 
-    Interpreter i;
-    int res = i.parse();
+    Interpreter interpreter;
+    stringstream* input_string = new std::stringstream("comandodeteste(1,2,3);");
+    interpreter.switchInputStream(input_string);
+    int res = interpreter.parse();
     cout << "Parser finalizado! res: " << res << endl;
     return res;
 }
