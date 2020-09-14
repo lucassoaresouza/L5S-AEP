@@ -1,5 +1,6 @@
-#include "../inc/game.hpp"
 #include <iostream>
+
+#include "../inc/game.hpp"
 
 using namespace Engine;
 

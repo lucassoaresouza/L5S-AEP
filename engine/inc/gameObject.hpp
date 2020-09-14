@@ -10,7 +10,6 @@
 
 #include "log.hpp"
 
-
 namespace Engine{
     class GameObject {
 

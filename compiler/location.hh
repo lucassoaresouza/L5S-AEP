@@ -31,12 +31,12 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /home/lucas-souza/UnB/TCC/AmbienteDeEnsinoDeProgramacao/compiler/location.hh
+ ** \file /home/lucas-souza/UnB/TCC/TCC_2-AEP/compiler/location.hh
  ** Define the  Compiler ::location class.
  */
 
-#ifndef YY_YY_HOME_LUCAS_SOUZA_UNB_TCC_AMBIENTEDEENSINODEPROGRAMACAO_COMPILER_LOCATION_HH_INCLUDED
-# define YY_YY_HOME_LUCAS_SOUZA_UNB_TCC_AMBIENTEDEENSINODEPROGRAMACAO_COMPILER_LOCATION_HH_INCLUDED
+#ifndef YY_YY_HOME_LUCAS_SOUZA_UNB_TCC_TCC_2_AEP_COMPILER_LOCATION_HH_INCLUDED
+# define YY_YY_HOME_LUCAS_SOUZA_UNB_TCC_TCC_2_AEP_COMPILER_LOCATION_HH_INCLUDED
 
 # include <iostream>
 # include <string>
@@ -55,7 +55,7 @@
 
 #line 9 "parser.yy"
 namespace  Compiler  {
-#line 59 "/home/lucas-souza/UnB/TCC/AmbienteDeEnsinoDeProgramacao/compiler/location.hh"
+#line 59 "/home/lucas-souza/UnB/TCC/TCC_2-AEP/compiler/location.hh"
 
   /// A point in a source file.
   class position
@@ -329,6 +329,6 @@ namespace  Compiler  {
 
 #line 9 "parser.yy"
 } //  Compiler 
-#line 333 "/home/lucas-souza/UnB/TCC/AmbienteDeEnsinoDeProgramacao/compiler/location.hh"
+#line 333 "/home/lucas-souza/UnB/TCC/TCC_2-AEP/compiler/location.hh"
 
-#endif // !YY_YY_HOME_LUCAS_SOUZA_UNB_TCC_AMBIENTEDEENSINODEPROGRAMACAO_COMPILER_LOCATION_HH_INCLUDED
+#endif // !YY_YY_HOME_LUCAS_SOUZA_UNB_TCC_TCC_2_AEP_COMPILER_LOCATION_HH_INCLUDED

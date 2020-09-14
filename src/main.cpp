@@ -10,7 +10,7 @@
 
 #include "../compiler/interpreter.hpp"
 #include "../compiler/command.hpp"
-
+#include "aepcompiler.hpp"
 
 using namespace Engine;
 using namespace Compiler;
@@ -32,10 +32,10 @@ int main(int, char**){
 
     // return 0;
 
-    Interpreter interpreter;
-    stringstream* input_string = new std::stringstream("comandodeteste(1,2,3);");
-    interpreter.switchInputStream(input_string);
-    int res = interpreter.parse();
-    cout << "Parser finalizado! res: " << res << endl;
-    return res;
+    AEPCompiler* compiler = new AEPCompiler();
+    std::string test = "";
+    cin >> test;
+    compiler->run(test);
+
+    return 0;
 }
