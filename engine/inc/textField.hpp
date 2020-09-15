@@ -20,9 +20,14 @@ namespace Engine{
             int columns = 0;
             SDL_Texture* texture = NULL;
             SDL_Color font_color = {0xFF, 0xFF, 0xFF, 0xFF};
+            SDL_Color font_background_color = {0xFF, 0xFF, 0xFF, 0xFF};
             std::string font_path = "";
             int font_size = 0;
             TTF_Font *font = NULL;
+            std::string **text_table;
+            SDL_Texture ***texture_table;
+
+            void allocate_tables();
 
         public:
             TextField(

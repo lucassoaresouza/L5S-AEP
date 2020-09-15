@@ -15,6 +15,16 @@ TextField::TextField(
     position = object_position;
     lines = max_lines;
     columns = max_columns;
+    allocate_tables();
+}
+
+void TextField::allocate_tables(){
+    text_table = new std::string *[lines];
+    texture_table = new SDL_Texture **[lines];
+    for(int i = 0; i < lines; i++){
+        text_table[i] = new std::string[columns];
+        texture_table[i] = new SDL_Texture *[columns];
+    }
 }
 
 void TextField::set_font(std::string path, int size){
@@ -32,21 +42,39 @@ bool TextField::load(){
     if(font == NULL){
         Log().print("Houve um problema ao carregar a fonte!");
     }
-    SDL_Surface* provisory_surface = TTF_RenderText_Solid(font, current_text.c_str(), font_color);
-    texture = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
-    return texture != NULL;
+    for(int i = 0; i < lines; i++){
+        for(int j = 0; j < columns; j++){
+            text_table[i][j] = "A";
+            SDL_Surface* provisory_surface = TTF_RenderText_Shaded(font, text_table[i][j].c_str(), font_color, font_background_color);
+            texture_table[i][j] = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
+            SDL_FreeSurface(provisory_surface);
+        }
+    }
+    return true;
 }
 
 void TextField::draw(){
-    Game& game = Game::get_instance();
-    if(current_text != ""){
-        SDL_Surface* provisory_surface = TTF_RenderText_Solid( font, current_text.c_str(), font_color);
-        texture = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface); 
-    } else {
-        std::string empty_string = " ";
-        SDL_Surface* provisory_surface = TTF_RenderText_Solid( font, empty_string.c_str(), font_color );
-        texture = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
+    for(int i = 0; i < lines; i++){
+        for(int j = 0; j < columns; j++){
+            texture_table[i][j] = NULL;
+        }
     }
-    SDL_Rect renderQuad = {0,0 , 10*28, 30};
-    SDL_RenderCopy(game.get_renderer(), texture, NULL, &renderQuad);
+
+    Game& game = Game::get_instance();
+    for(int i = 0; i < lines; i++){
+        for(int j = 0; j < columns; j++){
+            SDL_Surface* provisory_surface = NULL;
+            if(text_table[i][j] != ""){
+                provisory_surface = TTF_RenderText_Shaded( font, text_table[i][j].c_str(), font_color, font_background_color);
+                texture_table[i][j] = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface); 
+            } else {
+                std::string empty_string = " ";
+                provisory_surface = TTF_RenderText_Shaded( font, empty_string.c_str(), font_color, font_background_color);
+                texture_table[i][j] = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
+            }
+            SDL_Rect renderQuad = {provisory_surface->w*j+10, provisory_surface->h*i+10, provisory_surface->w, provisory_surface->h};
+            SDL_FreeSurface(provisory_surface);
+            SDL_RenderCopy(game.get_renderer(), texture_table[i][j], NULL, &renderQuad);
+        }
+    }
 }

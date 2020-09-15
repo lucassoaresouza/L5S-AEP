@@ -32,8 +32,8 @@ int main(int, char**){
     std::string object_name2="teste2";
     std::pair<int, int> object_position2(500, 300);
     std::pair<int, int> object_size2(67, 56);
-    TextField* obj_2 = new TextField(object_name2, object_position2, 10, 50);
-    obj_2->set_font( "./assets/fonts/advanced_pixel-7.ttf", 28);
+    TextField* obj_2 = new TextField(object_name2, object_position2, 35, 30);
+    obj_2->set_font( "./assets/fonts/Montserrat-Regular.ttf", 15);
     obj_2->set_color(0x00, 0x00, 0x00, 0x00);
     game.add_textfield(obj_2);
 
