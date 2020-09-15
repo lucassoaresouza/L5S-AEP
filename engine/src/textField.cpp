@@ -15,6 +15,8 @@ TextField::TextField(
     position = object_position;
     lines = max_lines;
     columns = max_columns;
+    pointer_position.first=0;
+    pointer_position.second=0;
     allocate_tables();
 }
 
@@ -44,37 +46,85 @@ bool TextField::load(){
     }
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
-            text_table[i][j] = "A";
-            SDL_Surface* provisory_surface = TTF_RenderText_Shaded(font, text_table[i][j].c_str(), font_color, font_background_color);
-            texture_table[i][j] = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
-            SDL_FreeSurface(provisory_surface);
+            text_table[i][j] = " ";
+            texture_table[i][j] = NULL;
         }
     }
     return true;
 }
 
 void TextField::draw(){
-    for(int i = 0; i < lines; i++){
-        for(int j = 0; j < columns; j++){
-            texture_table[i][j] = NULL;
-        }
-    }
-
+    free();
     Game& game = Game::get_instance();
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
             SDL_Surface* provisory_surface = NULL;
             if(text_table[i][j] != ""){
-                provisory_surface = TTF_RenderText_Shaded( font, text_table[i][j].c_str(), font_color, font_background_color);
-                texture_table[i][j] = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface); 
-            } else {
-                std::string empty_string = " ";
-                provisory_surface = TTF_RenderText_Shaded( font, empty_string.c_str(), font_color, font_background_color);
-                texture_table[i][j] = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
+                provisory_surface = TTF_RenderText_Blended(
+                    font,
+                    text_table[i][j].c_str(),
+                    font_color
+                );
+                texture_table[i][j] = SDL_CreateTextureFromSurface(
+                    game.get_renderer(),
+                    provisory_surface
+                ); 
             }
-            SDL_Rect renderQuad = {provisory_surface->w*j+10, provisory_surface->h*i+10, provisory_surface->w, provisory_surface->h};
+            SDL_Rect renderQuad = {
+                provisory_surface->w * j + 10,
+                provisory_surface->h * i + 10,
+                provisory_surface->w,
+                provisory_surface->h
+            };
             SDL_FreeSurface(provisory_surface);
-            SDL_RenderCopy(game.get_renderer(), texture_table[i][j], NULL, &renderQuad);
+            SDL_RenderCopy(
+                game.get_renderer(),
+                texture_table[i][j],
+                NULL,
+                &renderQuad
+            );
         }
     }
+}
+
+void TextField::free(){
+    for(int i = 0; i < lines; i++){
+        for(int j = 0; j < columns; j++){
+            SDL_DestroyTexture(texture_table[i][j]);
+            texture_table[i][j] = NULL;
+        }
+    }
+}
+
+std::string TextField::get_current_text(){
+    current_text = "";
+    for(int i = 0; i < lines; i++){
+        for(int j = 0; j < columns; j++){
+            current_text += text_table[i][j];
+        }
+        current_text += "\n";
+    }
+    return current_text;
+}
+
+void TextField::write(char letter){
+    if(pointer_position.first != lines && pointer_position.second != columns){
+        text_table[pointer_position.first][pointer_position.second] = letter;
+        if(pointer_position.second + 1 < columns){
+            pointer_position.second += 1;
+        } else {
+            if(pointer_position.first + 1 <= lines){
+                pointer_position.first += 1;
+                pointer_position.second = 0;
+            }
+        }
+    }
+}
+
+void TextField::set_spacing_line(int spacing){
+    spacing_line = spacing;
+}
+
+void TextField::set_spacing_letter(int spacing){
+    spacing_letter = spacing;
 }
