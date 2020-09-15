@@ -6,6 +6,7 @@
 #include "../engine/inc/game.hpp"
 #include "../engine/inc/scene.hpp"
 #include "../engine/inc/gameObject.hpp"
+#include "../engine/inc/textField.hpp"
 #include "../engine/inc/log.hpp"
 
 #include "../compiler/interpreter.hpp"
@@ -24,10 +25,17 @@ int main(int, char**){
     std::string object_name="teste";
     std::pair<int, int> object_position(800, 100);
     std::pair<int, int> object_size(67, 56);
-
     GameObject* obj_1 = new GameObject(object_name, object_position, object_size);
     obj_1->set_sprite("./assets/bots/B-25c.png");
     game.add_object(obj_1);
+
+    std::string object_name2="teste2";
+    std::pair<int, int> object_position2(500, 300);
+    std::pair<int, int> object_size2(67, 56);
+    TextField* obj_2 = new TextField(object_name2, object_position2, 10, 50);
+    obj_2->set_font( "./assets/fonts/advanced_pixel-7.ttf", 28);
+    obj_2->set_color(0x00, 0x00, 0x00, 0x00);
+    game.add_textfield(obj_2);
 
     game.load_objects();
     game.run();

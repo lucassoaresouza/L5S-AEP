@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "gameObject.hpp"
+#include "textField.hpp"
 #include "log.hpp"
 
 namespace Engine {
@@ -20,6 +21,7 @@ namespace Engine {
             std::string name;
             std::pair<int, int> window_dimensions;
             std::vector<GameObject*> objects;
+            std::vector<TextField*> text_fields;
             SDL_Window* window =  NULL;
             SDL_Renderer* renderer = NULL;
             SDL_Texture* current_texture = NULL;
@@ -45,6 +47,8 @@ namespace Engine {
             void add_object(GameObject* object);
             void load_objects();
             void draw_objects();
+
+            void add_textfield(TextField* object);
 
     };
 }

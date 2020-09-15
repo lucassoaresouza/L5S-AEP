@@ -84,14 +84,79 @@ void Game::close(){
 void Game::run(){
     SDL_Event e;
     bool quit = false;
+    bool renderText = false;
+    SDL_StartTextInput();
 
     while(!quit){
         while(SDL_PollEvent(&e) != 0){
             if(e.type == SDL_QUIT){
                 quit = true;
             }
+//PARTE TESTE TEXT INPUT--------------------------------------------------------------
+            // //Special key input
+            // else if( e.type == SDL_KEYDOWN )
+            // {
+            //     //Handle backspace
+            //     // if( e.key.keysym.sym == SDLK_BACKSPACE && inputText.length() > 0 )
+            //     if( e.key.keysym.sym == SDLK_BACKSPACE)
+            //     {
+            //         //lop off character
+            //         // inputText.pop_back();
+            //         renderText = true;
+            //     }
+            //     //Handle copy
+            //     else if( e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL )
+            //     {
+            //         // SDL_SetClipboardText( inputText.c_str() );
+            //     }
+            //     //Handle paste
+            //     else if( e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL )
+            //     {
+            //         // inputText = SDL_GetClipboardText();
+            //         renderText = true;
+            //     }
+            // }
+            // //Special text input event
+            // else if( e.type == SDL_TEXTINPUT )
+            // {
+            //     //Not copy or pasting
+            //     if( !( SDL_GetModState() & KMOD_CTRL && ( e.text.text[ 0 ] == 'c' || e.text.text[ 0 ] == 'C' || e.text.text[ 0 ] == 'v' || e.text.text[ 0 ] == 'V' ) ) )
+            //     {
+            //         //Append character
+            //         // inputText += e.text.text;
+            //         renderText = true;
+            //     }
+            // }
         }
 
+        // //Rerender text if needed
+        // if( renderText )
+        // {
+        //     //Text is not empty
+        //     if( inputText != "" )
+        //     {
+        //         //Render new text
+        //         SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, inputText.c_str(), textColor );
+        //         current_texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        //     }
+        //     //Text is empty
+        //     else
+        //     {
+        //         //Render space texture
+        //         std::string x = " ";
+        //         SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, x.c_str(), textColor );
+        //         current_texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        //     }
+        // }
+
+        // //Clear screen
+        // // SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        // SDL_RenderClear( renderer );
+        // SDL_Rect renderQuad = {0,0 , 250, 800};
+        
+        // SDL_RenderCopy(renderer, current_texture, NULL, &renderQuad);
+        // SDL_RenderPresent( renderer );
+//------------------------------------------------------------------------------------
         SDL_SetRenderDrawColor(renderer, 0xD3, 0xD3, 0xD3, 0x00);
         SDL_RenderClear(renderer);
         draw_objects();
@@ -122,17 +187,26 @@ std::pair<int, int> Game::get_window_dimensions(){
 
 void Game::add_object(GameObject* object){
     objects.push_back(object);
-    std::cout << "Objeto adicionado!" << std::endl;
+}
+
+void Game::add_textfield(TextField* object){
+    text_fields.push_back(object);
 }
 
 void Game::load_objects(){
     for(auto object : objects){
         object->load();
     }
+    for(auto field : text_fields){
+        field->load();
+    }
 }
 
 void Game::draw_objects(){
     for(auto object : objects){
         object->draw();
+    }
+    for(auto field : text_fields){
+        field->draw();
     }
 }
