@@ -9,10 +9,12 @@ GameObject::GameObject(){};
 
 GameObject::GameObject(
     std::string object_name,
-    std::pair<int, int> object_position
+    std::pair<int, int> object_position,
+    std::pair<int, int> object_size
 ){
     name = object_name;
     position = object_position;
+    size = object_size;
 }
 
 void GameObject::set_position(std::pair <int, int> object_position){
@@ -49,19 +51,36 @@ int GameObject::get_height(){
 void GameObject::set_sprite(std::string path){
     sprite = path;
 }
-SDL_Texture* GameObject::load(){
+bool GameObject::load(){
+    free();
     Game& game = Game::get_instance();
-
-    SDL_Surface * loadedSurface = IMG_Load(sprite.c_str());
-    if(loadedSurface == NULL){
+    SDL_Texture* in_load_texture = NULL;
+    SDL_Surface* provisory_surface = IMG_Load(sprite.c_str());
+    if(provisory_surface == NULL){
         Log().print("Nao foi possivel carregar o sprite!");
     } else {
-        texture = SDL_CreateTextureFromSurface(game.get_renderer(), loadedSurface);
-        if(texture == NULL){
+        in_load_texture = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
+        if(in_load_texture == NULL){
             Log().print(SDL_GetError());
         }
-        SDL_FreeSurface(loadedSurface);
+        SDL_FreeSurface(provisory_surface);
     }
-    Log().print("Objeto carregado!");
-    return texture;
+    texture = in_load_texture;
+    return texture != NULL;
+}
+void GameObject::draw(){
+    Game& game = Game::get_instance();
+    SDL_Rect ret = {
+        position.first,
+        position.second,
+        size.first,
+        size.second
+    };
+    SDL_RenderCopy(game.get_renderer(), texture, NULL, &ret);
+}
+void GameObject::free(){
+    if(texture != NULL){
+        SDL_DestroyTexture(texture);
+        texture = NULL;
+    }
 }

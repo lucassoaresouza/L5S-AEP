@@ -24,7 +24,8 @@ namespace Engine{
             GameObject();
             GameObject(
                 std::string object_name,
-                std::pair<int, int> object_position
+                std::pair<int, int> object_position,
+                std::pair<int, int> object_size
             );
             ~GameObject(){};
             void set_position(std::pair <int, int> object_position);
@@ -41,8 +42,9 @@ namespace Engine{
 
 
             void set_sprite(std::string path);
-            SDL_Texture* load();
-
+            bool load();
+            void draw();
+            void free();
     };
 }
 
