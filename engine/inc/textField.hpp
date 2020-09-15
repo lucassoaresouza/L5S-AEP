@@ -33,6 +33,7 @@ namespace Engine{
             TTF_Font *font = NULL;
 
             void allocate_tables();
+            void read_input();
 
         public:
             TextField(

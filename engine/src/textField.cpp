@@ -55,6 +55,7 @@ bool TextField::load(){
 
 void TextField::draw(){
     free();
+    read_input();
     Game& game = Game::get_instance();
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
@@ -127,4 +128,21 @@ void TextField::set_spacing_line(int spacing){
 
 void TextField::set_spacing_letter(int spacing){
     spacing_letter = spacing;
+}
+
+void TextField::read_input(){
+    SDL_Event e;
+    SDL_StartTextInput();
+    while(SDL_PollEvent(&e) != 0){
+        if(e.type == SDL_QUIT){
+            Game& game = Game::get_instance();
+            game.quit = true;
+        } else if( e.type == SDL_TEXTINPUT ){
+            if( !( SDL_GetModState() & KMOD_CTRL && ( e.text.text[ 0 ] == 'c' || e.text.text[ 0 ] == 'C' || e.text.text[ 0 ] == 'v' || e.text.text[ 0 ] == 'V' ) ) ){
+                    std::string input = e.text.text;
+                    write(input[0]);
+                }
+            }
+        }
+    // SDL_StopTextInput();
 }

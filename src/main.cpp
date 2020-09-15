@@ -36,22 +36,7 @@ int main(int, char**){
     obj_2->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     obj_2->set_color(0x00, 0x00, 0x00, 0x00);
     game.add_textfield(obj_2);
-
     game.load_objects();
-    obj_2->write('H');
-    obj_2->write('e');
-    obj_2->write('l');
-    obj_2->write('l');
-    obj_2->write('o');
-    obj_2->write(' ');
-    obj_2->write('W');
-    obj_2->write('o');
-    obj_2->write('r');
-    obj_2->write('l');
-    obj_2->write('d');
-    obj_2->write('!');
-    obj_2->write('!');
-    obj_2->write('!');
     game.run();
 
     // AEPCompiler* compiler = new AEPCompiler();

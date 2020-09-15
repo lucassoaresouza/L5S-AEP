@@ -31,6 +31,7 @@ namespace Engine {
             void set_information(std::string, std::pair<int,int>);
 
         public:
+            bool quit = false; //TODO remover essa gambiarra
             ~Game(){};
             static Game& get_instance();
             static Game& initialize(std::string, std::pair<int, int>);
