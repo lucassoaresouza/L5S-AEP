@@ -46,7 +46,7 @@ bool TextField::load(){
     }
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
-            text_table[i][j] = " ";
+            text_table[i][j] = "";
             texture_table[i][j] = NULL;
         }
     }
@@ -60,17 +60,19 @@ void TextField::draw(){
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
             SDL_Surface* provisory_surface = NULL;
-            if(text_table[i][j] != ""){
-                provisory_surface = TTF_RenderText_Blended(
-                    font,
-                    text_table[i][j].c_str(),
-                    font_color
-                );
-                texture_table[i][j] = SDL_CreateTextureFromSurface(
-                    game.get_renderer(),
-                    provisory_surface
-                ); 
+            std::string aux_value = text_table[i][j];
+            if(aux_value == "\n" || aux_value == ""){
+                aux_value = " ";
             }
+            provisory_surface = TTF_RenderText_Blended(
+                font,
+                aux_value.c_str(),
+                font_color
+            );
+            texture_table[i][j] = SDL_CreateTextureFromSurface(
+                game.get_renderer(),
+                provisory_surface
+            );
             SDL_Rect renderQuad = {
                 provisory_surface->w * j + 10,
                 provisory_surface->h * i + 10,
@@ -103,7 +105,6 @@ std::string TextField::get_current_text(){
         for(int j = 0; j < columns; j++){
             current_text += text_table[i][j];
         }
-        current_text += "\n";
     }
     return current_text;
 }
@@ -122,6 +123,28 @@ void TextField::write(char letter){
     }
 }
 
+void TextField::erase(){
+    if(pointer_position.first >= 0 && pointer_position.second >= 0){
+        if(pointer_position.second - 1 >= 0){
+            text_table[pointer_position.first][pointer_position.second - 1] = "";
+            pointer_position.second -= 1;
+        } else {
+            if(pointer_position.first - 1 >= 0){
+                pointer_position.first -= 1;
+                pointer_position.second = columns;
+            }
+        }
+    }
+}
+
+void TextField::add_endline(){
+    if(pointer_position.first >= 0 && pointer_position.first < lines){
+        text_table[pointer_position.first][pointer_position.second] = "\n";
+        pointer_position.first += 1;
+        pointer_position.second = 0;
+    }
+}
+
 void TextField::set_spacing_line(int spacing){
     spacing_line = spacing;
 }
@@ -137,12 +160,18 @@ void TextField::read_input(){
         if(e.type == SDL_QUIT){
             Game& game = Game::get_instance();
             game.quit = true;
+        } else if(e.type == SDL_KEYDOWN){
+            if(e.key.keysym.sym == SDLK_BACKSPACE){
+                erase();
+            } else if(e.key.keysym.sym == SDLK_RETURN){
+                add_endline();
+            }
         } else if( e.type == SDL_TEXTINPUT ){
             if( !( SDL_GetModState() & KMOD_CTRL && ( e.text.text[ 0 ] == 'c' || e.text.text[ 0 ] == 'C' || e.text.text[ 0 ] == 'v' || e.text.text[ 0 ] == 'V' ) ) ){
                     std::string input = e.text.text;
                     write(input[0]);
-                }
             }
         }
-    // SDL_StopTextInput();
+    }
+    SDL_StopTextInput();
 }

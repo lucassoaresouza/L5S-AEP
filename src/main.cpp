@@ -39,10 +39,10 @@ int main(int, char**){
     game.load_objects();
     game.run();
 
-    // AEPCompiler* compiler = new AEPCompiler();
-    // std::string test = "";
-    // cin >> test;
-    // compiler->run(test);
+    AEPCompiler* compiler = new AEPCompiler();
+    std::string test = "";
+    test = obj_2->get_current_text();
+    compiler->run(test);
 
     return 0;
 }

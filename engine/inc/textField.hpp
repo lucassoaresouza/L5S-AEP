@@ -49,6 +49,9 @@ namespace Engine{
             void set_font(std::string path, int size);
             void set_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alfa);
             void write(char letter);
+            void erase();
+            void add_endline();
+            void move_pointer(std::string code);
             void set_spacing_line(int spacing);
             void set_spacing_letter(int spacing);
             std::string get_current_text();
