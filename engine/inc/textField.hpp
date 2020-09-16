@@ -40,6 +40,10 @@ namespace Engine{
             void read_input();
             void draw_pointer_pipe();
             void draw_text_table();
+            void erase();
+            void write(char letter);
+            void add_endline();
+            void move_pointer(std::string code);
 
         public:
             TextField(
@@ -54,10 +58,6 @@ namespace Engine{
             void free();
             void set_font(std::string path, int size);
             void set_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alfa);
-            void write(char letter);
-            void erase();
-            void add_endline();
-            void move_pointer(std::string code);
             void set_spacing_line(int spacing);
             void set_spacing_letter(int spacing);
             std::string get_current_text();

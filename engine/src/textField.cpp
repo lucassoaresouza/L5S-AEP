@@ -56,6 +56,7 @@ bool TextField::load(){
 void TextField::draw_pointer_pipe(){
     Game& game = Game::get_instance();
     SDL_Surface* provisory_surface = NULL;
+    // TTF_SetFontStyle(font, TTF_STYLE_BOLD);
     if(aux_pointer_count > 10){
         if(pointer_pipe == "|"){
             pointer_pipe = " ";
@@ -91,6 +92,7 @@ void TextField::draw_pointer_pipe(){
 
 void TextField::draw_text_table(){
     Game& game = Game::get_instance();
+    // TTF_SetFontStyle(font, TTF_STYLE_BOLD);
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
             SDL_Surface* provisory_surface = NULL;
@@ -186,6 +188,26 @@ void TextField::add_endline(){
     }
 }
 
+void TextField::move_pointer(std::string code){
+    if(code == "UP"){
+        if(pointer_position.first - 1 >= 0){
+            pointer_position.first -= 1;
+        }
+    } else if(code == "LEFT"){
+        if(pointer_position.second - 1 >= 0){
+            pointer_position.second -= 1;
+        }
+    } else if(code == "RIGHT"){
+        if(pointer_position.second + 1 <= columns){
+            pointer_position.second += 1;
+        }
+    } else if(code == "DOWN"){
+        if(pointer_position.first + 1 <= lines){
+            pointer_position.first += 1;
+        }
+    }
+}
+
 void TextField::set_spacing_line(int spacing){
     spacing_line = spacing;
 }
@@ -202,15 +224,42 @@ void TextField::read_input(){
             Game& game = Game::get_instance();
             game.quit = true;
         } else if(e.type == SDL_KEYDOWN){
-            if(e.key.keysym.sym == SDLK_BACKSPACE){
-                erase();
-            } else if(e.key.keysym.sym == SDLK_RETURN){
-                add_endline();
+            switch (e.key.keysym.sym){
+                case SDLK_BACKSPACE:
+                    erase();
+                    break;
+                case SDLK_RETURN:
+                    add_endline();
+                    break;
+                case SDLK_UP:
+                    move_pointer("UP");
+                    break;
+                case SDLK_DOWN:
+                    move_pointer("DOWN");
+                    break;
+                case SDLK_LEFT:
+                    move_pointer("LEFT");
+                    break;
+                case SDLK_RIGHT:
+                    move_pointer("RIGHT");
+                    break;
+                default:
+                    break;
             }
         } else if( e.type == SDL_TEXTINPUT ){
-            if( !( SDL_GetModState() & KMOD_CTRL && ( e.text.text[ 0 ] == 'c' || e.text.text[ 0 ] == 'C' || e.text.text[ 0 ] == 'v' || e.text.text[ 0 ] == 'V' ) ) ){
-                    std::string input = e.text.text;
-                    write(input[0]);
+            if(
+                !(
+                    SDL_GetModState() & KMOD_CTRL &&
+                    (
+                        e.text.text[ 0 ] == 'c' ||
+                        e.text.text[ 0 ] == 'C' ||
+                        e.text.text[ 0 ] == 'v' ||
+                        e.text.text[ 0 ] == 'V'
+                    )
+                )
+            ){
+                std::string input = e.text.text;
+                write(input[0]);
             }
         }
     }
