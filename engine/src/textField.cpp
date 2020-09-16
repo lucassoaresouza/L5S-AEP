@@ -53,9 +53,43 @@ bool TextField::load(){
     return true;
 }
 
-void TextField::draw(){
-    free();
-    read_input();
+void TextField::draw_pointer_pipe(){
+    Game& game = Game::get_instance();
+    SDL_Surface* provisory_surface = NULL;
+    if(aux_pointer_count > 10){
+        if(pointer_pipe == "|"){
+            pointer_pipe = " ";
+        } else {
+            pointer_pipe = "|";
+        }
+        aux_pointer_count = 0;
+    }
+    aux_pointer_count +=1;
+    provisory_surface = TTF_RenderText_Blended(
+        font,
+        pointer_pipe.c_str(),
+        font_color
+    );
+    pointer_texture = SDL_CreateTextureFromSurface(
+        game.get_renderer(),
+        provisory_surface
+    );
+    SDL_Rect renderQuad = {
+        provisory_surface->w * pointer_position.second + 10,
+        provisory_surface->h * pointer_position.first + 10,
+        provisory_surface->w,
+        provisory_surface->h
+    };
+    SDL_FreeSurface(provisory_surface);
+    SDL_RenderCopy(
+        game.get_renderer(),
+        pointer_texture,
+        NULL,
+        &renderQuad
+    );
+}
+
+void TextField::draw_text_table(){
     Game& game = Game::get_instance();
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
@@ -87,7 +121,14 @@ void TextField::draw(){
                 &renderQuad
             );
         }
-    }
+    }   
+}
+
+void TextField::draw(){
+    free();
+    read_input();
+    draw_pointer_pipe();
+    draw_text_table();
 }
 
 void TextField::free(){

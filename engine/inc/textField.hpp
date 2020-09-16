@@ -21,11 +21,15 @@ namespace Engine{
             std::string **text_table;
             SDL_Texture *background;
             SDL_Texture ***texture_table;
-            std::pair<int, int> pointer_position;
             int spacing_line = 0;
             int spacing_letter = 0;
+            SDL_Renderer *renderer;
 
-            SDL_Texture* texture = NULL;
+            std::pair<int, int> pointer_position;
+            std::string pointer_pipe = "|";
+            SDL_Texture *pointer_texture;
+            int aux_pointer_count = 0; //TODO Mudar essa gambiarra!
+
             SDL_Color font_color = {0xFF, 0xFF, 0xFF, 0xFF};
             SDL_Color background_color = {0xFF, 0xFF, 0xFF, 0xFF};
             std::string font_path = "";
@@ -34,6 +38,8 @@ namespace Engine{
 
             void allocate_tables();
             void read_input();
+            void draw_pointer_pipe();
+            void draw_text_table();
 
         public:
             TextField(
