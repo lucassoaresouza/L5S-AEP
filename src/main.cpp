@@ -8,6 +8,7 @@
 #include "../engine/inc/gameObject.hpp"
 #include "../engine/inc/textField.hpp"
 #include "../engine/inc/log.hpp"
+#include "../engine/inc/inputReceiver.hpp"
 
 #include "../compiler/interpreter.hpp"
 #include "../compiler/command.hpp"

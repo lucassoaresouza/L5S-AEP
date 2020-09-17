@@ -9,9 +9,10 @@
 #include <string>
 #include <vector>
 
-#include "gameObject.hpp"
+#include "inputReceiver.hpp"
 #include "textField.hpp"
 #include "log.hpp"
+#include "gameObject.hpp"
 
 namespace Engine {
     class Game {
@@ -25,6 +26,7 @@ namespace Engine {
             SDL_Window* window =  NULL;
             SDL_Renderer* renderer = NULL;
             SDL_Texture* current_texture = NULL;
+            InputReceiver& input_receiver = InputReceiver::get_instance();
 
             Game(){};
             bool init();
@@ -48,6 +50,7 @@ namespace Engine {
             void add_object(GameObject* object);
             void load_objects();
             void draw_objects();
+            void read_input();
 
             void add_textfield(TextField* object);
 

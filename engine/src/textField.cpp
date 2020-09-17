@@ -217,51 +217,60 @@ void TextField::set_spacing_letter(int spacing){
 }
 
 void TextField::read_input(){
-    SDL_Event e;
-    SDL_StartTextInput();
-    while(SDL_PollEvent(&e) != 0){
-        if(e.type == SDL_QUIT){
-            Game& game = Game::get_instance();
-            game.quit = true;
-        } else if(e.type == SDL_KEYDOWN){
-            switch (e.key.keysym.sym){
-                case SDLK_BACKSPACE:
-                    erase();
-                    break;
-                case SDLK_RETURN:
-                    add_endline();
-                    break;
-                case SDLK_UP:
-                    move_pointer("UP");
-                    break;
-                case SDLK_DOWN:
-                    move_pointer("DOWN");
-                    break;
-                case SDLK_LEFT:
-                    move_pointer("LEFT");
-                    break;
-                case SDLK_RIGHT:
-                    move_pointer("RIGHT");
-                    break;
-                default:
-                    break;
-            }
-        } else if( e.type == SDL_TEXTINPUT ){
-            if(
-                !(
-                    SDL_GetModState() & KMOD_CTRL &&
-                    (
-                        e.text.text[ 0 ] == 'c' ||
-                        e.text.text[ 0 ] == 'C' ||
-                        e.text.text[ 0 ] == 'v' ||
-                        e.text.text[ 0 ] == 'V'
-                    )
-                )
-            ){
-                std::string input = e.text.text;
-                write(input[0]);
-            }
-        }
-    }
-    SDL_StopTextInput();
+    // SDL_Event e;
+    // SDL_StartTextInput();
+    // while(SDL_PollEvent(&e) != 0){
+    //     if(e.type == SDL_QUIT){
+    //         Game& game = Game::get_instance();
+    //         game.quit = true;
+    //     } else if(e.type == SDL_KEYDOWN){
+    //         switch (e.key.keysym.sym){
+    //             case SDLK_BACKSPACE:
+    //                 erase();
+    //                 break;
+    //             case SDLK_RETURN:
+    //                 add_endline();
+    //                 break;
+    //             case SDLK_UP:
+    //                 move_pointer("UP");
+    //                 break;
+    //             case SDLK_DOWN:
+    //                 move_pointer("DOWN");
+    //                 break;
+    //             case SDLK_LEFT:
+    //                 move_pointer("LEFT");
+    //                 break;
+    //             case SDLK_RIGHT:
+    //                 move_pointer("RIGHT");
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     } else if( e.type == SDL_TEXTINPUT ){
+    //         if(
+    //             !(
+    //                 SDL_GetModState() & KMOD_CTRL &&
+    //                 (
+    //                     e.text.text[ 0 ] == 'c' ||
+    //                     e.text.text[ 0 ] == 'C' ||
+    //                     e.text.text[ 0 ] == 'v' ||
+    //                     e.text.text[ 0 ] == 'V'
+    //                 )
+    //             )
+    //         ){
+    //             std::string input = e.text.text;
+    //             write(input[0]);
+    //         }
+    //     } else if(e.type == SDL_MOUSEMOTION){
+    //         int x;
+    //         int y;
+    //         SDL_GetMouseState( &x, &y);
+    //         std::cout << "(x: " << x << " ,y: " << y << ")" << std::endl;
+    //     } else if(e.type == SDL_MOUSEBUTTONDOWN){
+    //         std::cout << "CLICK DOWN!" << std::endl;
+    //     } else if(e.type == SDL_MOUSEBUTTONUP){
+    //         std::cout << "CLICK UP!" << std::endl;
+    //     }
+    // }
+    // SDL_StopTextInput();
 }

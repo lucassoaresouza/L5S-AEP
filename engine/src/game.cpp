@@ -83,6 +83,7 @@ void Game::close(){
 
 void Game::run(){
     while(!quit){
+        read_input();
         SDL_SetRenderDrawColor(renderer, 0xD3, 0xD3, 0xD3, 0x00);
         SDL_RenderClear(renderer);
         draw_objects();
@@ -134,5 +135,12 @@ void Game::draw_objects(){
     }
     for(auto field : text_fields){
         field->draw();
+    }
+}
+
+void Game::read_input(){
+    input_receiver.run();
+    if(input_receiver.get_last_input()->type == SDL_QUIT){
+        quit = true;
     }
 }
