@@ -15,6 +15,8 @@ compiler/libcompiler.a
 compiler/position.hh
 compiler/scanner.cpp
 compiler/stack.hh
+compiler/parser.hpp
+compiler/parser.cpp
 engine/CMakeFiles/*
 engine/Makefile
 engine/cmake_install.cmake
