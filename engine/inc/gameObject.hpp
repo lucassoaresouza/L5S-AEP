@@ -19,6 +19,7 @@ namespace Engine{
             std::pair<int, int> size;
             std::string sprite;
             SDL_Texture* texture = NULL;
+            bool listening_inputs = false;
 
         public:
             GameObject();

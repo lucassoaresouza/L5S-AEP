@@ -26,3 +26,7 @@ void InputReceiver::run(){
 SDL_Event* InputReceiver::get_last_input(){
     return &event;
 }
+
+void InputReceiver::registry_observer(GameObject* observer){
+    observers.push_back(observer);
+}

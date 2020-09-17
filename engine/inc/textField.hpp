@@ -9,9 +9,10 @@
 #include <string>
 
 #include "log.hpp"
+#include "gameObject.hpp"
 
 namespace Engine{
-    class TextField{
+    class TextField : public GameObject{
         private:
             std::string name = "";
             std::pair<int, int> position;
