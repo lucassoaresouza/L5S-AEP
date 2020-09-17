@@ -84,3 +84,11 @@ void GameObject::free(){
         texture = NULL;
     }
 }
+
+std::string GameObject::get_name(){
+    return name;
+}
+
+void GameObject::read_input(SDL_Event *event){
+    std::cout << "Olha só!" << std::endl;
+}

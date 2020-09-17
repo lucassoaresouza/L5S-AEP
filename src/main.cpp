@@ -36,7 +36,7 @@ int main(int, char**){
     TextField* obj_2 = new TextField(object_name2, object_position2, 40, 40);
     obj_2->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     obj_2->set_color(0x00, 0x00, 0x00, 0x00);
-    game.add_textfield(obj_2);
+    game.add_object(obj_2);
     game.load_objects();
     game.run();
 

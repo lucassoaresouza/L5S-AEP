@@ -38,14 +38,16 @@ namespace Engine{
             int get_position_y();
 
             std::pair<int, int> get_size();
+            std::string get_name();
             int get_width();
             int get_height();
 
 
             void set_sprite(std::string path);
-            bool load();
-            void draw();
-            void free();
+            virtual bool load();
+            virtual void free();
+            virtual void draw();
+            virtual void read_input(SDL_Event *event);
     };
 }
 

@@ -117,27 +117,18 @@ std::pair<int, int> Game::get_window_dimensions(){
 
 void Game::add_object(GameObject* object){
     objects.push_back(object);
-}
-
-void Game::add_textfield(TextField* object){
-    text_fields.push_back(object);
+    input_receiver.register_observer(object);
 }
 
 void Game::load_objects(){
     for(auto object : objects){
         object->load();
     }
-    for(auto field : text_fields){
-        field->load();
-    }
 }
 
 void Game::draw_objects(){
     for(auto object : objects){
         object->draw();
-    }
-    for(auto field : text_fields){
-        field->draw();
     }
 }
 

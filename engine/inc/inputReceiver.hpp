@@ -7,12 +7,13 @@
 #include <vector>
 
 #include "gameObject.hpp"
+#include "textField.hpp"
 
 namespace Engine{
     class InputReceiver{
         private:
             static InputReceiver* instance;
-            SDL_Event event;
+            SDL_Event last_event;
             InputReceiver(){};
             std::string text;
             std::vector<GameObject*> observers;
@@ -21,7 +22,9 @@ namespace Engine{
             static  InputReceiver& get_instance();
             void run();
             SDL_Event* get_last_input();
-            void registry_observer(GameObject* observer);
+            void register_observer(GameObject* observer);
+            void unregister_observer(std::string name);
+            void notify_observers(SDL_Event *event);
     };
 }
 

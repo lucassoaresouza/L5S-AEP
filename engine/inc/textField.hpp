@@ -38,7 +38,6 @@ namespace Engine{
             TTF_Font *font = NULL;
 
             void allocate_tables();
-            void read_input();
             void draw_pointer_pipe();
             void draw_text_table();
             void erase();
@@ -61,6 +60,7 @@ namespace Engine{
             void set_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alfa);
             void set_spacing_line(int spacing);
             void set_spacing_letter(int spacing);
+            void read_input(SDL_Event *event);
             std::string get_current_text();
     };
 }
