@@ -9,6 +9,9 @@ Game* Game::instance = NULL;
 Game& Game::get_instance(){
     if(!instance){
         Log().print("Primeiramente inicialize uma instancia");
+        std::string default_name = "screen";
+        std::pair<int,int> default_screen(800,600);
+        return Game::initialize(default_name, default_screen);
     } else {
         return *instance;
     }
