@@ -32,18 +32,19 @@ namespace Engine{
             void set_position(std::pair <int, int> object_position);
             void set_name(std::string object_name);
             void set_size(std::pair<int, int> object_size);
+            void set_sprite(std::string path);
+            void set_texture(SDL_Texture* new_texture);
 
             std::pair<int, int> get_position();
             int get_position_x();
             int get_position_y();
+            std::string get_sprite();
 
             std::pair<int, int> get_size();
             std::string get_name();
             int get_width();
             int get_height();
 
-
-            void set_sprite(std::string path);
             virtual bool load();
             virtual void free();
             virtual void draw();

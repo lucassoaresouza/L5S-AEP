@@ -216,7 +216,6 @@ void TextField::set_spacing_letter(int spacing){
 }
 
 void TextField::read_input(SDL_Event *event){
-    // std::cout << "agora sou eu quem tá vendo!" << std::endl;
     if(event->type == SDL_QUIT){
         Game& game = Game::get_instance();
         game.quit = true;
@@ -258,14 +257,5 @@ void TextField::read_input(SDL_Event *event){
             std::string input = event->text.text;
             write(input[0]);
         }
-    } else if(event->type == SDL_MOUSEMOTION){
-        int x;
-        int y;
-        SDL_GetMouseState( &x, &y);
-        std::cout << "(x: " << x << " ,y: " << y << ")" << std::endl;
-    } else if(event->type == SDL_MOUSEBUTTONDOWN){
-        std::cout << "CLICK DOWN!" << std::endl;
-    } else if(event->type == SDL_MOUSEBUTTONUP){
-        std::cout << "CLICK UP!" << std::endl;
     }
 }

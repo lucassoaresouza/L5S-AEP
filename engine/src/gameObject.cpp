@@ -46,6 +46,9 @@ int GameObject::get_width(){
 int GameObject::get_height(){
     return size.second;
 };
+std::string GameObject::get_sprite(){
+    return sprite;
+}
 
 
 void GameObject::set_sprite(std::string path){
@@ -68,6 +71,7 @@ bool GameObject::load(){
     texture = in_load_texture;
     return texture != NULL;
 }
+
 void GameObject::draw(){
     Game& game = Game::get_instance();
     SDL_Rect ret = {
@@ -89,6 +93,8 @@ std::string GameObject::get_name(){
     return name;
 }
 
-void GameObject::read_input(SDL_Event *event){
-    std::cout << "Olha só!" << std::endl;
+void GameObject::read_input(SDL_Event *event){}
+
+void GameObject::set_texture(SDL_Texture* new_texture){
+    texture = new_texture;
 }
