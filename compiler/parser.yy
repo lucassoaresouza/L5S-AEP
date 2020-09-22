@@ -64,16 +64,15 @@
 %%
 
 program :   {
-                cout << "*** RUN ***" << endl;
-                cout << "Type function with list of parmeters. Parameter list can be empty" << endl
-                     << "or contain positive integers only. Examples: " << endl
-                     << " * function()" << endl
-                     << " * function(1,2,3)" << endl
-                     << "Terminate listing with ; to see parsed AST" << endl
-                     << "Terminate parser with Ctrl-D" << endl;
+                // cout << "*** RUN ***" << endl;
+                // cout << "Type function with list of parmeters. Parameter list can be empty" << endl
+                //      << "or contain positive integers only. Examples: " << endl
+                //      << " * function()" << endl
+                //      << " * function(1,2,3)" << endl
+                //      << "Terminate listing with ; to see parsed AST" << endl
+                //      << "Terminate parser with Ctrl-D" << endl;
                 
-                cout << endl << "prompt> ";
-                
+                // cout << endl << "prompt> ";
                 driver.clear();
             }
         | program command

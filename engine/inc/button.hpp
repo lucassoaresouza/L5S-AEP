@@ -16,6 +16,7 @@ namespace Engine{
             std::string pressed_sprite;
 
         public:
+            Button(){};
             Button(
                 std::string object_name,
                 std::pair<int,int>object_position,
