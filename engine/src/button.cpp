@@ -33,11 +33,14 @@ bool Button::was_pressed(int x, int y){
     std::pair<int, int> current_size;
     current_possition = get_position();
     current_size = get_size();
+    std::cout << "mouse_x: " << x << " | mouse_y: " << y << std::endl;
+    std::cout << "inicio_x: " << current_possition.first << " | inicio_y: " << current_possition.second << std::endl;
+    std::cout << "fim_x: " << current_possition.first + current_size.first << " | fim_y: " << current_possition.first + current_size.second << std::endl;
     if(
         x >= current_possition.first &&
         x <= current_possition.first + current_size.first &&
         y >= current_possition.second &&
-        y <= current_possition.first + current_size.second
+        y <= current_possition.second + current_size.second
     ){
         return true;
     } else {

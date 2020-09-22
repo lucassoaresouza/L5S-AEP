@@ -25,7 +25,7 @@ int main(int, char**){
 
     //aviao
     std::string object_name="aviao";
-    std::pair<int, int> object_position(800, 100);
+    std::pair<int, int> object_position(700, 450);
     std::pair<int, int> object_size(67, 56);
     ProgrammableObject* obj_1 = new ProgrammableObject(
         object_name,
@@ -52,7 +52,7 @@ int main(int, char**){
 
     //button
     std::string button_name = "button";
-    std::pair<int, int> button_position(400,400);
+    std::pair<int, int> button_position(400,600);
     std::pair<int, int> button_size(128,64);
     CompilerButton* button = new CompilerButton(button_name, button_position, button_size);
     button->set_sprites(
