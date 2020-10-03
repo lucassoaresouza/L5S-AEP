@@ -26,6 +26,7 @@ namespace Compiler {
             void clear();
             std::string str() const;
             void switchInputStream(std::istream *is);
+            std::vector<Command> get_commands();
             friend class Parser;
             friend class Scanner;
         

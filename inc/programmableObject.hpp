@@ -15,7 +15,8 @@ class ProgrammableObject : public Engine::GameObject{
         std::vector<Compiler::Command> commands;
         int direction_angle; // degrees
         std::pair<int, int> orientation; // first = x, second = y
-    
+        bool running = false;
+
     public:
         ProgrammableObject(
             std::string object_name,
@@ -24,8 +25,8 @@ class ProgrammableObject : public Engine::GameObject{
         );
         ~ProgrammableObject();
         void draw();
-        void add_commands(std::vector<Compiler::Command>& new_commands);
-        void read_input(SDL_Event *event);
+        void add_commands(std::vector<Compiler::Command> new_commands);
+        void run_commands();
 
         //Basic commands
         void set_direction(std::string new_direction);

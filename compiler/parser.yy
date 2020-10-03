@@ -64,15 +64,6 @@
 %%
 
 program :   {
-                // cout << "*** RUN ***" << endl;
-                // cout << "Type function with list of parmeters. Parameter list can be empty" << endl
-                //      << "or contain positive integers only. Examples: " << endl
-                //      << " * function()" << endl
-                //      << " * function(1,2,3)" << endl
-                //      << "Terminate listing with ; to see parsed AST" << endl
-                //      << "Terminate parser with Ctrl-D" << endl;
-                
-                // cout << endl << "prompt> ";
                 driver.clear();
             }
         | program command
@@ -126,10 +117,5 @@ arguments : NUMBER
 
 // Bison expects us to provide implementation - otherwise linker complains
 void Compiler::Parser::error(const location &loc , const std::string &message) {
-        
-        // Location should be initialized inside scanner action, but is not in this example.
-        // Let's grab location directly from driver class.
-	// cout << "Error: " << message << endl << "Location: " << loc << endl;
-	
-        cout << "Error: " << message << endl << "Error location: " << driver.location() << endl;
+    cout << "Error: " << message << endl << "Error location: " << driver.location() << endl;
 }

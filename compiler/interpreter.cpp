@@ -50,3 +50,7 @@ void Interpreter::increaseLocation(unsigned int loc){
 unsigned int Interpreter::location() const {
     return m_location;
 }
+
+std::vector<Command> Interpreter::get_commands(){
+    return m_commands;
+}

@@ -22,7 +22,7 @@
 %%
 
 
-[a-z]+      { 
+[a-z_A-Z]+  { 
                 cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_STRING(yytext, Compiler::location( /* put location data here if you want */ )); 
             }

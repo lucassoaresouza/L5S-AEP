@@ -4,8 +4,10 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "../compiler/interpreter.hpp"
+#include "../compiler/command.hpp"
 
 class AEPCompiler{
 
@@ -17,7 +19,7 @@ class AEPCompiler{
         AEPCompiler(){};
         ~AEPCompiler(){};
         // static AEPCompiler& get_instance();
-        void run(std::string);
+        std::vector<Compiler::Command> run(std::string);
 
 };
 

@@ -13,7 +13,7 @@ ProgrammableObject::ProgrammableObject(
 }
 
 void ProgrammableObject::add_commands(
-    std::vector<Compiler::Command>& new_commands
+    std::vector<Compiler::Command> new_commands
 ){
     commands = new_commands;
 }
@@ -68,27 +68,12 @@ void ProgrammableObject::move(int distance){
     position.second += orientation.second * distance;
 }
 
-void ProgrammableObject::read_input(SDL_Event *event){
-    if(event->type == SDL_KEYDOWN){
-        switch(event->key.keysym.sym){
-            case SDLK_a:
-                set_direction("LEFT");
-                move(10);
-                break;
-            case SDLK_d:
-                set_direction("RIGHT");
-                move(10);
-                break;
-            case SDLK_s:
-                set_direction("DOWN");
-                move(10);
-                break;
-            case SDLK_w:
-                set_direction("UP");
-                move(10);
-                break;
-            default:
-                break;
+void ProgrammableObject::run_commands(){
+    if(running == false){
+        running = true;
+        for(Compiler::Command command : commands){
+            std::cout << command.name() << std::endl;
         }
     }
+    running = false;
 }
