@@ -216,7 +216,7 @@ void TextField::set_spacing_letter(int spacing){
 }
 
 void TextField::read_input(SDL_Event *event){
-    if(event->type == SDL_QUIT){
+    if(event->type == SDL_QUIT){ //TO DO - AJUSTAR QUEM VAI 'OUVIR' O QUIT
         Game& game = Game::get_instance();
         game.quit = true;
     } else if(event->type == SDL_KEYDOWN){

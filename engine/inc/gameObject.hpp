@@ -15,11 +15,13 @@ namespace Engine{
 
         private:
             std::string name = "";
-            std::pair<int, int> position;
-            std::pair<int, int> size;
             std::string sprite;
-            SDL_Texture* texture = NULL;
             bool listening_inputs = false;
+
+        protected:
+            std::pair<int, int> position;
+            SDL_Texture* texture = NULL;
+            std::pair<int, int> size;
 
         public:
             GameObject();
