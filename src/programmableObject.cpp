@@ -40,24 +40,32 @@ void ProgrammableObject::draw(){
 
 void ProgrammableObject::set_direction(std::string new_direction){
     if(new_direction == "UP"){
-        Engine::Log().print("UP");//angle = 0
         direction_angle = 0;
+        orientation.first = 0;
+        orientation.second = -1;
+
     } else if(new_direction == "DOWN"){
-        Engine::Log().print("DOWN"); //angle = 180
         direction_angle = 180;
+        orientation.first = 0;
+        orientation.second = 1;
+
     } else if(new_direction == "LEFT"){
-        Engine::Log().print("LEFT"); //angle = 270
         direction_angle = 270;
+        orientation.first = -1;
+        orientation.second = 0;
+
     } else if(new_direction == "RIGHT"){
-        Engine::Log().print("RIGHT"); //angle = 90
         direction_angle = 90;
+        orientation.first = 1;
+        orientation.second = 0;
     } else {
         Engine::Log().print("Direcao invalida!");
     }
 }
 
-int ProgrammableObject::get_direction(){
-    return direction_angle;
+void ProgrammableObject::move(int distance){
+    position.first += orientation.first * distance;
+    position.second += orientation.second * distance;
 }
 
 void ProgrammableObject::read_input(SDL_Event *event){
@@ -65,15 +73,19 @@ void ProgrammableObject::read_input(SDL_Event *event){
         switch(event->key.keysym.sym){
             case SDLK_a:
                 set_direction("LEFT");
+                move(10);
                 break;
             case SDLK_d:
                 set_direction("RIGHT");
+                move(10);
                 break;
             case SDLK_s:
                 set_direction("DOWN");
+                move(10);
                 break;
             case SDLK_w:
                 set_direction("UP");
+                move(10);
                 break;
             default:
                 break;

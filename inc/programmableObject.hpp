@@ -13,7 +13,8 @@
 class ProgrammableObject : public Engine::GameObject{
     private:
         std::vector<Compiler::Command> commands;
-        int direction_angle;
+        int direction_angle; // degrees
+        std::pair<int, int> orientation; // first = x, second = y
     
     public:
         ProgrammableObject(
@@ -24,9 +25,12 @@ class ProgrammableObject : public Engine::GameObject{
         ~ProgrammableObject();
         void draw();
         void add_commands(std::vector<Compiler::Command>& new_commands);
-        void set_direction(std::string new_direction);
-        int get_direction();
         void read_input(SDL_Event *event);
+
+        //Basic commands
+        void set_direction(std::string new_direction);
+        void move(int distance);
+
 };
 
 #endif

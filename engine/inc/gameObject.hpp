@@ -20,8 +20,8 @@ namespace Engine{
 
         protected:
             std::pair<int, int> position;
-            SDL_Texture* texture = NULL;
             std::pair<int, int> size;
+            SDL_Texture* texture = NULL;
 
         public:
             GameObject();
