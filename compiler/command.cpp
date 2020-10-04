@@ -31,3 +31,7 @@ std::string Command::str() const {
 std::string Command::name() const {
     return m_name;
 }
+
+std::vector<uint64_t> Command::get_args() const {
+    return m_args;
+}

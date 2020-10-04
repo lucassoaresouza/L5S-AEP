@@ -72,7 +72,21 @@ void ProgrammableObject::run_commands(){
     if(running == false){
         running = true;
         for(Compiler::Command command : commands){
-            std::cout << command.name() << std::endl;
+            std::string command_name = command.name();
+            std::vector<uint64_t> args = command.get_args();
+            if(command_name == "paraFrente"){
+                set_direction("UP");
+                move(args[0]);
+            } else if(command_name == "paraTras"){
+                set_direction("DOWN");
+                move(args[0]);
+            } else if(command_name == "paraEsquerda"){
+                set_direction("LEFT");
+                move(args[0]);
+            } else if(command_name == "paraDireita"){
+                set_direction("RIGHT");
+                move(args[0]);
+            }
         }
     }
     running = false;

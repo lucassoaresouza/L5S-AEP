@@ -18,6 +18,7 @@ namespace Compiler {
 
             std::string str() const;
             std::string name() const;
+            std::vector<uint64_t> get_args() const;
     };
 }
 
