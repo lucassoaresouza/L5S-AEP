@@ -16,6 +16,10 @@ class ProgrammableObject : public Engine::GameObject{
         int direction_angle; // degrees
         std::pair<int, int> orientation; // first = x, second = y
         bool running = false;
+        int command_index = 0;
+        int expected_x = 0;
+        int expected_y = 0;
+        void set_initial_state();
 
     public:
         ProgrammableObject(
@@ -32,6 +36,7 @@ class ProgrammableObject : public Engine::GameObject{
         void set_direction(std::string new_direction);
         void move(int distance);
 
+        void teste();
 };
 
 #endif

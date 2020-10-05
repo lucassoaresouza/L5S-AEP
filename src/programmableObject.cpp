@@ -36,6 +36,7 @@ void ProgrammableObject::draw(){
         NULL,
         flip
     );
+    teste();
 }
 
 void ProgrammableObject::set_direction(std::string new_direction){
@@ -64,30 +65,62 @@ void ProgrammableObject::set_direction(std::string new_direction){
 }
 
 void ProgrammableObject::move(int distance){
-    position.first += orientation.first * distance;
-    position.second += orientation.second * distance;
+    if(expected_x == 0 && expected_y == 0 ){
+        expected_x = position.first + distance;
+        expected_y = position.second + distance;
+    }
+
+    position.first += orientation.first * 1;
+    position.second += orientation.second * 1;
+    expected_x -= 1;
+    expected_y -= 1;
+
+    if(
+        position.first >= expected_x ||
+        position.second >= expected_y
+    ){
+        command_index += 1;
+        expected_x = 0;
+        expected_y = 0;
+    }
 }
 
 void ProgrammableObject::run_commands(){
     if(running == false){
         running = true;
-        for(Compiler::Command command : commands){
-            std::string command_name = command.name();
-            std::vector<uint64_t> args = command.get_args();
-            if(command_name == "paraFrente"){
-                set_direction("UP");
-                move(args[0]);
-            } else if(command_name == "paraTras"){
-                set_direction("DOWN");
-                move(args[0]);
-            } else if(command_name == "paraEsquerda"){
-                set_direction("LEFT");
-                move(args[0]);
-            } else if(command_name == "paraDireita"){
-                set_direction("RIGHT");
-                move(args[0]);
-            }
-        }
+    } else {
+        Engine::Log().print("Executando a lista de comandos anterior!");
     }
+}
+
+void ProgrammableObject::teste(){
+    if(command_index < commands.size() && running == true){
+        std::string command_name = commands[command_index].name();
+        std::vector<uint64_t> args = commands[command_index].get_args();
+        if(command_name == "paraFrente"){
+            set_direction("UP");
+            move(args[0]);
+        } else if(command_name == "paraTras"){
+            set_direction("DOWN");
+            move(args[0]);
+        } else if(command_name == "paraEsquerda"){
+            set_direction("LEFT");
+            move(args[0]);
+        } else if(command_name == "paraDireita"){
+            set_direction("RIGHT");
+            move(args[0]);
+        }
+    } else {
+        set_initial_state();
+    }
+}
+
+void ProgrammableObject::set_initial_state(){
+    std::pair<int, int>position(700,450);
+    set_position(position);
+    set_direction("UP");
+    commands.clear();
+    expected_x = 0;
+    expected_y = 0;
     running = false;
 }

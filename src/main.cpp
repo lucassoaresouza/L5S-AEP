@@ -46,9 +46,6 @@ int main(int, char**){
 
     //compiler
     AEPCompiler* compiler = new AEPCompiler();
-    // std::string test = "";
-    // test = obj_2->get_current_text();
-    // compiler->run(test);
 
     //button
     std::string button_name = "button";
