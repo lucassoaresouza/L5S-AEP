@@ -14,6 +14,7 @@
 #include "compilerButton.hpp"
 #include "aepcompiler.hpp"
 #include "programmableObject.hpp"
+#include "challengeMap.hpp"
 
 using namespace Engine;
 using namespace Compiler;
@@ -26,12 +27,13 @@ int main(int, char**){
     Game& game = Game::initialize(game_name, window_size);
 
     //field
-    std::string field_name="map";
-    std::pair<int, int> field_posititon(405, 10);
-    std::pair<int, int> field_size(19*32, 15*32);
-    Field* field = new Field(field_name, field_posititon, field_size);
-    field->set_color(0xFF, 0xFF, 0xFF, 0xFF);
-    game.add_object(field);
+    std::string map_name="map";
+    std::pair<int, int> map_posititon(405, 10);
+    std::string map_path = "./levels/level_one/challenge_a.aep";
+    // std::pair<int, int> field_size(19*32, 15*32);
+    ChallengeMap* map = new ChallengeMap(map_name, map_posititon, map_path);
+    // field->set_color(0xFF, 0xFF, 0xFF, 0xFF);
+    game.add_object(map);
 
     //console field
     std::string console_name="console";

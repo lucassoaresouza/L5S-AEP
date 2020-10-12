@@ -20,6 +20,23 @@ void Field::set_color(Uint64 r, Uint64 g, Uint64 b, Uint64 a){
 }
 
 bool Field::load(){
+    free();
+    if(sprite != ""){
+        Game& game = Game::get_instance();
+        SDL_Texture* in_load_texture = NULL;
+        SDL_Surface* provisory_surface = IMG_Load(sprite.c_str());
+        if(provisory_surface == NULL){
+            Log().print("Nao foi possivel carregar o sprite!");
+        } else {
+            in_load_texture = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
+            if(in_load_texture == NULL){
+                Log().print(SDL_GetError());
+            }
+            SDL_FreeSurface(provisory_surface);
+        }
+        texture = in_load_texture;
+        return texture != NULL;
+    }
     return true;
 };
 
@@ -39,4 +56,7 @@ void Field::draw(){
         color.a 
     );        
     SDL_RenderFillRect(game.get_renderer(), &rect);
+    if(texture != NULL){
+        SDL_RenderCopy(game.get_renderer(), texture, NULL, &rect);
+    }
 }

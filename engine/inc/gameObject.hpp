@@ -15,10 +15,10 @@ namespace Engine{
 
         private:
             std::string name = "";
-            std::string sprite;
             bool listening_inputs = false;
 
         protected:
+            std::string sprite = "";
             std::pair<int, int> position;
             std::pair<int, int> size;
             SDL_Texture* texture = NULL;
