@@ -37,9 +37,9 @@ int main(int, char**){
 
     //textfield
     std::string object_name2="textfield";
-    std::pair<int, int> object_position2(500, 300);
+    std::pair<int, int> object_position2(10, 10);
     std::pair<int, int> object_size2(67, 56);
-    TextField* obj_2 = new TextField(object_name2, object_position2, 40, 40);
+    TextField* obj_2 = new TextField(object_name2, object_position2, 35, 40);
     obj_2->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     obj_2->set_color(0x00, 0x00, 0x00, 0x00);
     game.add_object(obj_2);

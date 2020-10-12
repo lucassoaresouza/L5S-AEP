@@ -53,19 +53,16 @@ bool TextField::load(){
     return true;
 }
 
+void TextField::draw(){
+    free();
+    draw_background();
+    draw_pointer_pipe();
+    draw_text_table();
+}
+
 void TextField::draw_pointer_pipe(){
     Game& game = Game::get_instance();
     SDL_Surface* provisory_surface = NULL;
-    // TTF_SetFontStyle(font, TTF_STYLE_BOLD);
-    if(aux_pointer_count > 10){
-        if(pointer_pipe == "|"){
-            pointer_pipe = " ";
-        } else {
-            pointer_pipe = "|";
-        }
-        aux_pointer_count = 0;
-    }
-    aux_pointer_count +=1;
     provisory_surface = TTF_RenderText_Blended(
         font,
         pointer_pipe.c_str(),
@@ -76,8 +73,8 @@ void TextField::draw_pointer_pipe(){
         provisory_surface
     );
     SDL_Rect renderQuad = {
-        provisory_surface->w * pointer_position.second + 10,
-        provisory_surface->h * pointer_position.first + 10,
+        position.first + (provisory_surface->w * pointer_position.second) + 9,
+        position.second + (provisory_surface->h * pointer_position.first) + 18,
         provisory_surface->w,
         provisory_surface->h
     };
@@ -92,7 +89,6 @@ void TextField::draw_pointer_pipe(){
 
 void TextField::draw_text_table(){
     Game& game = Game::get_instance();
-    // TTF_SetFontStyle(font, TTF_STYLE_BOLD);
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
             SDL_Surface* provisory_surface = NULL;
@@ -110,8 +106,8 @@ void TextField::draw_text_table(){
                 provisory_surface
             );
             SDL_Rect renderQuad = {
-                provisory_surface->w * j + 10,
-                provisory_surface->h * i + 10,
+                position.first + (provisory_surface->w * j) + 9,
+                position.second + (provisory_surface->h * i) + 18,
                 provisory_surface->w,
                 provisory_surface->h
             };
@@ -126,10 +122,22 @@ void TextField::draw_text_table(){
     }   
 }
 
-void TextField::draw(){
-    free();
-    draw_pointer_pipe();
-    draw_text_table();
+void TextField::draw_background(){
+    Game& game = Game::get_instance();
+    SDL_Rect background_rect = {
+        position.first,
+        position.second,
+        9 * (columns + 3),
+        18 * (lines + 2), 
+    };
+    SDL_SetRenderDrawColor(
+        game.get_renderer(),
+        background_color.r,
+        background_color.g,
+        background_color.b,
+        background_color.a 
+    );        
+    SDL_RenderFillRect(game.get_renderer(), &background_rect);
 }
 
 void TextField::free(){
@@ -216,10 +224,7 @@ void TextField::set_spacing_letter(int spacing){
 }
 
 void TextField::read_input(SDL_Event *event){
-    if(event->type == SDL_QUIT){ //TO DO - AJUSTAR QUEM VAI 'OUVIR' O QUIT
-        Game& game = Game::get_instance();
-        game.quit = true;
-    } else if(event->type == SDL_KEYDOWN){
+    if(event->type == SDL_KEYDOWN){
         switch (event->key.keysym.sym){
             case SDLK_BACKSPACE:
                 erase();

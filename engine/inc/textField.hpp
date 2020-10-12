@@ -40,6 +40,7 @@ namespace Engine{
             void allocate_tables();
             void draw_pointer_pipe();
             void draw_text_table();
+            void draw_background();
             void erase();
             void write(char letter);
             void add_endline();

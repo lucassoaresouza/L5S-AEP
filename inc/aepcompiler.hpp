@@ -12,13 +12,11 @@
 class AEPCompiler{
 
     private:
-        // static AEPCompiler* instance;
         Compiler::Interpreter interpreter;
 
     public:
         AEPCompiler(){};
         ~AEPCompiler(){};
-        // static AEPCompiler& get_instance();
         std::vector<Compiler::Command> run(std::string);
 
 };
