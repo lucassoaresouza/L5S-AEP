@@ -29,7 +29,6 @@ namespace Engine{
             std::pair<int, int> pointer_position;
             std::string pointer_pipe = "|";
             SDL_Texture *pointer_texture;
-            int aux_pointer_count = 0; //TODO Mudar essa gambiarra!
 
             SDL_Color font_color = {0xFF, 0xFF, 0xFF, 0xFF};
             SDL_Color background_color = {0xFF, 0xFF, 0xFF, 0xFF};
@@ -58,7 +57,7 @@ namespace Engine{
             void draw();
             void free();
             void set_font(std::string path, int size);
-            void set_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alfa);
+            void set_font_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alfa);
             void set_spacing_line(int spacing);
             void set_spacing_letter(int spacing);
             void read_input(SDL_Event *event);

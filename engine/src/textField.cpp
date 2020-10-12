@@ -34,7 +34,7 @@ void TextField::set_font(std::string path, int size){
     font_size = size;
 }
 
-void TextField::set_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alfa){
+void TextField::set_font_color(Uint8 r, Uint8 g, Uint8 b, Uint8 alfa){
     font_color = {r, g, b, alfa};
 }
 
