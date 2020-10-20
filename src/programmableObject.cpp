@@ -116,11 +116,12 @@ void ProgrammableObject::teste(){
 }
 
 void ProgrammableObject::set_initial_state(){
-    std::pair<int, int>position(700,450);
+    std::pair<int, int>position(405+(7*32),450);
     set_position(position);
     set_direction("UP");
     commands.clear();
     expected_x = 0;
     expected_y = 0;
     running = false;
+    command_index = 0;
 }
