@@ -48,15 +48,23 @@
 
 %define api.token.prefix {TOKEN_}
 
-%token END 0 "end of file"
+%token END 0 "end of file";
 %token <std::string> STRING  "string";
 %token <uint64_t> NUMBER "number";
 %token LEFTPAR "leftpar";
 %token RIGHTPAR "rightpar";
-%token SEMICOLON "semicolon";
 %token COMMA "comma";
 
+%token <std::string> NORTH;
+%token <std::string> SOUTH;
+%token <std::string> EAST;
+%token <std::string> WEST;
+
+%token <std::string> TRUE;
+%token <std::string> FALSE;
+
 %type< Compiler::Command > command;
+%type< Compiler::Command > reservedCommand;
 %type< std::vector<uint64_t> > arguments;
 
 %start program
@@ -69,39 +77,68 @@ program :   {
         | program command
             {
                 const Command &cmd = $2;
-                cout << "command parsed, updating AST" << endl;
                 driver.addCommand(cmd);
-                cout << endl << "prompt> ";
             }
-        | program SEMICOLON
-            {
-                cout << "*** STOP RUN ***" << endl;
-                cout << driver.str() << endl;
-            }
+        | program reservedCommand
+        {
+            const Command &cmd = $2;
+            driver.addCommand(cmd);
+        }
         ;
 
 
 command : STRING LEFTPAR RIGHTPAR
         {
             string &id = $1;
-            cout << "ID: " << id << endl;
             $$ = Command(id);
         }
     | STRING LEFTPAR arguments RIGHTPAR
         {
             string &id = $1;
             const std::vector<uint64_t> &args = $3;
-            cout << "function: " << id << ", " << args.size() << endl;
             $$ = Command(id, args);
         }
     ;
+
+reservedCommand : NORTH LEFTPAR NUMBER RIGHTPAR
+                {
+                    string id = "NORTH";
+                    const uint64_t &number = $3;
+                    std::vector<uint64_t>arguments;
+                    arguments.push_back(number);
+                    $$ = Command(id, arguments);
+                }
+                | SOUTH LEFTPAR NUMBER RIGHTPAR
+                {
+                    string id = "SOUTH";
+                    const uint64_t &number = $3;
+                    std::vector<uint64_t>arguments;
+                    arguments.push_back(number);
+                    $$ = Command(id, arguments);
+                }
+                | EAST LEFTPAR NUMBER RIGHTPAR
+                {
+                    string id = "EAST";
+                    const uint64_t &number = $3;
+                    std::vector<uint64_t>arguments;
+                    arguments.push_back(number);
+                    $$ = Command(id, arguments);
+                }
+                | WEST LEFTPAR NUMBER RIGHTPAR
+                {
+                    string id = "WEST";
+                    const uint64_t &number = $3;
+                    std::vector<uint64_t>arguments;
+                    arguments.push_back(number);
+                    $$ = Command(id, arguments);
+                }
+                 ;
 
 arguments : NUMBER
         {
             uint64_t number = $1;
             $$ = std::vector<uint64_t>();
             $$.push_back(number);
-            cout << "first argument: " << number << endl;
         }
     | arguments COMMA NUMBER
         {
@@ -109,13 +146,13 @@ arguments : NUMBER
             std::vector<uint64_t> &args = $1;
             args.push_back(number);
             $$ = args;
-            cout << "next argument: " << number << ", arg list size = " << args.size() << endl;
         }
     ;
-    
+
 %%
 
 // Bison expects us to provide implementation - otherwise linker complains
 void Compiler::Parser::error(const location &loc , const std::string &message) {
     cout << "Error: " << message << endl << "Error location: " << driver.location() << endl;
+    driver.clear();
 }

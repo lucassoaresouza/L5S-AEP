@@ -36,7 +36,7 @@ class ProgrammableObject : public Engine::GameObject{
         void set_direction(std::string new_direction);
         void move(int distance);
 
-        void teste();
+        void execute();
 };
 
 #endif
