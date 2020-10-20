@@ -49,26 +49,48 @@ falso       {
                 return Compiler::Parser::make_FALSE(yytext, Compiler::location());
             }
 
-[a-z_A-Z]+  { 
+e           {
+                return Compiler::Parser::make_AND(yytext, Compiler::location());
+            }
+
+ou          {
+                return Compiler::Parser::make_OR(yytext, Compiler::location());
+            }
+
+se          {
+                return Compiler::Parser::make_IF(yytext, Compiler::location());
+            }
+
+[a-z_A-Z]+  {
                 // cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_STRING(yytext, Compiler::location()); 
             }
-            
+
 \(          {
                 // cout << "Scanner: '('" << endl;
                 return Compiler::Parser::make_LEFTPAR(Compiler::location());
             }
-            
-\)          { 
+
+\)          {
                 // cout << "Scanner: ')'" << endl;
                 return Compiler::Parser::make_RIGHTPAR(Compiler::location());
+            }
+
+\{          {
+                // cout << "Scanner: '('" << endl;
+                return Compiler::Parser::make_LEFTBRACE(Compiler::location());
+            }
+
+\}          {
+                // cout << "Scanner: ')'" << endl;
+                return Compiler::Parser::make_RIGHTBRACE(Compiler::location());
             }
 
 ,           {
                 // cout << "Scanner: ','" << endl;
                 return Compiler::Parser::make_COMMA(Compiler::location());
             }
-            
+
 [\n\t ]     {
                 //cout << "Scanner: whitechar (ignored)" << endl;
             }
@@ -79,10 +101,10 @@ falso       {
                 return Compiler::Parser::make_NUMBER(number, Compiler::location());
             }
 
-.           { 
+.           {
                 // cout << "Scanner: unknown character [" << yytext << "]" << endl; 
             }
-            
+
 <<EOF>>     { return yyterminate(); }
 
 

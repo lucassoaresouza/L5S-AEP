@@ -53,6 +53,8 @@
 %token <uint64_t> NUMBER "number";
 %token LEFTPAR "leftpar";
 %token RIGHTPAR "rightpar";
+%token LEFTBRACE "leftbrace";
+%token RIGHTBRACE "rightbrace";
 %token COMMA "comma";
 
 %token <std::string> NORTH;
@@ -62,11 +64,18 @@
 
 %token <std::string> TRUE;
 %token <std::string> FALSE;
+%token <std::string> AND;
+%token <std::string> OR;
+%token <std::string> IF;
 
 %type< Compiler::Command > command;
 %type< Compiler::Command > reservedCommand;
+%type< std::vector<Compiler::Command> > commandBlock;
 %type< std::vector<uint64_t> > arguments;
 %type< bool > booleanOperation;
+%type< bool > boolean;
+%type< bool > decisionBlock;
+
 
 %start program
 
@@ -87,11 +96,21 @@ program :   {
         }
         | program booleanOperation
         {
-            // const Command &cmd = $2;
-            // driver.addCommand(cmd);
+            // do something
+        }
+        | program commandBlock
+        {
+            // do something
+        }
+        | program decisionBlock
+        {
+            // do something
         }
         ;
 
+commandBlock : LEFTBRACE program RIGHTBRACE {}
+
+decisionBlock: IF LEFTPAR booleanOperation RIGHTPAR commandBlock {}
 
 command : STRING LEFTPAR RIGHTPAR
         {
@@ -155,14 +174,33 @@ arguments : NUMBER
         }
     ;
 
-booleanOperation : TRUE
+boolean : TRUE
         {
-            cout << "É VERDADEIRO!" << endl;
+            bool value = true;
+            $$ = value;
         }
         | FALSE
         {
-            cout << "É FALSO FEIO NOTA DE 3 REAIS" << endl;
+            bool value = false;
+            $$ = value;
         }
+
+booleanOperation : boolean
+        {
+            bool value = $1;
+            $$ = value;
+        }
+        | boolean AND booleanOperation
+        {
+            bool value = $1 && $3;
+            $$ = value;
+        }
+        | boolean OR booleanOperation
+        {
+            bool value = $1 || $3;
+            $$ = value;
+        }
+
 
 %%
 
