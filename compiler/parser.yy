@@ -66,6 +66,7 @@
 %type< Compiler::Command > command;
 %type< Compiler::Command > reservedCommand;
 %type< std::vector<uint64_t> > arguments;
+%type< bool > booleanOperation;
 
 %start program
 
@@ -83,6 +84,11 @@ program :   {
         {
             const Command &cmd = $2;
             driver.addCommand(cmd);
+        }
+        | program booleanOperation
+        {
+            // const Command &cmd = $2;
+            // driver.addCommand(cmd);
         }
         ;
 
@@ -148,6 +154,15 @@ arguments : NUMBER
             $$ = args;
         }
     ;
+
+booleanOperation : TRUE
+        {
+            cout << "É VERDADEIRO!" << endl;
+        }
+        | FALSE
+        {
+            cout << "É FALSO FEIO NOTA DE 3 REAIS" << endl;
+        }
 
 %%
 
