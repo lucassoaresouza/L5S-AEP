@@ -16,6 +16,9 @@
 #include "programmableObject.hpp"
 #include "challengeMap.hpp"
 
+
+#include "../compiler/syntaticTree.hpp"
+
 using namespace Engine;
 using namespace Compiler;
 using namespace std;
@@ -83,7 +86,6 @@ int main(int, char**){
     //load and run!
     game.load_objects();
     game.run();
-
 
     return 0;
 }

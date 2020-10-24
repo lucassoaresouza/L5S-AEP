@@ -97,9 +97,14 @@ se          {
 
 [1-9][0-9]* {
                 // cout << "Scanner: decimal number: " << yytext << endl;
-                uint64_t number = strtoull(yytext, 0, 10);
-                return Compiler::Parser::make_NUMBER(number, Compiler::location());
+                int number = atoi(yytext);
+                return Compiler::Parser::make_INTEGER(number, Compiler::location());
             }
+
+[0-9]+"."[0-9]+ {
+    double number = atof(yytext);
+    return Compiler::Parser::make_DOUBLE(number, Compiler::location());
+}
 
 .           {
                 // cout << "Scanner: unknown character [" << yytext << "]" << endl; 

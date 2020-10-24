@@ -14,6 +14,7 @@
     #include <vector>
     #include <stdint.h>
     #include "command.hpp"
+    #include "syntaticTree.hpp"
 
     using namespace std;
 
@@ -49,8 +50,10 @@
 %define api.token.prefix {TOKEN_}
 
 %token END 0 "end of file";
+%token EOL "end of line";
 %token <std::string> STRING  "string";
-%token <uint64_t> NUMBER "number";
+%token <uint64_t> INTEGER "integer";
+%token <double> DOUBLE "double";
 %token LEFTPAR "leftpar";
 %token RIGHTPAR "rightpar";
 %token LEFTBRACE "leftbrace";
@@ -73,40 +76,29 @@
 %type< std::vector<Compiler::Command> > commandBlock;
 %type< std::vector<uint64_t> > arguments;
 %type< bool > booleanOperation;
-%type< bool > boolean;
 %type< bool > decisionBlock;
+%type< bool > boolean;
+
+%type <Compiler::Node*> constant;
 
 
 %start program
 
 %%
 
-program :   {
-                driver.clear();
-            }
-        | program command
-            {
+program     : { driver.clear(); }
+            | program command {
                 const Command &cmd = $2;
                 driver.addCommand(cmd);
             }
-        | program reservedCommand
-        {
-            const Command &cmd = $2;
-            driver.addCommand(cmd);
-        }
-        | program booleanOperation
-        {
-            // do something
-        }
-        | program commandBlock
-        {
-            // do something
-        }
-        | program decisionBlock
-        {
-            // do something
-        }
-        ;
+            | program reservedCommand {
+                const Command &cmd = $2;
+                driver.addCommand(cmd);
+            }
+            | program booleanOperation {}
+            | program commandBlock {}
+            | program decisionBlock {}
+            | program constant {}
 
 commandBlock : LEFTBRACE program RIGHTBRACE {}
 
@@ -125,7 +117,7 @@ command : STRING LEFTPAR RIGHTPAR
         }
     ;
 
-reservedCommand : NORTH LEFTPAR NUMBER RIGHTPAR
+reservedCommand : NORTH LEFTPAR INTEGER RIGHTPAR
                 {
                     string id = "NORTH";
                     const uint64_t &number = $3;
@@ -133,7 +125,7 @@ reservedCommand : NORTH LEFTPAR NUMBER RIGHTPAR
                     arguments.push_back(number);
                     $$ = Command(id, arguments);
                 }
-                | SOUTH LEFTPAR NUMBER RIGHTPAR
+                | SOUTH LEFTPAR INTEGER RIGHTPAR
                 {
                     string id = "SOUTH";
                     const uint64_t &number = $3;
@@ -141,7 +133,7 @@ reservedCommand : NORTH LEFTPAR NUMBER RIGHTPAR
                     arguments.push_back(number);
                     $$ = Command(id, arguments);
                 }
-                | EAST LEFTPAR NUMBER RIGHTPAR
+                | EAST LEFTPAR INTEGER RIGHTPAR
                 {
                     string id = "EAST";
                     const uint64_t &number = $3;
@@ -149,7 +141,7 @@ reservedCommand : NORTH LEFTPAR NUMBER RIGHTPAR
                     arguments.push_back(number);
                     $$ = Command(id, arguments);
                 }
-                | WEST LEFTPAR NUMBER RIGHTPAR
+                | WEST LEFTPAR INTEGER RIGHTPAR
                 {
                     string id = "WEST";
                     const uint64_t &number = $3;
@@ -159,13 +151,13 @@ reservedCommand : NORTH LEFTPAR NUMBER RIGHTPAR
                 }
                  ;
 
-arguments : NUMBER
+arguments : INTEGER
         {
             uint64_t number = $1;
             $$ = std::vector<uint64_t>();
             $$.push_back(number);
         }
-    | arguments COMMA NUMBER
+    | arguments COMMA INTEGER
         {
             uint64_t number = $3;
             std::vector<uint64_t> &args = $1;
@@ -201,6 +193,14 @@ booleanOperation : boolean
             $$ = value;
         }
 
+constant    : INTEGER {
+                std::cout << "CONSTANTE INTEIRA :" << $1 << std::endl;
+                $$ = new Compiler::NodeConst($1);
+            }
+            | DOUBLE {
+                std::cout << "CONSTANTE DECIMAL :" << $1 << std::endl;
+                $$ = new Compiler::NodeConst($1);
+            }
 
 %%
 
