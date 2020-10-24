@@ -61,6 +61,10 @@ se          {
                 return Compiler::Parser::make_IF(yytext, Compiler::location());
             }
 
+=           {
+                return Compiler::Parser::make_ASSIGNER(yytext, Compiler::location());
+            }
+
 [a-z_A-Z]+  {
                 // cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_STRING(yytext, Compiler::location()); 

@@ -1,6 +1,9 @@
 #ifndef SYNTATIC_TREE_H
 #define SYNTATIC_TREE_H
 
+#include <map>
+#include <vector>
+
 namespace Compiler {
     class Node {
         public:
@@ -28,6 +31,18 @@ namespace Compiler {
             double evaluate();
     };
 
+    class TreeManage {
+        private:
+            typedef std::map<std::string, double> variablemap_type;
+            variablemap_type variables;
+            std::vector<Node*> nodes;
+
+        public:
+            ~TreeManage();
+            void clearNodes();
+            bool existsVariable(const std::string &variable_name);
+            double getVariable(const std::string &variable_name);
+    };
 }
 
 #endif //SYNTATIC_TREE_H

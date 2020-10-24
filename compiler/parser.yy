@@ -70,6 +70,7 @@
 %token <std::string> AND;
 %token <std::string> OR;
 %token <std::string> IF;
+%token <std::string> ASSIGNER;
 
 %type< Compiler::Command > command;
 %type< Compiler::Command > reservedCommand;
@@ -95,6 +96,7 @@ program     : { driver.clear(); }
                 const Command &cmd = $2;
                 driver.addCommand(cmd);
             }
+            | program assignment {}
             | program booleanOperation {}
             | program commandBlock {}
             | program decisionBlock {}
@@ -200,6 +202,12 @@ constant    : INTEGER {
             | DOUBLE {
                 std::cout << "CONSTANTE DECIMAL :" << $1 << std::endl;
                 $$ = new Compiler::NodeConst($1);
+            }
+
+
+assignment  : STRING ASSIGNER constant {
+                std::cout << "nome: " << $1 << " valor: " << $3->evaluate() << std::endl;
+                delete $3;
             }
 
 %%
