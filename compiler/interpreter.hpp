@@ -4,6 +4,7 @@
 #include <vector>
 #include "scanner.hpp"
 #include "parser.hpp"
+#include "syntaticTree.hpp"
 
 namespace Compiler {
 
@@ -14,6 +15,7 @@ namespace Compiler {
             Scanner m_scanner;
             Parser m_parser;
             std::vector<Command> m_commands;
+            TreeManage* manage = NULL;
             unsigned int m_location;
         
             void addCommand(const Command &cmd);

@@ -60,17 +60,11 @@
 %token RIGHTBRACE "rightbrace";
 %token COMMA "comma";
 
-%token <std::string> NORTH;
-%token <std::string> SOUTH;
-%token <std::string> EAST;
-%token <std::string> WEST;
-
-%token <std::string> TRUE;
-%token <std::string> FALSE;
-%token <std::string> AND;
-%token <std::string> OR;
+%token <std::string> POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
+%token <std::string> NORTH SOUTH WEST EAST;
+%token <std::string> TRUE FALSE;
+%token <std::string> AND OR;
 %token <std::string> IF;
-%token <std::string> ASSIGNER;
 
 %type< Compiler::Command > command;
 %type< Compiler::Command > reservedCommand;
@@ -80,7 +74,8 @@
 %type< bool > decisionBlock;
 %type< bool > boolean;
 
-%type <Compiler::Node*> constant;
+%type <Compiler::Node*> constant variable;
+%type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
 
 
 %start program
@@ -204,10 +199,72 @@ constant    : INTEGER {
                 $$ = new Compiler::NodeConst($1);
             }
 
+variable    : STRING {
+                if(!driver.manage->existVariable($1)){
+                    error(yyloc, std::string("Variável desconhecida \"") + $1 + "\"");
+                    delete $1;
+                    YYERROR;
+                } else {
+                    $$ = new CNConstante(driver.manage->getVariable($1));
+                    delete $1;
+                }
+            }
 
 assignment  : STRING ASSIGNER constant {
+                driver.manage->variables[$1] = $3->evaluate();
                 std::cout << "nome: " << $1 << " valor: " << $3->evaluate() << std::endl;
                 delete $3;
+            }
+
+atomexpr    : constant {
+                $$ = $1;
+            }
+            | variable {
+                $$ = $1;
+            }
+            | LEFTPAR expr RIGHTPAR {
+                $$ = $2;
+            }
+
+powexpr     : atomexpr {
+                $$ = $1;
+            }
+            | atomexpr POWERSYM powexpr {
+                $$ = new NodeCalc($1, $3, '^');
+            }
+
+unaryexpr   : powexpr {
+                $$ = $1;
+            }
+            | SUMSYM powexpr {
+                $$ = $2;
+            }
+            | SUBSYM powexpr {
+                $$ = new NodeNegate($2);
+            }
+
+mulexpr     : unaryexpr {
+                $$ = $1;
+            }
+            | mulexpr MULTSYM unaryexpr {
+                $$ = new NodeCalc($1, $3, '*');
+            }
+            | mulexpr DIVSYM unaryexpr {
+                $$ = new NodeCalc($1, $3, '/');
+            }
+
+addexpr     : mulexpr {
+                $$ = $1;
+            }
+            | addexpr SUMSYM mulexpr {
+                $$ = new NodeCalc($1, $3, '+');
+            }
+            | addexpr SUBSYM mulexpr {
+                $$ = new NodeCalc($1, $3, '-');
+            }
+
+expr        : addexpr {
+                $$ = $1;
             }
 
 %%

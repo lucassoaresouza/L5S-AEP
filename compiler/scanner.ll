@@ -65,9 +65,29 @@ se          {
                 return Compiler::Parser::make_ASSIGNER(yytext, Compiler::location());
             }
 
+\^          {
+                return Compiler::Parser::make_POWERSYM(yytext, Compiler::location());
+            }
+
+\*          {
+                return Compiler::Parser::make_MULTSYM(yytext, Compiler::location());
+            }
+
+\/          {
+                return Compiler::Parser::make_DIVSYM(yytext, Compiler::location());
+            }
+
+\+          {
+                return Compiler::Parser::make_SUMSYM(yytext, Compiler::location());
+            }
+
+\-          {
+                return Compiler::Parser::make_SUBSYM(yytext, Compiler::location());
+            }
+
 [a-z_A-Z]+  {
                 // cout << "Scanner: identifier [" << yytext << "]" << endl;
-                return Compiler::Parser::make_STRING(yytext, Compiler::location()); 
+                return Compiler::Parser::make_STRING(yytext, Compiler::location());
             }
 
 \(          {

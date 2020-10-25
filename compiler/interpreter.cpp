@@ -9,7 +9,8 @@ Interpreter::Interpreter() :
     m_commands(),
     m_scanner(*this),
     m_parser(m_scanner, *this),
-    m_location(0)
+    m_location(0),
+    manage(new TreeManage())
 {}
 
 int Interpreter::parse() {
