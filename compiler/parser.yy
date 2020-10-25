@@ -91,57 +91,60 @@ program     : { driver.clear(); }
                 const Command &cmd = $2;
                 driver.addCommand(cmd);
             }
-            | program assignment {}
             | program booleanOperation {}
             | program commandBlock {}
             | program decisionBlock {}
             | program constant {}
+            | program assignment {}
+            | program expr {
+                driver.manage->nodes.push_back($2);
+            }
+            | program expr END {
+                driver.manage->nodes.push_back($2);
+            }
 
 commandBlock : LEFTBRACE program RIGHTBRACE {}
 
 decisionBlock: IF LEFTPAR booleanOperation RIGHTPAR commandBlock {}
 
-command : STRING LEFTPAR RIGHTPAR
-        {
-            string &id = $1;
-            $$ = Command(id);
-        }
-    | STRING LEFTPAR arguments RIGHTPAR
-        {
-            string &id = $1;
-            const std::vector<uint64_t> &args = $3;
-            $$ = Command(id, args);
-        }
-    ;
+command     : STRING LEFTPAR RIGHTPAR {
+                string &id = $1;
+                $$ = Command(id);
+            }
+            | STRING LEFTPAR arguments RIGHTPAR {
+                string &id = $1;
+                const std::vector<uint64_t> &args = $3;
+                $$ = Command(id, args);
+            }
 
-reservedCommand : NORTH LEFTPAR INTEGER RIGHTPAR
+reservedCommand : NORTH LEFTPAR expr RIGHTPAR
                 {
                     string id = "NORTH";
-                    const uint64_t &number = $3;
+                    const uint64_t &number = $3->evaluate();
                     std::vector<uint64_t>arguments;
                     arguments.push_back(number);
                     $$ = Command(id, arguments);
                 }
-                | SOUTH LEFTPAR INTEGER RIGHTPAR
+                | SOUTH LEFTPAR expr RIGHTPAR
                 {
                     string id = "SOUTH";
-                    const uint64_t &number = $3;
+                    const uint64_t &number = $3->evaluate();
                     std::vector<uint64_t>arguments;
                     arguments.push_back(number);
                     $$ = Command(id, arguments);
                 }
-                | EAST LEFTPAR INTEGER RIGHTPAR
+                | EAST LEFTPAR expr RIGHTPAR
                 {
                     string id = "EAST";
-                    const uint64_t &number = $3;
+                    const uint64_t &number = $3->evaluate();
                     std::vector<uint64_t>arguments;
                     arguments.push_back(number);
                     $$ = Command(id, arguments);
                 }
-                | WEST LEFTPAR INTEGER RIGHTPAR
+                | WEST LEFTPAR expr RIGHTPAR
                 {
                     string id = "WEST";
-                    const uint64_t &number = $3;
+                    const uint64_t &number = $3->evaluate();
                     std::vector<uint64_t>arguments;
                     arguments.push_back(number);
                     $$ = Command(id, arguments);
@@ -191,28 +194,26 @@ booleanOperation : boolean
         }
 
 constant    : INTEGER {
-                std::cout << "CONSTANTE INTEIRA :" << $1 << std::endl;
                 $$ = new Compiler::NodeConst($1);
             }
             | DOUBLE {
-                std::cout << "CONSTANTE DECIMAL :" << $1 << std::endl;
                 $$ = new Compiler::NodeConst($1);
             }
 
 variable    : STRING {
-                if(!driver.manage->existVariable($1)){
-                    error(yyloc, std::string("Variável desconhecida \"") + $1 + "\"");
-                    delete $1;
+                if(!driver.manage->existsVariable($1)){
                     YYERROR;
                 } else {
-                    $$ = new CNConstante(driver.manage->getVariable($1));
-                    delete $1;
+                    $$ = new NodeConst(driver.manage->getVariable($1));
                 }
             }
 
 assignment  : STRING ASSIGNER constant {
                 driver.manage->variables[$1] = $3->evaluate();
-                std::cout << "nome: " << $1 << " valor: " << $3->evaluate() << std::endl;
+                delete $3;
+            }
+            | STRING ASSIGNER expr {
+                driver.manage->variables[$1] = $3->evaluate();
                 delete $3;
             }
 

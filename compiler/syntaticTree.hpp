@@ -124,6 +124,12 @@ namespace Compiler {
                     return vi->second;
                 }
             }
+            void run(){
+                for (int i = 0; i < nodes.size(); i++){
+                    std::cout << "tree:" << std::endl;
+                    std::cout << "evaluated: " << nodes[i]->evaluate() << std::endl;
+                }
+            }
     };
 }
 

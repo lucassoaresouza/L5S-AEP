@@ -53,5 +53,6 @@ unsigned int Interpreter::location() const {
 }
 
 std::vector<Command> Interpreter::get_commands(){
+    manage->run();
     return m_commands;
 }

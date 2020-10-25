@@ -65,15 +65,15 @@ se          {
                 return Compiler::Parser::make_ASSIGNER(yytext, Compiler::location());
             }
 
-\^          {
+\*\*        {
                 return Compiler::Parser::make_POWERSYM(yytext, Compiler::location());
             }
 
-\*          {
+\*           {
                 return Compiler::Parser::make_MULTSYM(yytext, Compiler::location());
             }
 
-\/          {
+\/           {
                 return Compiler::Parser::make_DIVSYM(yytext, Compiler::location());
             }
 
