@@ -94,7 +94,6 @@ program     : { driver.clear(); }
             | program booleanOperation {}
             | program commandBlock {}
             | program decisionBlock {}
-            | program constant {}
             | program assignment {}
             | program expr {
                 driver.manage->nodes.push_back($2);

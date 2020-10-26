@@ -48,11 +48,14 @@ namespace Compiler {
         private:
             Node* node;
         public:
-            NodeNegate(Node* _node){}
+            NodeNegate(Node* _node){
+                node = _node;
+            }
             ~NodeNegate(){
                 delete node;
             }
             double evaluate(){
+                double result = - node->evaluate();
                 return - node->evaluate();
             }
     };
