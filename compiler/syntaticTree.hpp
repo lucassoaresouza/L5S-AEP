@@ -114,6 +114,7 @@ namespace Compiler {
                 for(int i = 0; i < nodes.size(); i++){
                     delete nodes[i];
                 }
+                variables.clear();
                 nodes.clear();
             }
 

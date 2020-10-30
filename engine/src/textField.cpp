@@ -24,7 +24,7 @@ void TextField::allocate_tables(){
     text_table = new std::string *[lines];
     texture_table = new SDL_Texture **[lines];
     for(int i = 0; i < lines; i++){
-        text_table[i] = new std::string[columns];
+        text_table[i] = new std::string[columns+1];
         texture_table[i] = new SDL_Texture *[columns];
     }
 }
@@ -156,6 +156,7 @@ std::string TextField::get_current_text(){
             current_text += text_table[i][j];
         }
     }
+    current_text += '\n';
     return current_text;
 }
 
@@ -181,17 +182,20 @@ void TextField::erase(){
         } else {
             if(pointer_position.first - 1 >= 0){
                 pointer_position.first -= 1;
-                pointer_position.second = columns;
+                pointer_position.second = locate_eol(pointer_position.first);
             }
         }
     }
 }
 
 void TextField::add_endline(){
-    if(pointer_position.first >= 0 && pointer_position.first < lines){
+    if(pointer_position.first + 1 < lines){
         text_table[pointer_position.first][pointer_position.second] = "\n";
-        pointer_position.first += 1;
+        for(int i = pointer_position.second + 1; i < columns; i++){
+            text_table[pointer_position.first][i] = "";
+        }
         pointer_position.second = 0;
+        pointer_position.first += 1;
     }
 }
 
@@ -199,6 +203,7 @@ void TextField::move_pointer(std::string code){
     if(code == "UP"){
         if(pointer_position.first - 1 >= 0){
             pointer_position.first -= 1;
+            pointer_position.second = locate_eol(pointer_position.first);
         }
     } else if(code == "LEFT"){
         if(pointer_position.second - 1 >= 0){
@@ -207,12 +212,30 @@ void TextField::move_pointer(std::string code){
     } else if(code == "RIGHT"){
         if(pointer_position.second + 1 <= columns){
             pointer_position.second += 1;
+            pointer_position.second = locate_eol(pointer_position.first);
         }
     } else if(code == "DOWN"){
-        if(pointer_position.first + 1 <= lines){
-            pointer_position.first += 1;
+        if(pointer_position.first + 1 < lines){
+            int eol = locate_eol(pointer_position.first);
+            if(eol > 0){
+                pointer_position.first += 1;
+                pointer_position.second = locate_eol(pointer_position.first);
+            }
         }
     }
+}
+
+int TextField::locate_eol(int line){
+    for(int i = columns-1; i > 0 ; i--){
+        if(text_table[line][i] != ""){
+            if(text_table[line][i] == "\n"){
+                return i;
+            } else {
+                return i+1;
+            }
+        }
+    }
+    return 0;
 }
 
 void TextField::set_spacing_line(int spacing){

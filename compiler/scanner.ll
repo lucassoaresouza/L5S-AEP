@@ -65,7 +65,7 @@ se          {
                 return Compiler::Parser::make_ASSIGNER(yytext, Compiler::location());
             }
 
-numero      {
+nro         {
                 return Compiler::Parser::make_TYPENUMBER(yytext, Compiler::location());
             }
 
@@ -119,7 +119,12 @@ numero      {
                 return Compiler::Parser::make_COMMA(Compiler::location());
             }
 
-[\n\t ]     {
+\n          {
+                return Compiler::Parser::make_EOL(Compiler::location());
+            }
+
+
+[\t ]     {
                 //cout << "Scanner: whitechar (ignored)" << endl;
             }
 

@@ -44,6 +44,7 @@ namespace Engine{
             void write(char letter);
             void add_endline();
             void move_pointer(std::string code);
+            int locate_eol(int line);
 
         public:
             TextField(

@@ -70,7 +70,6 @@
 
 %type< Compiler::Command > command;
 %type< Compiler::Command > reservedCommand;
-%type< std::vector<Compiler::Command> > commandBlock;
 %type< std::vector<uint64_t> > arguments;
 
 %type <Compiler::Node*> variable;
@@ -83,24 +82,18 @@
 %%
 
 program     : { driver.clear(); }
-            | program command {
+            | program command EOL{
                 const Command &cmd = $2;
                 driver.addCommand(cmd);
             }
-            | program reservedCommand {
+            | program reservedCommand EOL{
                 const Command &cmd = $2;
                 driver.addCommand(cmd);
             }
-            | program commandBlock {}
-            | program assignment {}
-            | program expr {
+            | program assignment EOL;
+            | program expr EOL{
                 driver.manage->nodes.push_back($2);
             }
-            | program expr END {
-                driver.manage->nodes.push_back($2);
-            }
-
-commandBlock : LEFTBRACE program RIGHTBRACE {}
 
 command     : STRING LEFTPAR RIGHTPAR {
                 string &id = $1;
@@ -162,11 +155,11 @@ arguments : INTEGER
     ;
 
 constant    : INTEGER {
-                        $$ = new Compiler::NodeConst($1);
-                    }
-                    | DOUBLE {
-                        $$ = new Compiler::NodeConst($1);
-                    }
+                $$ = new Compiler::NodeConst($1);
+            }
+            | DOUBLE {
+                $$ = new Compiler::NodeConst($1);
+            }
 
 variable    : STRING {
                 if(driver.manage->existsVariable($1)){
