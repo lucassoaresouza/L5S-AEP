@@ -18,6 +18,7 @@ class AEPCompiler{
         AEPCompiler(){};
         ~AEPCompiler(){};
         std::vector<Compiler::Command> run(std::string);
+        void clear();
 
 };
 

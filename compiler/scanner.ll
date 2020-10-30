@@ -65,6 +65,10 @@ se          {
                 return Compiler::Parser::make_ASSIGNER(yytext, Compiler::location());
             }
 
+numero      {
+                return Compiler::Parser::make_TYPENUMBER(yytext, Compiler::location());
+            }
+
 \*\*        {
                 return Compiler::Parser::make_POWERSYM(yytext, Compiler::location());
             }

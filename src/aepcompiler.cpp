@@ -10,3 +10,7 @@ std::vector<Compiler::Command> AEPCompiler::run(std::string text){
     interpreter.parse();
     return interpreter.get_commands();
 }
+
+void AEPCompiler::clear(){
+    interpreter.clear();
+}

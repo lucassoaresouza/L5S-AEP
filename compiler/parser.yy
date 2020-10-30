@@ -60,6 +60,8 @@
 %token RIGHTBRACE "rightbrace";
 %token COMMA "comma";
 
+
+%token <std::string> TYPENUMBER;
 %token <std::string> POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
 %token <std::string> NORTH SOUTH WEST EAST;
 %token <std::string> TRUE FALSE;
@@ -74,7 +76,8 @@
 %type< bool > decisionBlock;
 %type< bool > boolean;
 
-%type <Compiler::Node*> constant variable;
+%type <std::pair<char, Compiler::Node*>> variable;
+%type <Compiler::Node*> numeric_constant;
 %type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
 
 
@@ -192,30 +195,71 @@ booleanOperation : boolean
             $$ = value;
         }
 
-constant    : INTEGER {
-                $$ = new Compiler::NodeConst($1);
-            }
-            | DOUBLE {
-                $$ = new Compiler::NodeConst($1);
-            }
+numeric_constant    : INTEGER {
+                        $$ = new Compiler::NodeConst($1);
+                    }
+                    | DOUBLE {
+                        $$ = new Compiler::NodeConst($1);
+                    }
 
 variable    : STRING {
-                if(!driver.manage->existsVariable($1)){
-                    YYERROR;
-                } else {
-                    $$ = new NodeConst(driver.manage->getVariable($1));
+                char existance_type = driver.manage->existsVariable($1);
+                std::pair<char, Compiler::Node*> variable;
+                switch(existance_type){
+                    case 'N':
+                        variable.first = 'N';
+                        variable.second = new Compiler::NodeConst(driver.manage->getVariable('N', $1));
+                        $$ = variable;
+                        break;
+                    case 'B':
+                        variable.first = 'B';
+                        variable.second = new Compiler::NodeConst(driver.manage->getVariable('B', $1));
+                        $$ = variable;
+                        break;
+                    default:
+                        std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
+                        YYERROR;
+                        break;
                 }
             }
 
-assignment  : STRING ASSIGNER expr {
-                driver.manage->variables[$1] = $3->evaluate();
-                delete $3;
+assignment  : TYPENUMBER STRING ASSIGNER expr {
+                char existance_type = driver.manage->existsVariable($2);
+                if(existance_type == '0'){
+                    driver.manage->numeric_variables[$2] = $4->evaluate();
+                    delete $4;
+                } else {
+                    std::cout << "Erro: A variavel '" << $2 << "' ja foi declarada!!!" << std::endl;
+                    YYERROR;
+                }
+            }
+            | STRING ASSIGNER expr {
+                char existance_type = driver.manage->existsVariable($1);
+                switch(existance_type){
+                    case 'N':
+                        driver.manage->numeric_variables[$1] = $3->evaluate();
+                        delete $3;
+                        break;
+                    case 'B':
+                        std::cout << "Erro: A variavel '" << $1 << "' tem valor booleano!!!" << std::endl;
+                        YYERROR;
+                        break;
+                    default:
+                        std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
+                        YYERROR;
+                        break;
+                }
             }
 
-atomexpr    : constant {
-                $$ = $1;
+atomexpr    : variable {
+                if($1.first == 'N'){
+                    $$ = $1.second;
+                } else {
+                    std::cout << "Nao eh possivel realizar operacores numericas com booleanos" << std::endl;
+                    YYERROR;
+                }
             }
-            | variable {
+            | numeric_constant {
                 $$ = $1;
             }
             | LEFTPAR expr RIGHTPAR {
@@ -270,3 +314,4 @@ void Compiler::Parser::error(const location &loc , const std::string &message) {
     cout << "Error: " << message << endl << "Error location: " << driver.location() << endl;
     driver.clear();
 }
+

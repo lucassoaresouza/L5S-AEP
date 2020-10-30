@@ -29,4 +29,5 @@ void CompilerButton::execute(){
     program = text_field->get_current_text();
     programmable->add_commands(compiler->run(program));
     programmable->run_commands();
+    compiler->clear();
 }

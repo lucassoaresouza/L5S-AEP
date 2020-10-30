@@ -21,6 +21,7 @@ int Interpreter::parse() {
 void Interpreter::clear(){
     m_location = 0;
     m_commands.clear();
+    manage->clearNodes();
 }
 
 std::string Interpreter::str() const {
