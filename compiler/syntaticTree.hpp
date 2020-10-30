@@ -102,59 +102,28 @@ namespace Compiler {
 
     class TreeManage {
         public:
-            typedef std::map<std::string, double> numeric_variablemap;
-            typedef std::map<std::string, bool> boolean_variablemap;
-            boolean_variablemap boolean_variables;
-            numeric_variablemap numeric_variables;
+            typedef std::map<std::string, double> variablemap_type;
             std::vector<Node*> nodes;
+            variablemap_type variables;
 
             ~TreeManage(){
                 clearNodes();
             }
+
             void clearNodes(){
                 for(int i = 0; i < nodes.size(); i++){
                     delete nodes[i];
                 }
-                boolean_variables.clear();
-                numeric_variables.clear();
                 nodes.clear();
             }
-            char existsVariable(std::string &variable_name){
-                if(numeric_variables.find(variable_name) != numeric_variables.end()){
-                    return 'N';
-                } else if (boolean_variables.find(variable_name) != boolean_variables.end()) {
-                    return 'B';
-                } else {
-                    return '0';
-                }
+
+            bool existsVariable(const std::string &variable_name){
+                return variables.find(variable_name) != variables.end();
             }
 
-            double getVariable(char type, std::string &variable_name){
-                switch (type){
-                    case 'N':
-                        return getNumericVariable(variable_name);
-                        break;
-                    case 'B':
-                        return getBooleanVariable(variable_name);
-                    default:
-                        return 0;
-                        break;
-                }
-            }
-
-            double getNumericVariable(std::string &variable_name){
-                numeric_variablemap::const_iterator vi = numeric_variables.find(variable_name);
-                if(vi == numeric_variables.end()){
-                    std::cout << "Variável não encontrada!" << std::endl;
-                    return 0;
-                } else {
-                    return vi->second;
-                }
-            }
-
-            double getBooleanVariable(std::string &variable_name){
-                boolean_variablemap::const_iterator vi = boolean_variables.find(variable_name);
-                if(vi == boolean_variables.end()){
+            double getVariable(const std::string &variable_name){
+                variablemap_type::const_iterator vi = variables.find(variable_name);
+                if(vi == variables.end()){
                     std::cout << "Variável não encontrada!" << std::endl;
                     return 0;
                 } else {
@@ -164,6 +133,7 @@ namespace Compiler {
 
             void run(){
                 for (int i = 0; i < nodes.size(); i++){
+                    std::cout << "tree:" << std::endl;
                     std::cout << "evaluated: " << nodes[i]->evaluate() << std::endl;
                 }
             }

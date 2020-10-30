@@ -72,12 +72,9 @@
 %type< Compiler::Command > reservedCommand;
 %type< std::vector<Compiler::Command> > commandBlock;
 %type< std::vector<uint64_t> > arguments;
-%type< bool > booleanOperation;
-%type< bool > decisionBlock;
-%type< bool > boolean;
 
-%type <std::pair<char, Compiler::Node*>> variable;
-%type <Compiler::Node*> numeric_constant;
+%type <Compiler::Node*> variable;
+%type <Compiler::Node*> constant;
 %type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
 
 
@@ -94,9 +91,7 @@ program     : { driver.clear(); }
                 const Command &cmd = $2;
                 driver.addCommand(cmd);
             }
-            | program booleanOperation {}
             | program commandBlock {}
-            | program decisionBlock {}
             | program assignment {}
             | program expr {
                 driver.manage->nodes.push_back($2);
@@ -106,8 +101,6 @@ program     : { driver.clear(); }
             }
 
 commandBlock : LEFTBRACE program RIGHTBRACE {}
-
-decisionBlock: IF LEFTPAR booleanOperation RIGHTPAR commandBlock {}
 
 command     : STRING LEFTPAR RIGHTPAR {
                 string &id = $1;
@@ -168,34 +161,7 @@ arguments : INTEGER
         }
     ;
 
-boolean : TRUE
-        {
-            bool value = true;
-            $$ = value;
-        }
-        | FALSE
-        {
-            bool value = false;
-            $$ = value;
-        }
-
-booleanOperation : boolean
-        {
-            bool value = $1;
-            $$ = value;
-        }
-        | boolean AND booleanOperation
-        {
-            bool value = $1 && $3;
-            $$ = value;
-        }
-        | boolean OR booleanOperation
-        {
-            bool value = $1 || $3;
-            $$ = value;
-        }
-
-numeric_constant    : INTEGER {
+constant    : INTEGER {
                         $$ = new Compiler::NodeConst($1);
                     }
                     | DOUBLE {
@@ -203,30 +169,17 @@ numeric_constant    : INTEGER {
                     }
 
 variable    : STRING {
-                char existance_type = driver.manage->existsVariable($1);
-                std::pair<char, Compiler::Node*> variable;
-                switch(existance_type){
-                    case 'N':
-                        variable.first = 'N';
-                        variable.second = new Compiler::NodeConst(driver.manage->getVariable('N', $1));
-                        $$ = variable;
-                        break;
-                    case 'B':
-                        variable.first = 'B';
-                        variable.second = new Compiler::NodeConst(driver.manage->getVariable('B', $1));
-                        $$ = variable;
-                        break;
-                    default:
-                        std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
-                        YYERROR;
-                        break;
+                if(driver.manage->existsVariable($1)){
+                    $$ = new Compiler::NodeConst(driver.manage->getVariable($1));
+                } else {
+                    std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
+                    YYERROR;
                 }
             }
 
 assignment  : TYPENUMBER STRING ASSIGNER expr {
-                char existance_type = driver.manage->existsVariable($2);
-                if(existance_type == '0'){
-                    driver.manage->numeric_variables[$2] = $4->evaluate();
+                if(!driver.manage->existsVariable($2)){
+                    driver.manage->variables[$2] = $4->evaluate();
                     delete $4;
                 } else {
                     std::cout << "Erro: A variavel '" << $2 << "' ja foi declarada!!!" << std::endl;
@@ -234,32 +187,19 @@ assignment  : TYPENUMBER STRING ASSIGNER expr {
                 }
             }
             | STRING ASSIGNER expr {
-                char existance_type = driver.manage->existsVariable($1);
-                switch(existance_type){
-                    case 'N':
-                        driver.manage->numeric_variables[$1] = $3->evaluate();
-                        delete $3;
-                        break;
-                    case 'B':
-                        std::cout << "Erro: A variavel '" << $1 << "' tem valor booleano!!!" << std::endl;
-                        YYERROR;
-                        break;
-                    default:
-                        std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
-                        YYERROR;
-                        break;
+                if(driver.manage->existsVariable($1)){
+                    driver.manage->variables[$1] = $3->evaluate();
+                    delete $3;
+                } else {
+                    std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
+                    YYERROR;
                 }
             }
 
 atomexpr    : variable {
-                if($1.first == 'N'){
-                    $$ = $1.second;
-                } else {
-                    std::cout << "Nao eh possivel realizar operacores numericas com booleanos" << std::endl;
-                    YYERROR;
-                }
+                $$ = $1;
             }
-            | numeric_constant {
+            | constant {
                 $$ = $1;
             }
             | LEFTPAR expr RIGHTPAR {
