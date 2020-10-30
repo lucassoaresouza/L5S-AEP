@@ -207,11 +207,7 @@ variable    : STRING {
                 }
             }
 
-assignment  : STRING ASSIGNER constant {
-                driver.manage->variables[$1] = $3->evaluate();
-                delete $3;
-            }
-            | STRING ASSIGNER expr {
+assignment  : STRING ASSIGNER expr {
                 driver.manage->variables[$1] = $3->evaluate();
                 delete $3;
             }
