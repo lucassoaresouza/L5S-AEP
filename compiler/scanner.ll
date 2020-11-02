@@ -22,22 +22,18 @@
 %%
 
 sigaNorte   { 
-                // cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_NORTH(Compiler::location()); 
             }
 
 sigaSul     { 
-                // cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_SOUTH(Compiler::location()); 
             }
 
 sigaLeste   { 
-                // cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_EAST(Compiler::location()); 
             }
 
 sigaOeste   { 
-                // cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_WEST(Compiler::location()); 
             }
 
@@ -114,32 +110,26 @@ repita      {
             }
 
 [a-z_A-Z]+  {
-                // cout << "Scanner: identifier [" << yytext << "]" << endl;
                 return Compiler::Parser::make_STRING(yytext, Compiler::location());
             }
 
 \(          {
-                // cout << "Scanner: '('" << endl;
                 return Compiler::Parser::make_LEFTPAR(Compiler::location());
             }
 
 \)          {
-                // cout << "Scanner: ')'" << endl;
                 return Compiler::Parser::make_RIGHTPAR(Compiler::location());
             }
 
 \{          {
-                // cout << "Scanner: '('" << endl;
                 return Compiler::Parser::make_LEFTBRACE(Compiler::location());
             }
 
 \}          {
-                // cout << "Scanner: ')'" << endl;
                 return Compiler::Parser::make_RIGHTBRACE(Compiler::location());
             }
 
 ,           {
-                // cout << "Scanner: ','" << endl;
                 return Compiler::Parser::make_COMMA(Compiler::location());
             }
 
@@ -148,12 +138,9 @@ repita      {
             }
 
 
-[\t ]     {
-                //cout << "Scanner: whitechar (ignored)" << endl;
-            }
+[\t ]     {}
 
 [1-9][0-9]* {
-                // cout << "Scanner: decimal number: " << yytext << endl;
                 int number = atoi(yytext);
                 return Compiler::Parser::make_INTEGER(number, Compiler::location());
             }
@@ -163,9 +150,7 @@ repita      {
     return Compiler::Parser::make_DOUBLE(number, Compiler::location());
 }
 
-.           {
-                // cout << "Scanner: unknown character [" << yytext << "]" << endl; 
-            }
+.           {}
 
 <<EOF>>     { return yyterminate(); }
 
