@@ -65,6 +65,26 @@ se          {
                 return Compiler::Parser::make_ASSIGNER(yytext, Compiler::location());
             }
 
+==          {
+                return Compiler::Parser::make_EQUAL(yytext, Compiler::location());
+            }
+
+\>          {
+                return Compiler::Parser::make_GREATER(yytext, Compiler::location());
+            }
+
+\>=         {
+                return Compiler::Parser::make_GREATEREQUAL(yytext, Compiler::location());
+            }
+
+\<=         {
+                return Compiler::Parser::make_LESSEQUAL(yytext, Compiler::location());
+            }
+
+\<          {
+                return Compiler::Parser::make_LESS(yytext, Compiler::location());
+            }
+
 nro         {
                 return Compiler::Parser::make_TYPENUMBER(yytext, Compiler::location());
             }

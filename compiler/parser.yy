@@ -67,15 +67,15 @@
 %token <std::string> TRUE FALSE;
 %token <std::string> AND OR;
 %token <std::string> IF;
+%token <std::string> LESS GREATER EQUAL GREATEREQUAL LESSEQUAL;
 
 %type< Compiler::Command > command;
 %type< Compiler::Command > reservedCommand;
 %type< std::vector<uint64_t> > arguments;
 
-%type <Compiler::Node*> variable;
-%type <Compiler::Node*> constant boolean;
+%type <Compiler::Node*> constant boolean variable;
 %type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
-
+%type <Compiler::Node*> boolexp logicalexp;
 
 %start program
 
@@ -92,6 +92,9 @@ program     : { driver.clear(); }
             }
             | program assignment EOL;
             | program expr EOL{
+                driver.manage->nodes.push_back($2);
+            }
+            | program logicalexp EOL{
                 driver.manage->nodes.push_back($2);
             }
 
@@ -171,8 +174,6 @@ boolean     : TRUE {
 variable    : STRING {
                 if(driver.manage->existsVariable($1)){
                     Node* t = driver.manage->getVariable($1);
-                    std::cout << "\tType: " << t->type() << std::endl;
-                    std::cout << "\tValue: " << t->evaluate() << std::endl;
                     $$ = driver.manage->getVariable($1);
                 } else {
                     std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
@@ -181,6 +182,9 @@ variable    : STRING {
             }
 
 assignment  : STRING ASSIGNER expr {
+                driver.manage->variables[$1] = $3;
+            }
+            | STRING ASSIGNER logicalexp {
                 driver.manage->variables[$1] = $3;
             }
 
@@ -246,6 +250,9 @@ mulexpr     : unaryexpr {
 addexpr     : mulexpr {
                 $$ = $1;
             }
+            | boolexp {
+                $$ = $1;
+            }
             | addexpr SUMSYM mulexpr {
                 if($1->type() == 'N' && $3->type() == 'N'){
                     $$ = new NodeCalc($1, $3, '+');
@@ -262,7 +269,8 @@ addexpr     : mulexpr {
                     YYERROR;
                 }
             }
-            | addexpr OR mulexpr {
+
+boolexp     : addexpr OR mulexpr {
                 if($1->type() == 'B' && $3->type() == 'B'){
                     bool value = $1->evaluate() || $3->evaluate();
                     $$ = new NodeBool(value);
@@ -285,6 +293,26 @@ expr        : addexpr {
                 $$ = $1;
             }
 
+logicalexp  : expr LESS expr {
+                bool value = $1->evaluate() < $3->evaluate();
+                $$ = new NodeBool(value);    
+            }
+            | expr GREATER expr {
+                bool value = $1->evaluate() > $3->evaluate();
+                $$ = new NodeBool(value);    
+            }
+            | expr EQUAL expr {
+                bool value = $1->evaluate() == $3->evaluate();
+                $$ = new NodeBool(value); 
+            }
+            | expr GREATEREQUAL expr {
+                bool value = $1->evaluate() >= $3->evaluate();
+                $$ = new NodeBool(value); 
+            }
+            | expr LESSEQUAL expr {
+                bool value = $1->evaluate() <= $3->evaluate();
+                $$ = new NodeBool(value); 
+            }
 %%
 
 // Bison expects us to provide implementation - otherwise linker complains
