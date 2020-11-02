@@ -112,7 +112,7 @@ namespace Compiler {
             };
     };
 
-    class TreeManage {
+    class TreeManage : public Node {
         public:
             typedef std::map<std::string, Node*> variablemap_type;
             std::vector<Node*> nodes;

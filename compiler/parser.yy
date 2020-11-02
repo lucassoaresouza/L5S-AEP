@@ -67,93 +67,24 @@
 %token TRUE FALSE;
 %token AND OR;
 
-%type< Compiler::Command > reservedCommand;
-%type< std::vector<uint64_t> > arguments;
-%type< Compiler::Command > command;
-
 %type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
 %type <Compiler::Node*> constant boolean variable;
 %type <Compiler::Node*> boolexp logicalexp;
 
-%start program
+%start start
 
 %%
 
+start       : program;
+
 program     : { driver.clear(); }
-            | program command EOL{
-                const Command &cmd = $2;
-                driver.addCommand(cmd);
-            }
-            | program reservedCommand EOL{
-                const Command &cmd = $2;
-                driver.addCommand(cmd);
-            }
             | program assignment EOL;
-            | program expr EOL{
+            | program expr EOL {
                 driver.manage->nodes.push_back($2);
             }
-            | program logicalexp EOL{
+            | program logicalexp EOL {
                 driver.manage->nodes.push_back($2);
             }
-
-command     : STRING LEFTPAR RIGHTPAR {
-                string &id = $1;
-                $$ = Command(id);
-            }
-            | STRING LEFTPAR arguments RIGHTPAR {
-                string &id = $1;
-                const std::vector<uint64_t> &args = $3;
-                $$ = Command(id, args);
-            }
-
-reservedCommand : NORTH LEFTPAR expr RIGHTPAR
-                {
-                    string id = "NORTH";
-                    const uint64_t &number = $3->evaluate();
-                    std::vector<uint64_t>arguments;
-                    arguments.push_back(number);
-                    $$ = Command(id, arguments);
-                }
-                | SOUTH LEFTPAR expr RIGHTPAR
-                {
-                    string id = "SOUTH";
-                    const uint64_t &number = $3->evaluate();
-                    std::vector<uint64_t>arguments;
-                    arguments.push_back(number);
-                    $$ = Command(id, arguments);
-                }
-                | EAST LEFTPAR expr RIGHTPAR
-                {
-                    string id = "EAST";
-                    const uint64_t &number = $3->evaluate();
-                    std::vector<uint64_t>arguments;
-                    arguments.push_back(number);
-                    $$ = Command(id, arguments);
-                }
-                | WEST LEFTPAR expr RIGHTPAR
-                {
-                    string id = "WEST";
-                    const uint64_t &number = $3->evaluate();
-                    std::vector<uint64_t>arguments;
-                    arguments.push_back(number);
-                    $$ = Command(id, arguments);
-                }
-                 ;
-
-arguments : INTEGER
-        {
-            uint64_t number = $1;
-            $$ = std::vector<uint64_t>();
-            $$.push_back(number);
-        }
-    | arguments COMMA INTEGER
-        {
-            uint64_t number = $3;
-            std::vector<uint64_t> &args = $1;
-            args.push_back(number);
-            $$ = args;
-        }
-    ;
 
 constant    : INTEGER {
                 $$ = new Compiler::NodeConst($1);
