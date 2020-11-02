@@ -61,7 +61,7 @@
 %token COMMA "comma";
 
 
-%token <std::string> TYPENUMBER;
+%token <std::string> TYPENUMBER TYPEBOOL;
 %token <std::string> POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
 %token <std::string> NORTH SOUTH WEST EAST;
 %token <std::string> TRUE FALSE;
@@ -73,8 +73,8 @@
 %type< std::vector<uint64_t> > arguments;
 
 %type <Compiler::Node*> variable;
-%type <Compiler::Node*> constant;
-%type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
+%type <Compiler::Node*> constant boolean;
+%type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr boolexp;
 
 
 %start program
@@ -92,6 +92,9 @@ program     : { driver.clear(); }
             }
             | program assignment EOL;
             | program expr EOL{
+                driver.manage->nodes.push_back($2);
+            }
+            | program boolexp EOL{
                 driver.manage->nodes.push_back($2);
             }
 
@@ -161,9 +164,34 @@ constant    : INTEGER {
                 $$ = new Compiler::NodeConst($1);
             }
 
+boolean     : TRUE {
+                $$ = new Compiler::NodeBool(true);
+            }
+            | FALSE {
+                $$ = new Compiler::NodeBool(false);
+            }
+            | LEFTPAR boolexp RIGHTPAR {
+                $$ = $2;
+            }
+
+boolexp     : boolean {
+                $$ = $1;
+            }
+            | boolexp AND boolean {
+                bool value = $1->evaluate() && $3->evaluate();
+                $$ = new NodeBool(value);
+            } 
+            | boolexp OR boolean {
+                bool value = $1->evaluate() || $3->evaluate();
+                $$ = new NodeBool(value);
+            }
+
 variable    : STRING {
                 if(driver.manage->existsVariable($1)){
-                    $$ = new Compiler::NodeConst(driver.manage->getVariable($1));
+                    Node* t = driver.manage->getVariable($1);
+                    std::cout << "\tType: " << t->type() << std::endl;
+                    std::cout << "\tValue: " << t->evaluate() << std::endl;
+                    $$ = driver.manage->getVariable($1);
                 } else {
                     std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
                     YYERROR;
@@ -172,8 +200,15 @@ variable    : STRING {
 
 assignment  : TYPENUMBER STRING ASSIGNER expr {
                 if(!driver.manage->existsVariable($2)){
-                    driver.manage->variables[$2] = $4->evaluate();
-                    delete $4;
+                    driver.manage->variables[$2] = $4;
+                } else {
+                    std::cout << "Erro: A variavel '" << $2 << "' ja foi declarada!!!" << std::endl;
+                    YYERROR;
+                }
+            }
+            | TYPEBOOL STRING ASSIGNER boolexp {
+                if(!driver.manage->existsVariable($2)){
+                    driver.manage->variables[$2] = $4;
                 } else {
                     std::cout << "Erro: A variavel '" << $2 << "' ja foi declarada!!!" << std::endl;
                     YYERROR;
@@ -181,8 +216,15 @@ assignment  : TYPENUMBER STRING ASSIGNER expr {
             }
             | STRING ASSIGNER expr {
                 if(driver.manage->existsVariable($1)){
-                    driver.manage->variables[$1] = $3->evaluate();
-                    delete $3;
+                    driver.manage->variables[$1] = $3;
+                } else {
+                    std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
+                    YYERROR;
+                }
+            }
+            | STRING ASSIGNER boolexp {
+                if(driver.manage->existsVariable($1)){
+                    driver.manage->variables[$1] = $3;
                 } else {
                     std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
                     YYERROR;

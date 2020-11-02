@@ -41,11 +41,11 @@ sigaOeste   {
                 return Compiler::Parser::make_WEST(yytext, Compiler::location()); 
             }
 
-verdadeiro  {
+VDD         {
                 return Compiler::Parser::make_TRUE(yytext, Compiler::location());
             }
 
-falso       {
+FLS         {
                 return Compiler::Parser::make_FALSE(yytext, Compiler::location());
             }
 
@@ -67,6 +67,10 @@ se          {
 
 nro         {
                 return Compiler::Parser::make_TYPENUMBER(yytext, Compiler::location());
+            }
+
+bool        {
+                return Compiler::Parser::make_TYPEBOOL(yytext, Compiler::location());
             }
 
 \*\*        {

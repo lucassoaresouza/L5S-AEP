@@ -9,6 +9,9 @@ namespace Compiler {
     class Node {
         public:
             virtual ~Node(){};
+            virtual char type(){
+                return '0';
+            }
             virtual double evaluate(){
                 return 0;
             };
@@ -22,6 +25,9 @@ namespace Compiler {
                 value = _value;
             }
             ~NodeConst(){};
+            char type(){
+                return 'N';
+            }
             double evaluate(){
                 return value;
             }
@@ -35,6 +41,9 @@ namespace Compiler {
                 value = _value;
             }
             ~NodeBool(){};
+            char type(){
+                return 'B';
+            }
             double evaluate(){
                 if(value){
                     return 1;
@@ -102,7 +111,7 @@ namespace Compiler {
 
     class TreeManage {
         public:
-            typedef std::map<std::string, double> variablemap_type;
+            typedef std::map<std::string, Node*> variablemap_type;
             std::vector<Node*> nodes;
             variablemap_type variables;
 
@@ -122,7 +131,7 @@ namespace Compiler {
                 return variables.find(variable_name) != variables.end();
             }
 
-            double getVariable(const std::string &variable_name){
+            Node* getVariable(const std::string &variable_name){
                 variablemap_type::const_iterator vi = variables.find(variable_name);
                 if(vi == variables.end()){
                     std::cout << "Variável não encontrada!" << std::endl;
@@ -133,6 +142,7 @@ namespace Compiler {
             }
 
             void run(){
+                std::cout << "Nodes: " << nodes.size() << std::endl;
                 for (int i = 0; i < nodes.size(); i++){
                     std::cout << "tree:" << std::endl;
                     std::cout << "evaluated: " << nodes[i]->evaluate() << std::endl;
