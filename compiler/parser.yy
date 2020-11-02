@@ -49,32 +49,30 @@
 
 %define api.token.prefix {TOKEN_}
 
-%token END 0 "end of file";
-%token EOL "end of line";
 %token <std::string> STRING  "string";
 %token <uint64_t> INTEGER "integer";
 %token <double> DOUBLE "double";
-%token LEFTPAR "leftpar";
-%token RIGHTPAR "rightpar";
-%token LEFTBRACE "leftbrace";
 %token RIGHTBRACE "rightbrace";
+%token LEFTBRACE "leftbrace";
+%token RIGHTPAR "rightpar";
+%token END 0 "end of file";
+%token EOL "end of line";
+%token LEFTPAR "leftpar";
 %token COMMA "comma";
 
+%token POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
+%token LESS GREATER EQUAL GREATEREQUAL LESSEQUAL;
+%token NORTH SOUTH WEST EAST;
+%token IF ELSE REPEAT;
+%token TRUE FALSE;
+%token AND OR;
 
-%token <std::string> TYPENUMBER TYPEBOOL;
-%token <std::string> POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
-%token <std::string> NORTH SOUTH WEST EAST;
-%token <std::string> TRUE FALSE;
-%token <std::string> AND OR;
-%token <std::string> IF;
-%token <std::string> LESS GREATER EQUAL GREATEREQUAL LESSEQUAL;
-
-%type< Compiler::Command > command;
 %type< Compiler::Command > reservedCommand;
 %type< std::vector<uint64_t> > arguments;
+%type< Compiler::Command > command;
 
-%type <Compiler::Node*> constant boolean variable;
 %type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
+%type <Compiler::Node*> constant boolean variable;
 %type <Compiler::Node*> boolexp logicalexp;
 
 %start program

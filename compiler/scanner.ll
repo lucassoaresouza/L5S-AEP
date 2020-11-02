@@ -23,94 +23,94 @@
 
 sigaNorte   { 
                 // cout << "Scanner: identifier [" << yytext << "]" << endl;
-                return Compiler::Parser::make_NORTH(yytext, Compiler::location()); 
+                return Compiler::Parser::make_NORTH(Compiler::location()); 
             }
 
 sigaSul     { 
                 // cout << "Scanner: identifier [" << yytext << "]" << endl;
-                return Compiler::Parser::make_SOUTH(yytext, Compiler::location()); 
+                return Compiler::Parser::make_SOUTH(Compiler::location()); 
             }
 
 sigaLeste   { 
                 // cout << "Scanner: identifier [" << yytext << "]" << endl;
-                return Compiler::Parser::make_EAST(yytext, Compiler::location()); 
+                return Compiler::Parser::make_EAST(Compiler::location()); 
             }
 
 sigaOeste   { 
                 // cout << "Scanner: identifier [" << yytext << "]" << endl;
-                return Compiler::Parser::make_WEST(yytext, Compiler::location()); 
+                return Compiler::Parser::make_WEST(Compiler::location()); 
             }
 
 VDD         {
-                return Compiler::Parser::make_TRUE(yytext, Compiler::location());
+                return Compiler::Parser::make_TRUE(Compiler::location());
             }
 
 FLS         {
-                return Compiler::Parser::make_FALSE(yytext, Compiler::location());
+                return Compiler::Parser::make_FALSE(Compiler::location());
             }
 
 e           {
-                return Compiler::Parser::make_AND(yytext, Compiler::location());
+                return Compiler::Parser::make_AND(Compiler::location());
             }
 
 ou          {
-                return Compiler::Parser::make_OR(yytext, Compiler::location());
+                return Compiler::Parser::make_OR(Compiler::location());
             }
 
 se          {
-                return Compiler::Parser::make_IF(yytext, Compiler::location());
+                return Compiler::Parser::make_IF(Compiler::location());
+            }
+
+senao       {
+                return Compiler::Parser::make_ELSE(Compiler::location());
+            }
+
+repita      {
+                return Compiler::Parser::make_REPEAT(Compiler::location());
             }
 
 =           {
-                return Compiler::Parser::make_ASSIGNER(yytext, Compiler::location());
+                return Compiler::Parser::make_ASSIGNER(Compiler::location());
             }
 
 ==          {
-                return Compiler::Parser::make_EQUAL(yytext, Compiler::location());
+                return Compiler::Parser::make_EQUAL(Compiler::location());
             }
 
 \>          {
-                return Compiler::Parser::make_GREATER(yytext, Compiler::location());
+                return Compiler::Parser::make_GREATER(Compiler::location());
             }
 
 \>=         {
-                return Compiler::Parser::make_GREATEREQUAL(yytext, Compiler::location());
+                return Compiler::Parser::make_GREATEREQUAL(Compiler::location());
             }
 
 \<=         {
-                return Compiler::Parser::make_LESSEQUAL(yytext, Compiler::location());
+                return Compiler::Parser::make_LESSEQUAL(Compiler::location());
             }
 
 \<          {
-                return Compiler::Parser::make_LESS(yytext, Compiler::location());
-            }
-
-nro         {
-                return Compiler::Parser::make_TYPENUMBER(yytext, Compiler::location());
-            }
-
-bool        {
-                return Compiler::Parser::make_TYPEBOOL(yytext, Compiler::location());
+                return Compiler::Parser::make_LESS(Compiler::location());
             }
 
 \*\*        {
-                return Compiler::Parser::make_POWERSYM(yytext, Compiler::location());
+                return Compiler::Parser::make_POWERSYM(Compiler::location());
             }
 
 \*           {
-                return Compiler::Parser::make_MULTSYM(yytext, Compiler::location());
+                return Compiler::Parser::make_MULTSYM(Compiler::location());
             }
 
 \/           {
-                return Compiler::Parser::make_DIVSYM(yytext, Compiler::location());
+                return Compiler::Parser::make_DIVSYM(Compiler::location());
             }
 
 \+          {
-                return Compiler::Parser::make_SUMSYM(yytext, Compiler::location());
+                return Compiler::Parser::make_SUMSYM(Compiler::location());
             }
 
 \-          {
-                return Compiler::Parser::make_SUBSYM(yytext, Compiler::location());
+                return Compiler::Parser::make_SUBSYM(Compiler::location());
             }
 
 [a-z_A-Z]+  {
