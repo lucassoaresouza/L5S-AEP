@@ -294,24 +294,49 @@ boolexp     : atomexpr OR atomexpr {
             }
 
 logicalexp  : expr LESS expr {
-                bool value = $1->evaluate() < $3->evaluate();
-                $$ = new NodeBool(value);    
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    bool value = $1->evaluate() < $3->evaluate();
+                    $$ = new NodeBool(value);
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }    
             }
             | expr GREATER expr {
-                bool value = $1->evaluate() > $3->evaluate();
-                $$ = new NodeBool(value);    
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    bool value = $1->evaluate() > $3->evaluate();
+                    $$ = new NodeBool(value);
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }      
             }
             | expr EQUAL expr {
-                bool value = $1->evaluate() == $3->evaluate();
-                $$ = new NodeBool(value); 
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    bool value = $1->evaluate() == $3->evaluate();
+                    $$ = new NodeBool(value);
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }   
             }
             | expr GREATEREQUAL expr {
-                bool value = $1->evaluate() >= $3->evaluate();
-                $$ = new NodeBool(value); 
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    bool value = $1->evaluate() >= $3->evaluate();
+                    $$ = new NodeBool(value);
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }  
             }
             | expr LESSEQUAL expr {
+                if($1->type() == 'N' && $3->type() == 'N'){
                 bool value = $1->evaluate() <= $3->evaluate();
-                $$ = new NodeBool(value); 
+                $$ = new NodeBool(value);
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
+                    YYERROR;
+                } 
             }
 %%
 
