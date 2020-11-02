@@ -270,7 +270,11 @@ addexpr     : mulexpr {
                 }
             }
 
-boolexp     : addexpr OR mulexpr {
+expr        : addexpr {
+                $$ = $1;
+            }
+
+boolexp     : atomexpr OR atomexpr {
                 if($1->type() == 'B' && $3->type() == 'B'){
                     bool value = $1->evaluate() || $3->evaluate();
                     $$ = new NodeBool(value);
@@ -279,7 +283,7 @@ boolexp     : addexpr OR mulexpr {
                     YYERROR;
                 }
             }
-            | addexpr AND mulexpr {
+            | atomexpr AND atomexpr {
                 if($1->type() == 'B' && $3->type() == 'B'){
                     bool value = $1->evaluate() && $3->evaluate();
                     $$ = new NodeBool(value);
@@ -287,10 +291,6 @@ boolexp     : addexpr OR mulexpr {
                     std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
                     YYERROR;
                 }
-            }
-
-expr        : addexpr {
-                $$ = $1;
             }
 
 logicalexp  : expr LESS expr {
