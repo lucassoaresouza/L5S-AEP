@@ -85,6 +85,9 @@ namespace Compiler {
                 delete left;
                 delete right;
             };
+            char type(){
+                return 'N';
+            }
             double evaluate(){
                 switch (operation){
                     case '+':

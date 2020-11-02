@@ -74,7 +74,7 @@
 
 %type <Compiler::Node*> variable;
 %type <Compiler::Node*> constant boolean;
-%type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr boolexp;
+%type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
 
 
 %start program
@@ -92,9 +92,6 @@ program     : { driver.clear(); }
             }
             | program assignment EOL;
             | program expr EOL{
-                driver.manage->nodes.push_back($2);
-            }
-            | program boolexp EOL{
                 driver.manage->nodes.push_back($2);
             }
 
@@ -170,21 +167,6 @@ boolean     : TRUE {
             | FALSE {
                 $$ = new Compiler::NodeBool(false);
             }
-            | LEFTPAR boolexp RIGHTPAR {
-                $$ = $2;
-            }
-
-boolexp     : boolean {
-                $$ = $1;
-            }
-            | boolexp AND boolean {
-                bool value = $1->evaluate() && $3->evaluate();
-                $$ = new NodeBool(value);
-            } 
-            | boolexp OR boolean {
-                bool value = $1->evaluate() || $3->evaluate();
-                $$ = new NodeBool(value);
-            }
 
 variable    : STRING {
                 if(driver.manage->existsVariable($1)){
@@ -198,43 +180,17 @@ variable    : STRING {
                 }
             }
 
-assignment  : TYPENUMBER STRING ASSIGNER expr {
-                if(!driver.manage->existsVariable($2)){
-                    driver.manage->variables[$2] = $4;
-                } else {
-                    std::cout << "Erro: A variavel '" << $2 << "' ja foi declarada!!!" << std::endl;
-                    YYERROR;
-                }
-            }
-            | TYPEBOOL STRING ASSIGNER boolexp {
-                if(!driver.manage->existsVariable($2)){
-                    driver.manage->variables[$2] = $4;
-                } else {
-                    std::cout << "Erro: A variavel '" << $2 << "' ja foi declarada!!!" << std::endl;
-                    YYERROR;
-                }
-            }
-            | STRING ASSIGNER expr {
-                if(driver.manage->existsVariable($1)){
-                    driver.manage->variables[$1] = $3;
-                } else {
-                    std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
-                    YYERROR;
-                }
-            }
-            | STRING ASSIGNER boolexp {
-                if(driver.manage->existsVariable($1)){
-                    driver.manage->variables[$1] = $3;
-                } else {
-                    std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
-                    YYERROR;
-                }
+assignment  : STRING ASSIGNER expr {
+                driver.manage->variables[$1] = $3;
             }
 
 atomexpr    : variable {
                 $$ = $1;
             }
             | constant {
+                $$ = $1;
+            }
+            | boolean {
                 $$ = $1;
             }
             | LEFTPAR expr RIGHTPAR {
@@ -245,7 +201,12 @@ powexpr     : atomexpr {
                 $$ = $1;
             }
             | atomexpr POWERSYM powexpr {
-                $$ = new NodeCalc($1, $3, '^');
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    $$ = new NodeCalc($1, $3, '^');
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }
             }
 
 unaryexpr   : powexpr {
@@ -255,27 +216,69 @@ unaryexpr   : powexpr {
                 $$ = $2;
             }
             | SUBSYM powexpr {
-                $$ = new NodeNegate($2);
+                if($2->type() == 'N'){
+                    $$ = new NodeNegate($2);
+                } else if($2->type() == 'B'){
+                    $$ = new NodeBool(!$2->evaluate());
+                }
             }
 
 mulexpr     : unaryexpr {
                 $$ = $1;
             }
             | mulexpr MULTSYM unaryexpr {
-                $$ = new NodeCalc($1, $3, '*');
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    $$ = new NodeCalc($1, $3, '*');
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }
             }
             | mulexpr DIVSYM unaryexpr {
-                $$ = new NodeCalc($1, $3, '/');
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    $$ = new NodeCalc($1, $3, '/');
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }
             }
 
 addexpr     : mulexpr {
                 $$ = $1;
             }
             | addexpr SUMSYM mulexpr {
-                $$ = new NodeCalc($1, $3, '+');
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    $$ = new NodeCalc($1, $3, '+');
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }
             }
             | addexpr SUBSYM mulexpr {
-                $$ = new NodeCalc($1, $3, '-');
+                if($1->type() == 'N' && $3->type() == 'N'){
+                    $$ = new NodeCalc($1, $3, '-');
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }
+            }
+            | addexpr OR mulexpr {
+                if($1->type() == 'B' && $3->type() == 'B'){
+                    bool value = $1->evaluate() || $3->evaluate();
+                    $$ = new NodeBool(value);
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }
+            }
+            | addexpr AND mulexpr {
+                if($1->type() == 'B' && $3->type() == 'B'){
+                    bool value = $1->evaluate() && $3->evaluate();
+                    $$ = new NodeBool(value);
+                } else {
+                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
+                    YYERROR;
+                }
             }
 
 expr        : addexpr {
