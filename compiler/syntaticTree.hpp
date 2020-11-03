@@ -147,6 +147,24 @@ namespace Compiler {
             }
     };
 
+    class NodeRepeat : public Node {
+        private:
+            Node* expr;
+            Node* context;
+
+        public:
+            NodeRepeat(Node* _expr, Node* _context){
+                expr = _expr;
+                context = _context;
+            }
+            double evaluate(){
+                for(double i = 0; i < expr->evaluate(); i++){
+                    context->evaluate();
+                }
+                return 0;
+            }
+    };
+
     class TreeManage : public Node {
         public:
             typedef std::map<std::string, Node*> variablemap_type;

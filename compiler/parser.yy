@@ -71,7 +71,7 @@
 %type <Compiler::Node*> constant boolean variable;
 %type <Compiler::Node*> boolexp logicalexp;
 %type <Compiler::Node*> block;
-%type <Compiler::Node*>  ifblock;
+%type <Compiler::Node*>  ifblock repeatblock;
 %type <std::vector<Compiler::Node*>> context;
 
 %start start
@@ -90,6 +90,9 @@ program     : { driver.clear(); }
                 driver.manage->nodes.push_back($2);
             }
             | program ifblock EOL {
+                driver.manage->nodes.push_back($2);
+            };
+            | program repeatblock EOL {
                 driver.manage->nodes.push_back($2);
             };
 
@@ -111,6 +114,14 @@ context     : {
                 $1.push_back($2);
                 $$ = $1;
             }
+            | context ifblock EOL {
+                $1.push_back($2);
+                $$ = $1;
+            };
+            | context repeatblock EOL {
+                $1.push_back($2);
+                $$ = $1;
+            };
 
 block   : LEFTBRACE context RIGHTBRACE {
             std::cout << "context size " << $2.size() << std::endl;
@@ -132,6 +143,20 @@ ifblock     : IF LEFTPAR boolexp RIGHTPAR block {
                 NodeIf* node = new NodeIf($3, $5);
                 $$ = node;
             }
+            | IF LEFTPAR variable RIGHTPAR block {
+                if($3->type() == 'B'){
+                    NodeIf* node = new NodeIf($3, $5);
+                    $$ = node;
+                } else {
+                    std::cout << "Erro: arguemento 'SE' invalido" << std::endl;
+                    YYERROR;
+                }
+            }
+
+repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
+                    NodeRepeat* node = new NodeRepeat($3, $5);
+                    $$ = node;
+                }
 
 constant    : INTEGER {
                 $$ = new Compiler::NodeConst($1);
