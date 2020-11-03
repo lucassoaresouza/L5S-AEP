@@ -70,6 +70,9 @@
 %type <Compiler::Node*> atomexpr powexpr unaryexpr mulexpr addexpr expr;
 %type <Compiler::Node*> constant boolean variable;
 %type <Compiler::Node*> boolexp logicalexp;
+%type <Compiler::Node*> block;
+%type <Compiler::Node*>  ifblock;
+%type <std::vector<Compiler::Node*>> context;
 
 %start start
 
@@ -78,12 +81,56 @@
 start       : program;
 
 program     : { driver.clear(); }
+            | program EOL;
             | program assignment EOL;
             | program expr EOL {
                 driver.manage->nodes.push_back($2);
             }
             | program logicalexp EOL {
                 driver.manage->nodes.push_back($2);
+            }
+            | program ifblock EOL {
+                driver.manage->nodes.push_back($2);
+            };
+
+context     : {
+                std::vector<Compiler::Node*> context;
+                $$ = context;
+            }
+            | context EOL {
+                $$ = $1;
+            }
+            | context assignment EOL{
+                $$ = $1;
+            }
+            | context expr EOL {
+                $1.push_back($2);
+                $$ = $1;
+            }
+            | context logicalexp EOL {
+                $1.push_back($2);
+                $$ = $1;
+            }
+
+block   : LEFTBRACE context RIGHTBRACE {
+            std::cout << "context size " << $2.size() << std::endl;
+            NodeBlock* node  = new NodeBlock();
+            node->nodes = $2;
+            $$ = node;
+        }
+
+
+ifblock     : IF LEFTPAR boolexp RIGHTPAR block {
+                NodeIf* node = new NodeIf($3, $5);
+                $$ = node;
+            }
+            | IF LEFTPAR boolean RIGHTPAR block {
+                NodeIf* node = new NodeIf($3, $5);
+                $$ = node;
+            }
+            | IF LEFTPAR logicalexp RIGHTPAR block {
+                NodeIf* node = new NodeIf($3, $5);
+                $$ = node;
             }
 
 constant    : INTEGER {

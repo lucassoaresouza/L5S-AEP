@@ -112,6 +112,41 @@ namespace Compiler {
             };
     };
 
+    class NodeBlock : public Node {
+        public:
+            std::vector<Node*> nodes;
+            int  n = 0;
+
+            NodeBlock(){}
+            double evaluate(){
+                std::cout << "IN BLOCK" << std::endl;
+                for (int i = 0; i < nodes.size(); i++){
+                    std::cout << "evaluated: " << nodes[i]->evaluate() << std::endl;
+                }
+                std::cout << "OUT BLOCK" << std::endl;
+                return 0;
+            }
+    };
+
+
+    class NodeIf : public Node {
+        private:
+            Node* boolexp;
+            Node* ifblock;
+
+        public:
+            NodeIf(Node* _boolexp, Node* _ifblock){
+                boolexp = _boolexp;
+                ifblock = _ifblock;
+            }
+            double evaluate(){
+                if(boolexp->evaluate()){
+                    return ifblock->evaluate();
+                }
+                return 0;
+            }
+    };
+
     class TreeManage : public Node {
         public:
             typedef std::map<std::string, Node*> variablemap_type;
