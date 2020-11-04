@@ -148,14 +148,19 @@ ifblock     : IF LEFTPAR boolexp RIGHTPAR block {
                     NodeIf* node = new NodeIf($3, $5);
                     $$ = node;
                 } else {
-                    std::cout << "Erro: arguemento 'SE' invalido" << std::endl;
+                    std::cout << "Erro: arguemento 'SE' invalido. Deve ser um booleano" << std::endl;
                     YYERROR;
                 }
             }
 
 repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
-                    NodeRepeat* node = new NodeRepeat($3, $5);
-                    $$ = node;
+                    if($3->type() == 'N'){
+                        NodeRepeat* node = new NodeRepeat($3, $5);
+                        $$ = node;
+                    } else {
+                        std::cout << "Erro: arguemento 'REPITA' invalido. Deve ser um numero." << std::endl;
+                        YYERROR;
+                    }
                 }
 
 constant    : INTEGER {
