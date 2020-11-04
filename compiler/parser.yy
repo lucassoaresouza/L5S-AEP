@@ -84,27 +84,27 @@ start       : program;
 
 program     : context EOL {
                 driver.manage->nodes = $1;
-            }
+            };
 
 context     : {
                 std::vector<Compiler::Node*> context;
                 $$ = context;
-            }
+            };
             | context EOL {
                 $$ = $1;
-            }
+            };
             | context assignment SEMICOLON{
                 $1.push_back($2);
                 $$ = $1;
-            }
+            };
             | context expr SEMICOLON {
                 $1.push_back($2);
                 $$ = $1;
-            }
+            };
             | context logicalexp SEMICOLON {
                 $1.push_back($2);
                 $$ = $1;
-            }
+            };
             | context ifblock SEMICOLON {
                 $1.push_back($2);
                 $$ = $1;
@@ -118,145 +118,138 @@ block   : LEFTBRACE context RIGHTBRACE {
             NodeBlock* node  = new NodeBlock();
             node->nodes = $2;
             $$ = node;
-        }
+        };
 
 
 ifblock     : IF LEFTPAR boolexp RIGHTPAR block {
                 NodeIf* node = new NodeIf($3, $5);
                 $$ = node;
-            }
+            };
             | IF LEFTPAR boolean RIGHTPAR block {
                 NodeIf* node = new NodeIf($3, $5);
                 $$ = node;
-            }
+            };
             | IF LEFTPAR logicalexp RIGHTPAR block {
                 NodeIf* node = new NodeIf($3, $5);
                 $$ = node;
-            }
+            };
             | IF LEFTPAR variable RIGHTPAR block {
                 NodeIf* node = new NodeIf($3, $5);
                 $$ = node;
-            }
+            };
 
 repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
                     NodeRepeat* node = new NodeRepeat($3, $5);
                     $$ = node;
-                }
+                };
 
 constant    : INTEGER {
-                $$ = new Compiler::NodeConst($1);
-            }
+                $$ = new NodeConst($1);
+            };
             | DOUBLE {
-                $$ = new Compiler::NodeConst($1);
-            }
+                $$ = new NodeConst($1);
+            };
 
 boolean     : TRUE {
-                $$ = new Compiler::NodeBool(true);
-            }
+                $$ = new NodeBool(true);
+            };
             | FALSE {
-                $$ = new Compiler::NodeBool(false);
-            }
+                $$ = new NodeBool(false);
+            };
 
 variable    : STRING {
                 TreeManage* manage = driver.get_manage();
                 $$ = new NodeVariable($1, manage);
-            }
+            };
 
 assignment  : STRING ASSIGNER expr {
                 TreeManage* manage = driver.get_manage();
                 $$ = new NodeAssignment($1, $3, manage);
-            }
+            };
             | STRING ASSIGNER logicalexp {
                 TreeManage* manage = driver.get_manage();
                 $$ = new NodeAssignment($1, $3, manage);
-            }
+            };
 
 atomexpr    : variable {
                 $$ = $1;
-            }
+            };
             | constant {
                 $$ = $1;
-            }
+            };
             | boolean {
                 $$ = $1;
-            }
+            };
             | LEFTPAR expr RIGHTPAR {
                 $$ = $2;
-            }
+            };
 
 powexpr     : atomexpr {
                 $$ = $1;
-            }
+            };
             | atomexpr POWERSYM powexpr {
                 $$ = new NodeCalc($1, $3, '^');
-            }
+            };
 
 unaryexpr   : powexpr {
                 $$ = $1;
-            }
+            };
             | SUMSYM powexpr {
                 $$ = $2;
-            }
+            };
             | SUBSYM powexpr {
                 $$ = new NodeNegate($2);
-            }
+            };
 
 mulexpr     : unaryexpr {
                 $$ = $1;
-            }
+            };
             | mulexpr MULTSYM unaryexpr {
                 $$ = new NodeCalc($1, $3, '*');
-            }
+            };
             | mulexpr DIVSYM unaryexpr {
                 $$ = new NodeCalc($1, $3, '/');
-            }
+            };
 
 addexpr     : mulexpr {
                 $$ = $1;
-            }
+            };
             | boolexp {
                 $$ = $1;
-            }
+            };
             | addexpr SUMSYM mulexpr {
                     $$ = new NodeCalc($1, $3, '+');
-            }
+            };
             | addexpr SUBSYM mulexpr {
                     $$ = new NodeCalc($1, $3, '-');
-            }
+            };
 
 expr        : addexpr {
                 $$ = $1;
-            }
+            };
 
 boolexp     : atomexpr OR atomexpr {
-                    bool value = $1->evaluate() || $3->evaluate();
-                    $$ = new NodeBool(value);
-            }
+                $$ =  new NodeLogical($1, $3, "||");
+            };
             | atomexpr AND atomexpr {
-                    bool value = $1->evaluate() && $3->evaluate();
-                    $$ = new NodeBool(value);
-            }
+                $$ =  new NodeLogical($1, $3, "&&");
+            };
 
 logicalexp  : expr LESS expr {
-                    bool value = $1->evaluate() < $3->evaluate();
-                    $$ = new NodeBool(value);
-            }
+                $$ =  new NodeLogical($1, $3, "<");
+            };
             | expr GREATER expr {
-                    bool value = $1->evaluate() > $3->evaluate();
-                    $$ = new NodeBool(value);
-            }
+                $$ =  new NodeLogical($1, $3, ">");
+            };
             | expr EQUAL expr {
-                    bool value = $1->evaluate() == $3->evaluate();
-                    $$ = new NodeBool(value);
-            }
+                $$ =  new NodeLogical($1, $3, "==");
+            };
             | expr GREATEREQUAL expr {
-                    bool value = $1->evaluate() >= $3->evaluate();
-                    $$ = new NodeBool(value);
-            }
+                $$ =  new NodeLogical($1, $3, ">=");
+            };
             | expr LESSEQUAL expr {
-                bool value = $1->evaluate() <= $3->evaluate();
-                $$ = new NodeBool(value);
-            }
+                $$ =  new NodeLogical($1, $3, "<=");
+            };
 %%
 
 // Bison expects us to provide implementation - otherwise linker complains

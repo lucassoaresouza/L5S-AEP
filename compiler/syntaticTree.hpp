@@ -115,6 +115,40 @@ namespace Compiler {
             };
     };
 
+
+    class NodeLogical : public Node {
+        private:
+            Node* left;
+            Node* right;
+            std::string operation;
+
+        public:
+            NodeLogical(Node* _left, Node* _right, std::string _operation){
+                left = _left;
+                right = _right;
+                operation = _operation;
+            };
+            double evaluate(){
+                if(operation == "=="){
+                    return left->evaluate() == right->evaluate();
+                } else if (operation == "<"){
+                    return left->evaluate() < right->evaluate();
+                } else if (operation == ">"){
+                    return left->evaluate() > right->evaluate();
+                } else if (operation == "<="){
+                    return left->evaluate() <= right->evaluate();
+                } else if (operation == ">="){
+                    return left->evaluate() >= right->evaluate();
+                } else if (operation == "||"){
+                    return left->evaluate() || right->evaluate();
+                } else if (operation == "&&"){
+                    return left->evaluate() && right->evaluate();
+                } else {
+                    return 0;
+                }
+            }
+    };
+
     class NodeBlock : public Node {
         public:
             std::vector<Node*> nodes;
@@ -237,6 +271,7 @@ namespace Compiler {
                 manage = _manage;
             }
             double evaluate(){
+                std::cout << "Qtd: " << manage->variables.size() << std::endl;
                 if(manage->existsVariable(name)){
                     return manage->getVariable(name);
                 } else {
