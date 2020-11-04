@@ -198,11 +198,7 @@ unaryexpr   : powexpr {
                 $$ = $2;
             }
             | SUBSYM powexpr {
-                if($2->type() == 'N'){
-                    $$ = new NodeNegate($2);
-                } else if($2->type() == 'B'){
-                    $$ = new NodeBool(!$2->evaluate());
-                }
+                $$ = new NodeNegate($2);
             }
 
 mulexpr     : unaryexpr {
