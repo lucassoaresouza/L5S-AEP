@@ -59,6 +59,7 @@
 %token EOL "end of line";
 %token LEFTPAR "leftpar";
 %token COMMA "comma";
+%token SEMICOLON "semicolon";
 
 %token POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
 %token LESS GREATER EQUAL GREATEREQUAL LESSEQUAL;
@@ -80,21 +81,9 @@
 
 start       : program;
 
-program     : { driver.clear(); }
-            | program EOL;
-            | program assignment EOL;
-            | program expr EOL {
-                driver.manage->nodes.push_back($2);
+program     : context EOL {
+                driver.manage->nodes = $1;
             }
-            | program logicalexp EOL {
-                driver.manage->nodes.push_back($2);
-            }
-            | program ifblock EOL {
-                driver.manage->nodes.push_back($2);
-            };
-            | program repeatblock EOL {
-                driver.manage->nodes.push_back($2);
-            };
 
 context     : {
                 std::vector<Compiler::Node*> context;
@@ -103,22 +92,22 @@ context     : {
             | context EOL {
                 $$ = $1;
             }
-            | context assignment EOL{
+            | context assignment SEMICOLON{
                 $$ = $1;
             }
-            | context expr EOL {
+            | context expr SEMICOLON {
                 $1.push_back($2);
                 $$ = $1;
             }
-            | context logicalexp EOL {
+            | context logicalexp SEMICOLON {
                 $1.push_back($2);
                 $$ = $1;
             }
-            | context ifblock EOL {
+            | context ifblock SEMICOLON {
                 $1.push_back($2);
                 $$ = $1;
             };
-            | context repeatblock EOL {
+            | context repeatblock SEMICOLON {
                 $1.push_back($2);
                 $$ = $1;
             };

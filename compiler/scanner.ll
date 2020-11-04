@@ -133,6 +133,10 @@ repita      {
                 return Compiler::Parser::make_COMMA(Compiler::location());
             }
 
+;           {
+                return Compiler::Parser::make_SEMICOLON(Compiler::location());
+            }
+
 \n          {
                 return Compiler::Parser::make_EOL(Compiler::location());
             }
