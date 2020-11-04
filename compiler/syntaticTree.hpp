@@ -63,6 +63,9 @@ namespace Compiler {
             ~NodeNegate(){
                 delete node;
             }
+            char type(){
+                return 'N';
+            }
             double evaluate(){
                 double result = - node->evaluate();
                 return - node->evaluate();
@@ -119,11 +122,11 @@ namespace Compiler {
 
             NodeBlock(){}
             double evaluate(){
-                std::cout << "IN BLOCK" << std::endl;
+                std::cout << "===============INICIO===============" << std::endl;
                 for (int i = 0; i < nodes.size(); i++){
                     std::cout << "evaluated: " << nodes[i]->evaluate() << std::endl;
                 }
-                std::cout << "OUT BLOCK" << std::endl;
+                std::cout << "=================FIM================" << std::endl;
                 return 0;
             }
     };
@@ -165,9 +168,9 @@ namespace Compiler {
             }
     };
 
-    class TreeManage : public Node {
+    class TreeManage {
         public:
-            typedef std::map<std::string, Node*> variablemap_type;
+            typedef std::map<std::string, double> variablemap_type;
             std::vector<Node*> nodes;
             variablemap_type variables;
 
@@ -187,24 +190,61 @@ namespace Compiler {
                 return variables.find(variable_name) != variables.end();
             }
 
-            Node* getVariable(const std::string &variable_name){
+            double getVariable(const std::string &variable_name){
                 variablemap_type::const_iterator vi = variables.find(variable_name);
                 if(vi == variables.end()){
                     std::cout << "Variável não encontrada!" << std::endl;
                     return 0;
                 } else {
+                    std::cout << "Variavel: " << vi->first << " valor: " << vi->second << std::endl;
                     return vi->second;
                 }
             }
 
             void run(){
-                std::cout << "Nodes: " << nodes.size() << std::endl;
                 for (int i = 0; i < nodes.size(); i++){
-                    std::cout << "tree:" << std::endl;
-                    std::cout << "evaluated: " << nodes[i]->evaluate() << std::endl;
+                    nodes[i]->evaluate();
                 }
             }
     };
+
+    class NodeAssignment : public Node {
+        private:
+            std::string name;
+            Node* value;
+            TreeManage* manage;
+
+        public:
+            NodeAssignment(std::string _name, Node* _value, TreeManage* _manage){
+                name = _name;
+                value = _value;
+                manage = _manage;
+            }
+            double evaluate(){
+                manage->variables[name] = value->evaluate();
+                return 0;
+            }
+    };
+
+    class NodeVariable : public Node {
+        private:
+            std::string name;
+            TreeManage* manage;
+
+        public:
+            NodeVariable(std::string _name, TreeManage* _manage){
+                name = _name;
+                manage = _manage;
+            }
+            double evaluate(){
+                if(manage->existsVariable(name)){
+                    return manage->getVariable(name);
+                } else {
+                    return 0;
+                }
+            }
+    };
+
 }
 
 #endif //SYNTATIC_TREE_H

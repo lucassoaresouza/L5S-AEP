@@ -57,3 +57,7 @@ std::vector<Command> Interpreter::get_commands(){
     manage->run();
     return m_commands;
 }
+
+TreeManage* Interpreter::get_manage(){
+    return manage;
+}

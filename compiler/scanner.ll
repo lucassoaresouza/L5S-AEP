@@ -144,7 +144,7 @@ repita      {
 
 [\t ]     {}
 
-[1-9][0-9]* {
+[0-9]* {
                 int number = atoi(yytext);
                 return Compiler::Parser::make_INTEGER(number, Compiler::location());
             }

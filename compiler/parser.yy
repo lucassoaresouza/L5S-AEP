@@ -74,6 +74,7 @@
 %type <Compiler::Node*> block;
 %type <Compiler::Node*>  ifblock repeatblock;
 %type <std::vector<Compiler::Node*>> context;
+%type <Compiler::Node*> assignment;
 
 %start start
 
@@ -93,6 +94,7 @@ context     : {
                 $$ = $1;
             }
             | context assignment SEMICOLON{
+                $1.push_back($2);
                 $$ = $1;
             }
             | context expr SEMICOLON {
@@ -113,7 +115,6 @@ context     : {
             };
 
 block   : LEFTBRACE context RIGHTBRACE {
-            std::cout << "context size " << $2.size() << std::endl;
             NodeBlock* node  = new NodeBlock();
             node->nodes = $2;
             $$ = node;
@@ -133,23 +134,13 @@ ifblock     : IF LEFTPAR boolexp RIGHTPAR block {
                 $$ = node;
             }
             | IF LEFTPAR variable RIGHTPAR block {
-                if($3->type() == 'B'){
-                    NodeIf* node = new NodeIf($3, $5);
-                    $$ = node;
-                } else {
-                    std::cout << "Erro: arguemento 'SE' invalido. Deve ser um booleano" << std::endl;
-                    YYERROR;
-                }
+                NodeIf* node = new NodeIf($3, $5);
+                $$ = node;
             }
 
 repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
-                    if($3->type() == 'N'){
-                        NodeRepeat* node = new NodeRepeat($3, $5);
-                        $$ = node;
-                    } else {
-                        std::cout << "Erro: arguemento 'REPITA' invalido. Deve ser um numero." << std::endl;
-                        YYERROR;
-                    }
+                    NodeRepeat* node = new NodeRepeat($3, $5);
+                    $$ = node;
                 }
 
 constant    : INTEGER {
@@ -167,20 +158,17 @@ boolean     : TRUE {
             }
 
 variable    : STRING {
-                if(driver.manage->existsVariable($1)){
-                    Node* t = driver.manage->getVariable($1);
-                    $$ = driver.manage->getVariable($1);
-                } else {
-                    std::cout << "Erro: Variavel '" << $1 << "' nao encontrada!!!" << std::endl;
-                    YYERROR;
-                }
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeVariable($1, manage);
             }
 
 assignment  : STRING ASSIGNER expr {
-                driver.manage->variables[$1] = $3;
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeAssignment($1, $3, manage);
             }
             | STRING ASSIGNER logicalexp {
-                driver.manage->variables[$1] = $3;
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeAssignment($1, $3, manage);
             }
 
 atomexpr    : variable {
@@ -200,12 +188,7 @@ powexpr     : atomexpr {
                 $$ = $1;
             }
             | atomexpr POWERSYM powexpr {
-                if($1->type() == 'N' && $3->type() == 'N'){
-                    $$ = new NodeCalc($1, $3, '^');
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }
+                $$ = new NodeCalc($1, $3, '^');
             }
 
 unaryexpr   : powexpr {
@@ -226,20 +209,10 @@ mulexpr     : unaryexpr {
                 $$ = $1;
             }
             | mulexpr MULTSYM unaryexpr {
-                if($1->type() == 'N' && $3->type() == 'N'){
-                    $$ = new NodeCalc($1, $3, '*');
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }
+                $$ = new NodeCalc($1, $3, '*');
             }
             | mulexpr DIVSYM unaryexpr {
-                if($1->type() == 'N' && $3->type() == 'N'){
-                    $$ = new NodeCalc($1, $3, '/');
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }
+                $$ = new NodeCalc($1, $3, '/');
             }
 
 addexpr     : mulexpr {
@@ -249,20 +222,10 @@ addexpr     : mulexpr {
                 $$ = $1;
             }
             | addexpr SUMSYM mulexpr {
-                if($1->type() == 'N' && $3->type() == 'N'){
                     $$ = new NodeCalc($1, $3, '+');
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }
             }
             | addexpr SUBSYM mulexpr {
-                if($1->type() == 'N' && $3->type() == 'N'){
                     $$ = new NodeCalc($1, $3, '-');
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }
             }
 
 expr        : addexpr {
@@ -270,68 +233,33 @@ expr        : addexpr {
             }
 
 boolexp     : atomexpr OR atomexpr {
-                if($1->type() == 'B' && $3->type() == 'B'){
                     bool value = $1->evaluate() || $3->evaluate();
                     $$ = new NodeBool(value);
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }
             }
             | atomexpr AND atomexpr {
-                if($1->type() == 'B' && $3->type() == 'B'){
                     bool value = $1->evaluate() && $3->evaluate();
                     $$ = new NodeBool(value);
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar operacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }
             }
 
 logicalexp  : expr LESS expr {
-                if($1->type() == 'N' && $3->type() == 'N'){
                     bool value = $1->evaluate() < $3->evaluate();
                     $$ = new NodeBool(value);
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }    
             }
             | expr GREATER expr {
-                if($1->type() == 'N' && $3->type() == 'N'){
                     bool value = $1->evaluate() > $3->evaluate();
                     $$ = new NodeBool(value);
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }      
             }
             | expr EQUAL expr {
-                if($1->type() == 'N' && $3->type() == 'N'){
                     bool value = $1->evaluate() == $3->evaluate();
                     $$ = new NodeBool(value);
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }   
             }
             | expr GREATEREQUAL expr {
-                if($1->type() == 'N' && $3->type() == 'N'){
                     bool value = $1->evaluate() >= $3->evaluate();
                     $$ = new NodeBool(value);
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
-                    YYERROR;
-                }  
             }
             | expr LESSEQUAL expr {
-                if($1->type() == 'N' && $3->type() == 'N'){
                 bool value = $1->evaluate() <= $3->evaluate();
                 $$ = new NodeBool(value);
-                } else {
-                    std::cout << "Erro: Nao eh possivel realizar comparacao entre bool e nro" << std::endl;
-                    YYERROR;
-                } 
             }
 %%
 

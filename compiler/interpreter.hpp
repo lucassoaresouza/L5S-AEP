@@ -26,6 +26,7 @@ namespace Compiler {
             Interpreter();
             int parse();
             void clear();
+            TreeManage* get_manage();
             std::string str() const;
             void switchInputStream(std::istream *is);
             std::vector<Command> get_commands();
