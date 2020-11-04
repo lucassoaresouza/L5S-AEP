@@ -50,16 +50,16 @@
 %define api.token.prefix {TOKEN_}
 
 %token <std::string> STRING  "string";
-%token <uint64_t> INTEGER "integer";
-%token <double> DOUBLE "double";
-%token RIGHTBRACE "rightbrace";
-%token LEFTBRACE "leftbrace";
-%token RIGHTPAR "rightpar";
-%token END 0 "end of file";
-%token EOL "end of line";
-%token LEFTPAR "leftpar";
-%token COMMA "comma";
-%token SEMICOLON "semicolon";
+%token <uint64_t> INTEGER "inteiro";
+%token <double> DOUBLE "decimal";
+%token RIGHTBRACE "chave \'{\'";
+%token LEFTBRACE "chave \'}\'";
+%token RIGHTPAR "chave \'(\'";
+%token LEFTPAR "chave \')\'";
+%token END 0 "fim do arquivo";
+%token EOL "fim da linha";
+%token COMMA "virgula \',\'";
+%token SEMICOLON "ponto e virgula \';\'";
 
 %token POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
 %token LESS GREATER EQUAL GREATEREQUAL LESSEQUAL;
@@ -254,7 +254,7 @@ logicalexp  : expr LESS expr {
 
 // Bison expects us to provide implementation - otherwise linker complains
 void Compiler::Parser::error(const location &loc , const std::string &message) {
-    cout << "Error: " << message << endl << "Error location: " << driver.location() << endl;
+    cout << "Error: " << message << endl;
     driver.clear();
 }
 
