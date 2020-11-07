@@ -76,6 +76,7 @@
 %type <Compiler::Node*> command;
 %type <std::vector<Compiler::Node*>> context;
 %type <Compiler::Node*> assignment;
+%type <Compiler::Node*> ifexpression;
 
 %start start
 
@@ -125,36 +126,24 @@ block   : LEFTBRACE context RIGHTBRACE {
             $$ = node;
         };
 
+ifexpression    : boolexp {
+                    $$ = $1;
+                };
+                | boolean {
+                    $$ = $1;
+                };
+                | logicalexp {
+                    $$ = $1;
+                };
+                | variable {
+                    $$ = $1;
+                };
 
-ifblock     : IF LEFTPAR boolexp RIGHTPAR block {
+ifblock     : IF LEFTPAR ifexpression RIGHTPAR block {
                 NodeIf* node = new NodeIf($3, $5);
                 $$ = node;
             };
-            | IF LEFTPAR boolean RIGHTPAR block {
-                NodeIf* node = new NodeIf($3, $5);
-                $$ = node;
-            };
-            | IF LEFTPAR logicalexp RIGHTPAR block {
-                NodeIf* node = new NodeIf($3, $5);
-                $$ = node;
-            };
-            | IF LEFTPAR variable RIGHTPAR block {
-                NodeIf* node = new NodeIf($3, $5);
-                $$ = node;
-            };
-            | IF LEFTPAR boolexp RIGHTPAR block ELSE block{
-                NodeIf* node = new NodeIf($3, $5, $7);
-                $$ = node;
-            };
-            | IF LEFTPAR boolean RIGHTPAR block ELSE block{
-                NodeIf* node = new NodeIf($3, $5, $7);
-                $$ = node;
-            };
-            | IF LEFTPAR logicalexp RIGHTPAR block ELSE block{
-                NodeIf* node = new NodeIf($3, $5, $7);
-                $$ = node;
-            };
-            | IF LEFTPAR variable RIGHTPAR block ELSE block{
+            | IF LEFTPAR ifexpression RIGHTPAR block ELSE block{
                 NodeIf* node = new NodeIf($3, $5, $7);
                 $$ = node;
             };
