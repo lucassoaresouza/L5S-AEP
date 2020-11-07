@@ -4,7 +4,7 @@
 
 #include "aepcompiler.hpp"
 
-std::vector<std::pair<std::string, double>> AEPCompiler::run(std::string text){
+command_list AEPCompiler::run(std::string text){
     stringstream* input_string = new std::stringstream(text);
     interpreter.switchInputStream(input_string);
     interpreter.parse();

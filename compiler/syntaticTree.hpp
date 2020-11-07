@@ -4,6 +4,9 @@
 #include <map>
 #include <vector>
 #include <cmath>
+#include <iostream>
+
+typedef std::vector<std::pair<std::string, double>> command_list;
 
 namespace Compiler {
     class Node {
@@ -214,50 +217,16 @@ namespace Compiler {
     class TreeManage {
         public:
             typedef std::map<std::string, double> variablemap_type;
-            typedef std::vector<std::pair<std::string, double>> command_list;
             std::vector<Node*> nodes;
             variablemap_type variables;
             command_list commands;
 
-            ~TreeManage(){
-                clearNodes();
-            }
-
-            void clearNodes(){
-                for(int i = 0; i < nodes.size(); i++){
-                    delete nodes[i];
-                }
-                variables.clear();
-                nodes.clear();
-                commands.clear();
-            }
-
-            bool existsVariable(const std::string &variable_name){
-                return variables.find(variable_name) != variables.end();
-            }
-
-            double getVariable(const std::string &variable_name){
-                variablemap_type::const_iterator vi = variables.find(variable_name);
-                if(vi == variables.end()){
-                    std::cout << "Variável não encontrada!" << std::endl;
-                    return 0;
-                } else {
-                    std::cout << "Variavel: " << vi->first << " valor: " << vi->second << std::endl;
-                    return vi->second;
-                }
-            }
-
-            command_list getCommands(){
-                return commands;
-            }
-
-            void run(){
-                std::cout << "Inicializando leitura dos nós" << std::endl;
-                for (int i = 0; i < nodes.size(); i++){
-                    nodes[i]->evaluate();
-                }
-                std::cout << "Finalizando leitura dos nós" << std::endl;
-            }
+            ~TreeManage();
+            void clearNodes();
+            bool existsVariable(const std::string &variable_name);
+            double getVariable(const std::string &variable_name);
+            command_list getCommands();
+            void run();
     };
 
     class NodeAssignment : public Node {

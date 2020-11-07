@@ -40,7 +40,7 @@ unsigned int Interpreter::location() const {
     return m_location;
 }
 
-std::vector<std::pair<std::string, double>> Interpreter::get_commands(){
+command_list Interpreter::get_commands(){
     manage->run();
     return manage->getCommands();
 }

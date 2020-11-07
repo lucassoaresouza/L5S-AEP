@@ -27,7 +27,7 @@ namespace Compiler {
             TreeManage* get_manage();
             std::string str() const;
             void switchInputStream(std::istream *is);
-            std::vector<std::pair<std::string, double>> get_commands();
+            command_list get_commands();
             friend class Parser;
             friend class Scanner;
         

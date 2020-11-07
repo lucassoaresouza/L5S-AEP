@@ -17,7 +17,7 @@ class AEPCompiler{
     public:
         AEPCompiler(){};
         ~AEPCompiler(){};
-        std::vector<std::pair<std::string, double>> run(std::string);
+        command_list run(std::string);
         void clear();
 
 };

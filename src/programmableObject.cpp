@@ -13,7 +13,7 @@ ProgrammableObject::ProgrammableObject(
 }
 
 void ProgrammableObject::add_commands(
-    std::vector<std::pair<std::string, double>> new_commands
+    command_list new_commands
 ){
     commands = new_commands;
 }

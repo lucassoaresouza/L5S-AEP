@@ -5,14 +5,14 @@
 #include <iostream>
 #include <string>
 
-#include "../compiler/command.hpp"
+#include "../compiler/syntaticTree.hpp"
 #include "../engine/inc/game.hpp"
 #include "../engine/inc/gameObject.hpp"
 #include "../engine/inc/log.hpp"
 
 class ProgrammableObject : public Engine::GameObject{
     private:
-        std::vector<std::pair<std::string, double>> commands;
+        command_list commands;
         int direction_angle; // degrees
         std::pair<int, int> orientation; // first = x, second = y
         bool running = false;
@@ -29,7 +29,7 @@ class ProgrammableObject : public Engine::GameObject{
         );
         ~ProgrammableObject();
         void draw();
-        void add_commands(std::vector<std::pair<std::string, double>> new_commands);
+        void add_commands(command_list new_commands);
         void run_commands();
 
         //Basic commands
