@@ -86,9 +86,5 @@ int main(int, char**){
     //load and run!
     game.load_objects();
     game.run();
-    // Compiler::Node* a = new Compiler::NodeConst(2);
-    // Compiler::Node* b = new Compiler::NodeConst(5);
-    // Compiler::NodeCalc* c = new Compiler::NodeCalc(a,b,'^');
-    // std::cout << "valor-> " << c->evaluate() << std::endl;
     return 0;
 }

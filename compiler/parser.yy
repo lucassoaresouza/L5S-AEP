@@ -54,8 +54,8 @@
 %token <double> DOUBLE "decimal";
 %token RIGHTBRACE "chave \'{\'";
 %token LEFTBRACE "chave \'}\'";
-%token RIGHTPAR "chave \'(\'";
-%token LEFTPAR "chave \')\'";
+%token RIGHTPAR "parentese \'(\'";
+%token LEFTPAR "parentese \')\'";
 %token END 0 "fim do arquivo";
 %token EOL "fim da linha";
 %token COMMA "virgula \',\'";
@@ -72,7 +72,8 @@
 %type <Compiler::Node*> constant boolean variable;
 %type <Compiler::Node*> boolexp logicalexp;
 %type <Compiler::Node*> block;
-%type <Compiler::Node*>  ifblock repeatblock;
+%type <Compiler::Node*> ifblock repeatblock;
+%type <Compiler::Node*> command;
 %type <std::vector<Compiler::Node*>> context;
 %type <Compiler::Node*> assignment;
 
@@ -113,6 +114,10 @@ context     : {
                 $1.push_back($2);
                 $$ = $1;
             };
+            | context command SEMICOLON {
+                $1.push_back($2);
+                $$ = $1;
+            }
 
 block   : LEFTBRACE context RIGHTBRACE {
             NodeBlock* node  = new NodeBlock();
@@ -142,6 +147,19 @@ repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
                     NodeRepeat* node = new NodeRepeat($3, $5);
                     $$ = node;
                 };
+
+command     : NORTH LEFTPAR expr RIGHTPAR {
+                $$ = new NodeCommand($3, "NORTH");
+            };
+            | EAST LEFTPAR expr RIGHTPAR {
+                $$ = new NodeCommand($3, "EAST");
+            };
+            | WEST LEFTPAR expr RIGHTPAR {
+                $$ = new NodeCommand($3, "WEST");
+            };
+            | SOUTH LEFTPAR expr RIGHTPAR {
+                $$ = new NodeCommand($3, "SOUTH");
+            };
 
 constant    : INTEGER {
                 $$ = new NodeConst($1);

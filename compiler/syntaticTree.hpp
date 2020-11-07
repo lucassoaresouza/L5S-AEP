@@ -33,6 +33,25 @@ namespace Compiler {
             }
     };
 
+    class NodeCommand : public Node {
+        private:
+            Node* atribute;
+            std::string type;
+        public:
+            NodeCommand(Node* _atribute, std::string _type){
+                atribute = _atribute;
+                type = _type;
+            }
+            std::string get_type(){
+                return type;
+            }
+            double evaluate(){
+                double value = atribute->evaluate();
+                std::cout << "|tipo: " << type << " |valor: " << value << std::endl;
+                return 0;
+            }
+    };
+
     class NodeBool : public Node {
         private:
             bool value = false;
@@ -158,7 +177,7 @@ namespace Compiler {
             double evaluate(){
                 std::cout << "===============INICIO===============" << std::endl;
                 for (int i = 0; i < nodes.size(); i++){
-                    std::cout << "evaluated: " << nodes[i]->evaluate() << std::endl;
+                    std::cout << "\nevaluated: " << nodes[i]->evaluate() << std::endl;
                 }
                 std::cout << "=================FIM================" << std::endl;
                 return 0;
