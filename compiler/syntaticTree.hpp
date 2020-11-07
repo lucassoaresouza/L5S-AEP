@@ -243,9 +243,11 @@ namespace Compiler {
             }
 
             void run(){
+                std::cout << "Inicializando leitura dos nós" << std::endl;
                 for (int i = 0; i < nodes.size(); i++){
                     nodes[i]->evaluate();
                 }
+                std::cout << "Finalizando leitura dos nós" << std::endl;
             }
     };
 
@@ -298,11 +300,19 @@ namespace Compiler {
                 type = _type;
                 manage = _manage;
             }
+            NodeCommand(std::string _type, TreeManage* _manage){
+                atribute = NULL;
+                type = _type;
+                manage = _manage;
+            }
             std::string get_type(){
                 return type;
             }
             double evaluate(){
-                double value = atribute->evaluate();
+                double value = 0;
+                if(atribute){
+                    value = atribute->evaluate();
+                }
                 std::pair <std::string, double> command(type, value);
                 manage->commands.push_back(command);
                 std::cout << "|tipo: " << type << " |valor: " << value << std::endl;

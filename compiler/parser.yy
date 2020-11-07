@@ -63,7 +63,7 @@
 
 %token POWERSYM MULTSYM DIVSYM SUMSYM SUBSYM ASSIGNER;
 %token LESS GREATER EQUAL GREATEREQUAL LESSEQUAL;
-%token NORTH SOUTH WEST EAST;
+%token NORTH SOUTH WEST EAST ACTIVATE;
 %token IF ELSE REPEAT;
 %token TRUE FALSE;
 %token AND OR;
@@ -164,6 +164,10 @@ command     : NORTH LEFTPAR expr RIGHTPAR {
                 TreeManage* manage = driver.get_manage();
                 $$ = new NodeCommand($3, "SOUTH", manage);
             };
+            | ACTIVATE LEFTPAR RIGHTPAR {
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeCommand("ACTIVATE", manage);
+            }
 
 constant    : INTEGER {
                 $$ = new NodeConst($1);

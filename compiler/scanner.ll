@@ -25,7 +25,7 @@ sigaNorte   {
                 return Compiler::Parser::make_NORTH(Compiler::location()); 
             }
 
-sigaSul     { 
+sigaSul { 
                 return Compiler::Parser::make_SOUTH(Compiler::location()); 
             }
 
@@ -35,6 +35,10 @@ sigaLeste   {
 
 sigaOeste   { 
                 return Compiler::Parser::make_WEST(Compiler::location()); 
+            }
+
+ativar      {
+                return Compiler::Parser::make_ACTIVATE(Compiler::location());
             }
 
 VDD         {
@@ -93,11 +97,11 @@ repita      {
                 return Compiler::Parser::make_POWERSYM(Compiler::location());
             }
 
-\*           {
+\*          {
                 return Compiler::Parser::make_MULTSYM(Compiler::location());
             }
 
-\/           {
+\/          {
                 return Compiler::Parser::make_DIVSYM(Compiler::location());
             }
 
