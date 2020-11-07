@@ -170,15 +170,24 @@ namespace Compiler {
         private:
             Node* boolexp;
             Node* ifblock;
+            Node* elseblock;
 
         public:
             NodeIf(Node* _boolexp, Node* _ifblock){
                 boolexp = _boolexp;
                 ifblock = _ifblock;
+                elseblock = NULL;
+            }
+            NodeIf(Node* _boolexp, Node* _ifblock, Node* _elseblock){
+                boolexp = _boolexp;
+                ifblock = _ifblock;
+                elseblock = _elseblock;
             }
             double evaluate(){
                 if(boolexp->evaluate()){
                     return ifblock->evaluate();
+                } else if(elseblock){
+                    elseblock->evaluate();
                 }
                 return 0;
             }

@@ -142,6 +142,22 @@ ifblock     : IF LEFTPAR boolexp RIGHTPAR block {
                 NodeIf* node = new NodeIf($3, $5);
                 $$ = node;
             };
+            | IF LEFTPAR boolexp RIGHTPAR block ELSE block{
+                NodeIf* node = new NodeIf($3, $5, $7);
+                $$ = node;
+            };
+            | IF LEFTPAR boolean RIGHTPAR block ELSE block{
+                NodeIf* node = new NodeIf($3, $5, $7);
+                $$ = node;
+            };
+            | IF LEFTPAR logicalexp RIGHTPAR block ELSE block{
+                NodeIf* node = new NodeIf($3, $5, $7);
+                $$ = node;
+            };
+            | IF LEFTPAR variable RIGHTPAR block ELSE block{
+                NodeIf* node = new NodeIf($3, $5, $7);
+                $$ = node;
+            };
 
 repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
                     NodeRepeat* node = new NodeRepeat($3, $5);
