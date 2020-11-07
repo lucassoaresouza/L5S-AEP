@@ -6,7 +6,6 @@
 using namespace Compiler;
 
 Interpreter::Interpreter() :
-    m_commands(),
     m_scanner(*this),
     m_parser(m_scanner, *this),
     m_location(0),
@@ -20,28 +19,16 @@ int Interpreter::parse() {
 
 void Interpreter::clear(){
     m_location = 0;
-    m_commands.clear();
     manage->clearNodes();
 }
 
 std::string Interpreter::str() const {
-    // std::cout << "Estou na string do interpretador" << std::endl;
-
-    std::stringstream s;
-    // s << "Interpreter: " << m_commands.size() << " commands received from command line." << endl;
-    for(int i = 0; i < m_commands.size(); i++) {
-        s << " * " << m_commands[i].str() << endl;
-    }
-    return s.str();
+    return "string";
 }
 
 void Interpreter::switchInputStream(std::istream *is){
     m_scanner.switch_streams(is, NULL);
     m_commands.clear();
-}
-
-void Interpreter::addCommand(const Command &cmd){
-    m_commands.push_back(cmd);
 }
 
 void Interpreter::increaseLocation(unsigned int loc){
@@ -53,9 +40,9 @@ unsigned int Interpreter::location() const {
     return m_location;
 }
 
-std::vector<Command> Interpreter::get_commands(){
+std::vector<std::pair<std::string, double>> Interpreter::get_commands(){
     manage->run();
-    return m_commands;
+    return manage->getCommands();
 }
 
 TreeManage* Interpreter::get_manage(){

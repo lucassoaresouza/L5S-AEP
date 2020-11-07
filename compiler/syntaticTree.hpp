@@ -33,25 +33,6 @@ namespace Compiler {
             }
     };
 
-    class NodeCommand : public Node {
-        private:
-            Node* atribute;
-            std::string type;
-        public:
-            NodeCommand(Node* _atribute, std::string _type){
-                atribute = _atribute;
-                type = _type;
-            }
-            std::string get_type(){
-                return type;
-            }
-            double evaluate(){
-                double value = atribute->evaluate();
-                std::cout << "|tipo: " << type << " |valor: " << value << std::endl;
-                return 0;
-            }
-    };
-
     class NodeBool : public Node {
         private:
             bool value = false;
@@ -224,8 +205,10 @@ namespace Compiler {
     class TreeManage {
         public:
             typedef std::map<std::string, double> variablemap_type;
+            typedef std::vector<std::pair<std::string, double>> command_list;
             std::vector<Node*> nodes;
             variablemap_type variables;
+            command_list commands;
 
             ~TreeManage(){
                 clearNodes();
@@ -237,6 +220,7 @@ namespace Compiler {
                 }
                 variables.clear();
                 nodes.clear();
+                commands.clear();
             }
 
             bool existsVariable(const std::string &variable_name){
@@ -252,6 +236,10 @@ namespace Compiler {
                     std::cout << "Variavel: " << vi->first << " valor: " << vi->second << std::endl;
                     return vi->second;
                 }
+            }
+
+            command_list getCommands(){
+                return commands;
             }
 
             void run(){
@@ -296,6 +284,29 @@ namespace Compiler {
                 } else {
                     return 0;
                 }
+            }
+    };
+
+    class NodeCommand : public Node {
+        private:
+            Node* atribute;
+            std::string type;
+            TreeManage* manage;
+        public:
+            NodeCommand(Node* _atribute, std::string _type, TreeManage* _manage){
+                atribute = _atribute;
+                type = _type;
+                manage = _manage;
+            }
+            std::string get_type(){
+                return type;
+            }
+            double evaluate(){
+                double value = atribute->evaluate();
+                std::pair <std::string, double> command(type, value);
+                manage->commands.push_back(command);
+                std::cout << "|tipo: " << type << " |valor: " << value << std::endl;
+                return 0;
             }
     };
 

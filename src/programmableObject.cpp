@@ -13,7 +13,7 @@ ProgrammableObject::ProgrammableObject(
 }
 
 void ProgrammableObject::add_commands(
-    std::vector<Compiler::Command> new_commands
+    std::vector<std::pair<std::string, double>> new_commands
 ){
     commands = new_commands;
 }
@@ -95,20 +95,20 @@ void ProgrammableObject::run_commands(){
 
 void ProgrammableObject::execute(){
     if(command_index < commands.size() && running == true){
-        std::string command_name = commands[command_index].name();
-        std::vector<uint64_t> args = commands[command_index].get_args();
+        std::string command_name = commands[command_index].first;
+        double arg = commands[command_index].second;
         if(command_name == "NORTH"){
             set_direction("NORTH");
-            move(args[0]);
+            move(arg);
         } else if(command_name == "SOUTH"){
             set_direction("SOUTH");
-            move(args[0]);
+            move(arg);
         } else if(command_name == "WEST"){
             set_direction("WEST");
-            move(args[0]);
+            move(arg);
         } else if(command_name == "EAST"){
             set_direction("EAST");
-            move(args[0]);
+            move(arg);
         }
     } else {
         set_initial_state();

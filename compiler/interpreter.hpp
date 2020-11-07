@@ -17,8 +17,6 @@ namespace Compiler {
             std::vector<Command> m_commands;
             TreeManage* manage = NULL;
             unsigned int m_location;
-        
-            void addCommand(const Command &cmd);
             void increaseLocation(unsigned int loc);
             unsigned int location() const;
 
@@ -29,7 +27,7 @@ namespace Compiler {
             TreeManage* get_manage();
             std::string str() const;
             void switchInputStream(std::istream *is);
-            std::vector<Command> get_commands();
+            std::vector<std::pair<std::string, double>> get_commands();
             friend class Parser;
             friend class Scanner;
         

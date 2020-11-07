@@ -149,16 +149,20 @@ repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
                 };
 
 command     : NORTH LEFTPAR expr RIGHTPAR {
-                $$ = new NodeCommand($3, "NORTH");
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeCommand($3, "NORTH", manage);
             };
             | EAST LEFTPAR expr RIGHTPAR {
-                $$ = new NodeCommand($3, "EAST");
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeCommand($3, "EAST", manage);
             };
             | WEST LEFTPAR expr RIGHTPAR {
-                $$ = new NodeCommand($3, "WEST");
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeCommand($3, "WEST", manage);
             };
             | SOUTH LEFTPAR expr RIGHTPAR {
-                $$ = new NodeCommand($3, "SOUTH");
+                TreeManage* manage = driver.get_manage();
+                $$ = new NodeCommand($3, "SOUTH", manage);
             };
 
 constant    : INTEGER {

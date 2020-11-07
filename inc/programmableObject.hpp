@@ -12,7 +12,7 @@
 
 class ProgrammableObject : public Engine::GameObject{
     private:
-        std::vector<Compiler::Command> commands;
+        std::vector<std::pair<std::string, double>> commands;
         int direction_angle; // degrees
         std::pair<int, int> orientation; // first = x, second = y
         bool running = false;
@@ -29,7 +29,7 @@ class ProgrammableObject : public Engine::GameObject{
         );
         ~ProgrammableObject();
         void draw();
-        void add_commands(std::vector<Compiler::Command> new_commands);
+        void add_commands(std::vector<std::pair<std::string, double>> new_commands);
         void run_commands();
 
         //Basic commands
