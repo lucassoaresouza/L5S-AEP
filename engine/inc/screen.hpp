@@ -11,15 +11,16 @@
 
 #include "log.hpp"
 #include "gameObject.hpp"
+#include "inputReceiver.hpp"
 
 namespace Engine {
     class Screen {
         private:
             std::string name;
             std::vector<GameObject*> objects;
-        
+            InputReceiver& input_receiver = InputReceiver::get_instance();
+
         public:
-            // Screen(){};
             Screen(std::string screen_name);
             ~Screen(){};
             void set_name(std::string screen_name);

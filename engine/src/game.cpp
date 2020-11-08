@@ -25,6 +25,7 @@ Game& Game::initialize(
         instance = new Game();
         instance->set_information(game_name, window_dimensions);
         instance->init();
+        instance->screen_manage = new ScreenManage();
     }
     return *instance;
 }
@@ -89,7 +90,7 @@ void Game::run(){
         read_input();
         SDL_SetRenderDrawColor(renderer, 0xD3, 0xD3, 0xD3, 0x00);
         SDL_RenderClear(renderer);
-        draw_objects();
+        draw_screen();
         SDL_RenderPresent(renderer);
     }
     close();
@@ -115,17 +116,21 @@ std::pair<int, int> Game::get_window_dimensions(){
   return window_dimensions;
 }
 
-void Game::add_object(GameObject* object){
-    objects.push_back(object);
-    input_receiver.register_observer(object);
+void Game::load_screen(std::string screen_name){
+    actual_screen = screen_manage->get_screen(screen_name);
+    if(actual_screen){
+        actual_screen->load();
+    } else {
+        Log().print("Screen not found!");
+    }
 }
 
-void Game::load_objects(){
-    screen->load();
-}
-
-void Game::draw_objects(){
-    screen->draw();
+void Game::draw_screen(){
+    if(actual_screen){
+        actual_screen->draw();
+    } else {
+        Log().print("Screen not found!");
+    }
 }
 
 void Game::read_input(){
@@ -133,4 +138,8 @@ void Game::read_input(){
     if(input_receiver.get_last_input()->type == SDL_QUIT){
         quit = true;
     }
+}
+
+void Game::add_screen(Screen* screen){
+    screen_manage->add_screen(screen);
 }
