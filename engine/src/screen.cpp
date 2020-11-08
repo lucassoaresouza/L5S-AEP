@@ -2,6 +2,10 @@
 
 using namespace Engine;
 
+Screen::Screen(){
+    name = "default";
+}
+
 Screen::Screen(std::string screen_name){
     name = screen_name;
 }
