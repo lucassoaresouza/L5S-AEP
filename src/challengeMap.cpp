@@ -20,8 +20,11 @@ bool ChallengeMap::read_file(){
         if(line != "" && line[0] != '#'){
             iss >> columns;
             iss >> lines;
+            iss >> spacing;
+            add_background(columns, lines, spacing);
             int index_line = 0;
             while(getline(map_file, line)){
+                int size_with_spacing = 32 + spacing;
                 if(line != "" && line[0] != '#'){
                     std::pair<int,int> aux_position;
                     std::pair<int, int> aux_size(32,32);
@@ -36,8 +39,12 @@ bool ChallengeMap::read_file(){
                             "_" +
                             std::to_string(i)
                         );
-                        aux_position.first = position.first + i * 32;
-                        aux_position.second = position.second + index_line * 32;
+                        aux_position.first = (
+                            position.first + i * size_with_spacing
+                        );
+                        aux_position.second = (
+                            position.second + index_line * size_with_spacing
+                        );
                         aux_field = new Engine::Field(
                             tile_name,
                             aux_position,
@@ -77,4 +84,22 @@ void ChallengeMap::draw(){
     for(auto tile : tiles){
         tile->draw();
     }
+}
+
+void ChallengeMap::add_background(int columns, int lines, int spacing){
+    int size_with_spacing = 32 + spacing;
+    std::pair<int, int> background_size(
+        (columns * size_with_spacing) + spacing,
+        (lines * size_with_spacing) + spacing
+    );
+
+    std::pair<int, int> background_position(position.first - spacing, position.second - spacing);
+
+    Engine::Field* background_field = new Engine::Field(
+        "background_field",
+        background_position,
+        background_size
+    );
+    background_field->set_color(0x0, 0x0, 0x0, 0x0);
+    tiles.push_back(background_field);
 }

@@ -15,6 +15,8 @@ class ChallengeMap : public Engine::GameObject{
         std::vector<Engine::Field*> tiles;
         int columns = 0;
         int lines = 0;
+        int spacing = 0;
+
         bool read_file();
         bool load_tiles();
         void draw_tiles();
@@ -26,6 +28,7 @@ class ChallengeMap : public Engine::GameObject{
             std::string path
         );
         ~ChallengeMap(){};
+        void add_background(int columns, int lines, int spacing);
         bool load();
         void draw();
 };
