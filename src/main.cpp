@@ -7,6 +7,7 @@
 #include "../engine/inc/textField.hpp"
 #include "../engine/inc/button.hpp"
 #include "../engine/inc/field.hpp"
+#include "../engine/inc/screen.hpp"
 
 #include "../compiler/interpreter.hpp"
 #include "../compiler/command.hpp"
@@ -28,6 +29,9 @@ int main(int, char**){
     std::string game_name="AEP";
     std::pair<int,int> window_size(1024,768);
     Game& game = Game::initialize(game_name, window_size);
+    
+    //screen
+    Screen* screen = new Screen("teste-1");
 
     //field
     std::string map_name="map";
@@ -36,7 +40,7 @@ int main(int, char**){
     // std::pair<int, int> field_size(19*32, 15*32);
     ChallengeMap* map = new ChallengeMap(map_name, map_posititon, map_path);
     // field->set_color(0xFF, 0xFF, 0xFF, 0xFF);
-    game.add_object(map);
+    screen->add_object(map);
 
     //console field
     std::string console_name="console";
@@ -44,7 +48,7 @@ int main(int, char**){
     std::pair<int, int> console_size(19*32, 181);
     Field* console = new Field(console_name, console_posititon, console_size);
     console->set_color(0x99, 0x99, 0x99, 0x99);
-    game.add_object(console);
+    screen->add_object(console);
 
     //aviao
     std::string object_name="aviao";
@@ -56,7 +60,7 @@ int main(int, char**){
         object_size
     );
     obj_1->set_sprite("./assets/bots/B-25c.png");
-    game.add_object(obj_1);
+    screen->add_object(obj_1);
 
     //textfield
     std::string object_name2="textfield";
@@ -64,7 +68,7 @@ int main(int, char**){
     TextField* obj_2 = new TextField(object_name2, object_position2, 35, 40);
     obj_2->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     obj_2->set_font_color(0x00, 0x00, 0x00, 0x00);
-    game.add_object(obj_2);
+    screen->add_object(obj_2);
 
     //compiler
     AEPCompiler* compiler = new AEPCompiler();
@@ -81,9 +85,10 @@ int main(int, char**){
     button->set_compiler(compiler);
     button->set_programmable(obj_1);
     button->set_text_field(obj_2);
-    game.add_object(button);
+    screen->add_object(button);
 
     //load and run!
+    game.screen = screen;
     game.load_objects();
     game.run();
     return 0;

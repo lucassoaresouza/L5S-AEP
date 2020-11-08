@@ -33,7 +33,6 @@ void Interpreter::switchInputStream(std::istream *is){
 
 void Interpreter::increaseLocation(unsigned int loc){
     m_location += loc;
-    // cout << "mudando localizador do leitor de input:" << loc << ", total = " << m_location << endl;
 }
 
 unsigned int Interpreter::location() const {

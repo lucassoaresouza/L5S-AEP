@@ -13,6 +13,7 @@
 #include "textField.hpp"
 #include "log.hpp"
 #include "gameObject.hpp"
+#include "screen.hpp"
 
 namespace Engine {
     class Game {
@@ -32,6 +33,7 @@ namespace Engine {
             void set_information(std::string, std::pair<int,int>);
 
         public:
+            Screen* screen = NULL;
             bool quit = false; //TODO remover essa gambiarra
             ~Game(){};
             static Game& get_instance();

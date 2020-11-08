@@ -121,15 +121,11 @@ void Game::add_object(GameObject* object){
 }
 
 void Game::load_objects(){
-    for(auto object : objects){
-        object->load();
-    }
+    screen->load();
 }
 
 void Game::draw_objects(){
-    for(auto object : objects){
-        object->draw();
-    }
+    screen->draw();
 }
 
 void Game::read_input(){
