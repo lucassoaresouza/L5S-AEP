@@ -12,6 +12,7 @@
 
 class ProgrammableObject : public Engine::GameObject{
     private:
+        std::pair<int, int> initial_position;
         command_list commands;
         int direction_angle; // degrees
         std::pair<int, int> orientation; // first = x, second = y

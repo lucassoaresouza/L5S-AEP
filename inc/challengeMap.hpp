@@ -13,15 +13,17 @@ class ChallengeMap : public Engine::GameObject{
     private:
         std::string map_path;
         std::vector<Engine::Field*> tiles;
-        int columns = 0;
-        int lines = 0;
-        int spacing = 0;
+        int columns = 17;
+        int lines = 14;
+        int spacing = 1;
+        int tile_quad_size = 32;
+        std::pair<int, int> possible_positions[14][17];
 
         bool read_file();
         bool load_tiles();
         void draw_tiles();
-        void add_background(int columns, int lines, int spacing);
-        void add_table_border(int columns, int lines, int spacing);
+        void add_background();
+        void add_table_border();
 
     public:
         ChallengeMap(
@@ -32,6 +34,9 @@ class ChallengeMap : public Engine::GameObject{
         ~ChallengeMap(){};
         bool load();
         void draw();
+        std::pair<int,int> get_possible_position(int x, int y){
+            return possible_positions[x][y];
+        }
 };
 
 #endif

@@ -10,6 +10,7 @@ ProgrammableObject::ProgrammableObject(
     set_position(object_position);
     set_size(object_size);
     set_direction("NORTH");
+    initial_position = object_position;
 }
 
 void ProgrammableObject::add_commands(
@@ -116,8 +117,7 @@ void ProgrammableObject::execute(){
 }
 
 void ProgrammableObject::set_initial_state(){
-    std::pair<int, int>position(405+(7*32),450);
-    set_position(position);
+    set_position(initial_position);
     set_direction("NORTH");
     commands.clear();
     expected_x = 0;

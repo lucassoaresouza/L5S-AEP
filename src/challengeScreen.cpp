@@ -12,7 +12,6 @@ void ChallengeScreen::init(){
     std::pair<int, int> map_posititon(405, 10);
     std::string map_path = "./levels/level_one/challenge_a.aep";
     ChallengeMap* map = new ChallengeMap(map_name, map_posititon, map_path);
-
     // //Console initialization
     // std::string console_name="console";
     // std::pair<int, int> console_posititon(405, ((15*32)+15));
@@ -22,7 +21,8 @@ void ChallengeScreen::init(){
 
     //Player initialization
     std::string player_object_name="aviao";
-    std::pair<int, int> player_object_position(700, 450);
+    std::pair<int, int> player_object_position;
+    player_object_position = map->get_possible_position(13,7);
     std::pair<int, int> player_object_size(32, 32);
     ProgrammableObject* player_object = new ProgrammableObject(
         player_object_name,
