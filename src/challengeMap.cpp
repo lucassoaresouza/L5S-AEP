@@ -22,6 +22,7 @@ bool ChallengeMap::read_file(){
             iss >> lines;
             iss >> spacing;
             add_background(columns, lines, spacing);
+            add_table_border(columns, lines, spacing);
             int index_line = 0;
             while(getline(map_file, line)){
                 int size_with_spacing = 32 + spacing;
@@ -40,7 +41,7 @@ bool ChallengeMap::read_file(){
                             std::to_string(i)
                         );
                         aux_position.first = (
-                            position.first + i * size_with_spacing
+                            position.first + (i + 1) * size_with_spacing
                         );
                         aux_position.second = (
                             position.second + index_line * size_with_spacing
@@ -88,6 +89,8 @@ void ChallengeMap::draw(){
 
 void ChallengeMap::add_background(int columns, int lines, int spacing){
     int size_with_spacing = 32 + spacing;
+    columns += 1;
+    lines += 1;
     std::pair<int, int> background_size(
         (columns * size_with_spacing) + spacing,
         (lines * size_with_spacing) + spacing
@@ -102,4 +105,35 @@ void ChallengeMap::add_background(int columns, int lines, int spacing){
     );
     background_field->set_color(0x0, 0x0, 0x0, 0x0);
     tiles.push_back(background_field);
+}
+
+void ChallengeMap::add_table_border(int columns, int lines, int spacing){
+
+    //Add border lines
+    std::pair<int, int> border_position(position.first, position.second);
+    for(int i = 0; i < lines ; i++){
+        border_position.second = position.second + i * 33;
+        Engine::Field* border_line_field = new Engine::Field(
+            "border_field",
+            border_position,
+            std::pair<int,int>(32,32)
+        );
+        border_line_field->set_color(0xFFF, 0xFFF, 0xFFF, 0xFFF);
+        tiles.push_back(border_line_field);
+    }
+
+    //Add border columns
+    border_position.first = position.first;
+    border_position.second =  2 + position.second * (lines + (32 + spacing));
+    for(int i = 0; i < columns ; i++){
+        border_position.first = position.first + (i + 1) * (32 + spacing);
+        Engine::Field* border_column_field = new Engine::Field(
+            "border_field",
+            border_position,
+            std::pair<int,int>(32,32)
+        );
+        border_column_field->set_color(0xFFF, 0xFFF, 0xFFF, 0xFFF);
+        tiles.push_back(border_column_field);
+    }
+
 }

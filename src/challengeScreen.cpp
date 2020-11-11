@@ -13,12 +13,12 @@ void ChallengeScreen::init(){
     std::string map_path = "./levels/level_one/challenge_a.aep";
     ChallengeMap* map = new ChallengeMap(map_name, map_posititon, map_path);
 
-    //Console initialization
-    std::string console_name="console";
-    std::pair<int, int> console_posititon(405, ((15*32)+15));
-    std::pair<int, int> console_size(19*32, 181);
-    Field* console = new Field(console_name, console_posititon, console_size);
-    console->set_color(0x99, 0x99, 0x99, 0x99);
+    // //Console initialization
+    // std::string console_name="console";
+    // std::pair<int, int> console_posititon(405, ((15*32)+15));
+    // std::pair<int, int> console_size(19*32, 181);
+    // Field* console = new Field(console_name, console_posititon, console_size);
+    // console->set_color(0x99, 0x99, 0x99, 0x99);
 
     //Player initialization
     std::string player_object_name="aviao";
@@ -58,7 +58,7 @@ void ChallengeScreen::init(){
     add_object(map);
     add_object(player_object);
     add_object(text_field);
-    add_object(console);
+    // add_object(console);
     add_object(button);
 }
 

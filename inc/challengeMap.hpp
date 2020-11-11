@@ -20,6 +20,8 @@ class ChallengeMap : public Engine::GameObject{
         bool read_file();
         bool load_tiles();
         void draw_tiles();
+        void add_background(int columns, int lines, int spacing);
+        void add_table_border(int columns, int lines, int spacing);
 
     public:
         ChallengeMap(
@@ -28,7 +30,6 @@ class ChallengeMap : public Engine::GameObject{
             std::string path
         );
         ~ChallengeMap(){};
-        void add_background(int columns, int lines, int spacing);
         bool load();
         void draw();
 };
