@@ -107,3 +107,8 @@ void Field::draw(){
 void Field::set_bold(bool bold){
     is_bold = bold;
 }
+
+void Field::free(){
+    SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(font_texture);
+}

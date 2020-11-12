@@ -35,6 +35,7 @@ namespace Engine{
             void set_bold(bool bold);
             bool load();
             void draw();
+            void free();
 
     };
 }
