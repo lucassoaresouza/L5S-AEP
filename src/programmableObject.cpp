@@ -85,6 +85,9 @@ void ProgrammableObject::move(int distance, int displacement){
         expected_x = 0;
         expected_y = 0;
     }
+    if(!verify_limits()){
+        set_initial_state();
+    }
 }
 
 void ProgrammableObject::run_commands(){
@@ -129,4 +132,24 @@ void ProgrammableObject::set_initial_state(){
 
 void ProgrammableObject::set_initial_position(std::pair<int, int> initial){
     initial_position = initial;
+}
+
+void ProgrammableObject::set_limits(
+    std::pair<int, int> min, std::pair<int,int> max
+){
+    limits.first = min;
+    limits.second = max;
+}
+
+bool ProgrammableObject::verify_limits(){
+    if(
+        position.first < limits.first.first ||
+        position.second < limits.first.second ||
+        position.first > limits.second.first ||
+        position.second > limits.second.second
+    ){
+        std::cout << "DEU RUIM" << std::endl;
+        return false;
+    }
+    return true;
 }

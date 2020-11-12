@@ -39,6 +39,7 @@ class ChallengeMap : public Engine::GameObject{
         std::pair<int,int> get_possible_position(int x, int y){
             return possible_positions[x][y];
         }
+        std::pair<std::pair<int, int>,std::pair<int, int>> get_limits();
 };
 
 #endif

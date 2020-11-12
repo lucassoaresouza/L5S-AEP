@@ -117,7 +117,6 @@ std::pair<int, int> Game::get_window_dimensions(){
 }
 
 void Game::load_screen(std::string screen_name){
-    std::cout << "PRINTA!!" << std::endl;
     actual_screen = screen_manage->get_screen(screen_name);
     if(actual_screen){
         actual_screen->load();

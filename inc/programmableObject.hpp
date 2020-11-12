@@ -22,7 +22,13 @@ class ProgrammableObject : public Engine::GameObject{
         int expected_y = 0;
         int move_displacement = 33;
         int pivot_displacement = 33;
+        std::pair<std::pair<int, int>, std::pair<int, int>> limits = std::make_pair(
+            std::make_pair(0,0),
+            std::make_pair(1024,1024)
+        );
+
         void set_initial_state();
+        bool verify_limits();
 
     public:
         ProgrammableObject(
@@ -39,7 +45,7 @@ class ProgrammableObject : public Engine::GameObject{
         void set_initial_position(std::pair<int, int> initial);
         void set_direction(std::string new_direction);
         void move(int distance, int displacement);
-
+        void set_limits(std::pair<int, int> min, std::pair<int,int> max);
         void execute();
 };
 

@@ -12,6 +12,8 @@ void ChallengeScreen::init(){
     std::pair<int, int> map_posititon(405, 10);
     std::string map_path = "./levels/level_one/challenge_a.aep";
     ChallengeMap* map = new ChallengeMap(map_name, map_posititon, map_path);
+    std::pair<std::pair<int, int>,std::pair<int, int>> limits = map->get_limits();
+
     // //Console initialization
     // std::string console_name="console";
     // std::pair<int, int> console_posititon(405, ((15*32)+15));
@@ -30,6 +32,7 @@ void ChallengeScreen::init(){
         player_object_size
     );
     player_object->set_sprite("./assets/bots/B-25c.png");
+    player_object->set_limits(limits.first, limits.second);
 
     //Textfield initialization
     std::string text_field_name="textfield";

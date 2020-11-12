@@ -165,3 +165,16 @@ void ChallengeMap::column_border(){
         tiles.push_back(border_column_field);
     }
 }
+
+std::pair<std::pair<int, int>,std::pair<int, int>> ChallengeMap::get_limits(){
+    std::pair<std::pair<int, int>,std::pair<int, int>> limits;
+    limits.first = std::make_pair(
+        position.first + tile_quad_size,
+        position.second
+    );
+    limits.second = std::make_pair(
+        position.first + (tile_quad_size * columns),
+        position.second + (tile_quad_size * (lines - 1))
+    );
+    return limits;
+}
