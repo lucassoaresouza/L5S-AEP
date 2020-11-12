@@ -40,6 +40,16 @@ bool Field::load(){
     return true;
 };
 
+void Field::set_font(std::string path, int size){
+        font_path = path;
+        font_size = size;
+        font = TTF_OpenFont(path.c_str(), size);
+}
+
+void Field::set_text(std::string new_text){
+    text = new_text;
+}
+
 void Field::draw(){
     Game& game = Game::get_instance();
     SDL_Rect rect = {
@@ -48,15 +58,52 @@ void Field::draw(){
         size.first,
         size.second, 
     };
-    SDL_SetRenderDrawColor(
-        game.get_renderer(),
-        color.r,
-        color.g,
-        color.b,
-        color.a 
-    );        
-    SDL_RenderFillRect(game.get_renderer(), &rect);
+
+    if(sprite == ""){
+        SDL_SetRenderDrawColor(
+            game.get_renderer(),
+            color.r,
+            color.g,
+            color.b,
+            color.a 
+        );        
+        SDL_RenderFillRect(game.get_renderer(), &rect);
+    }
+
     if(texture != NULL){
         SDL_RenderCopy(game.get_renderer(), texture, NULL, &rect);
     }
+
+    if(font != NULL){
+        if(is_bold){
+            TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+        }
+        SDL_Surface* font_surface = NULL;
+        font_surface = TTF_RenderText_Blended(
+            font,
+            text.c_str(),
+            color
+        );
+        SDL_Texture *font_texture = SDL_CreateTextureFromSurface(
+            game.get_renderer(),
+            font_surface
+        );
+        SDL_Rect renderQuad = {
+            position.first + (size.first / 2) - (font_surface->w / 2),
+            position.second + (size.second / 2) - (font_surface->h / 2),
+            font_surface->w,
+            font_surface->h
+        };
+        SDL_FreeSurface(font_surface);
+        SDL_RenderCopy(
+            game.get_renderer(),
+            font_texture,
+            NULL,
+            &renderQuad
+        );
+    }
+}
+
+void Field::set_bold(bool bold){
+    is_bold = bold;
 }

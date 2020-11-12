@@ -110,10 +110,18 @@ void ChallengeMap::add_background(){
 }
 
 void ChallengeMap::add_table_border(){
-    //Add border lines
+    line_border();
+    column_border();
+}
+
+void ChallengeMap::line_border(){
+    SDL_Color color = {0x0, 0x0, 0x0, 0x0};
     std::pair<int, int> border_position(
         position.first, position.second
     );
+    char letter_a_index = 65;
+    std::string aux_string;
+    char aux_index = letter_a_index;
     for(int i = 0; i < lines-1 ; i++){
         border_position.second = position.second + i * 33;
         Engine::Field* border_line_field = new Engine::Field(
@@ -121,11 +129,22 @@ void ChallengeMap::add_table_border(){
             border_position,
             std::pair<int,int>(tile_quad_size,tile_quad_size)
         );
-        border_line_field->set_color(0xFFF, 0xFFF, 0xFFF, 0xFFF);
+        aux_string = "";
+        aux_index = letter_a_index + i;
+        border_line_field->set_bold(true);
+        border_line_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
+        border_line_field->set_text(aux_string + aux_index);
+        border_line_field->set_color(color.r, color.g, color.b, color.a);
+        border_line_field->set_sprite("./assets/tiles/border.png");
         tiles.push_back(border_line_field);
     }
+}
 
-    //Add border columns
+void ChallengeMap::column_border(){
+    SDL_Color color = {0x0, 0x0, 0x0, 0x0};
+    std::pair<int, int> border_position(
+        position.first, position.second
+    );
     border_position.first = position.first;
     border_position.second = (
         position.second + ((lines-1) * (tile_quad_size+spacing))
@@ -139,8 +158,11 @@ void ChallengeMap::add_table_border(){
             border_position,
             std::pair<int,int>(tile_quad_size,tile_quad_size)
         );
-        border_column_field->set_color(0xFFF, 0xFFF, 0xFFF, 0xFFF);
+        border_column_field->set_bold(true);
+        border_column_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
+        border_column_field->set_text(std::to_string(i+1));
+        border_column_field->set_color(color.r, color.g, color.b, color.a);
+        border_column_field->set_sprite("./assets/tiles/border.png");
         tiles.push_back(border_column_field);
     }
-
 }

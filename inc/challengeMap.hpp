@@ -14,16 +14,18 @@ class ChallengeMap : public Engine::GameObject{
         std::string map_path;
         std::vector<Engine::Field*> tiles;
         int columns = 17;
-        int lines = 14;
+        int lines = 17;
         int spacing = 1;
         int tile_quad_size = 32;
-        std::pair<int, int> possible_positions[14][17];
+        std::pair<int, int> possible_positions[17][17];
 
         bool read_file();
         bool load_tiles();
         void draw_tiles();
         void add_background();
         void add_table_border();
+        void line_border();
+        void column_border();
 
     public:
         ChallengeMap(
