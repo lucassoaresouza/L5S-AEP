@@ -24,7 +24,7 @@ void ChallengeScreen::init(){
     //Player initialization
     std::string player_object_name="aviao";
     std::pair<int, int> player_object_position;
-    player_object_position = map->get_possible_position(7,7);
+    player_object_position = map->get_possible_position(11,3);
     std::pair<int, int> player_object_size(32, 32);
     ProgrammableObject* player_object = new ProgrammableObject(
         player_object_name,
