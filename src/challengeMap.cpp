@@ -66,7 +66,6 @@ bool ChallengeMap::read_file(){
                 index_line += 1;
             }
         }
-        std::cout << "oueeeee" << std::endl;
         return true;
     } else {
         Engine::Log().print("Arquivo de desafio nao encontrado!");
