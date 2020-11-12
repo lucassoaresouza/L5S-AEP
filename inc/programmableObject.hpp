@@ -20,6 +20,8 @@ class ProgrammableObject : public Engine::GameObject{
         int command_index = 0;
         int expected_x = 0;
         int expected_y = 0;
+        int move_displacement = 33;
+        int pivot_displacement = 33;
         void set_initial_state();
 
     public:
@@ -34,8 +36,9 @@ class ProgrammableObject : public Engine::GameObject{
         void run_commands();
 
         //Basic commands
+        void set_initial_position(std::pair<int, int> initial);
         void set_direction(std::string new_direction);
-        void move(int distance);
+        void move(int distance, int displacement);
 
         void execute();
 };

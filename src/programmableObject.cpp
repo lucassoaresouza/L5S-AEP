@@ -65,16 +65,17 @@ void ProgrammableObject::set_direction(std::string new_direction){
     }
 }
 
-void ProgrammableObject::move(int distance){
+void ProgrammableObject::move(int distance, int displacement){
+    int real_distance = distance * (move_displacement + displacement);
     if(expected_x == 0 && expected_y == 0 ){
-        expected_x = position.first + distance;
-        expected_y = position.second + distance;
+        expected_x = position.first + real_distance;
+        expected_y = position.second + real_distance;
     }
 
-    position.first += orientation.first * 1;
-    position.second += orientation.second * 1;
-    expected_x -= 1;
-    expected_y -= 1;
+    position.first += orientation.first * 3;
+    position.second += orientation.second * 3;
+    expected_x -= 3;
+    expected_y -= 3;
 
     if(
         position.first >= expected_x ||
@@ -100,16 +101,16 @@ void ProgrammableObject::execute(){
         double arg = commands[command_index].second;
         if(command_name == "NORTH"){
             set_direction("NORTH");
-            move(arg);
+            move(arg, 0);
         } else if(command_name == "SOUTH"){
             set_direction("SOUTH");
-            move(arg);
+            move(arg, pivot_displacement);
         } else if(command_name == "WEST"){
             set_direction("WEST");
-            move(arg);
+            move(arg, 0);
         } else if(command_name == "EAST"){
             set_direction("EAST");
-            move(arg);
+            move(arg, pivot_displacement);
         }
     } else {
         set_initial_state();
@@ -124,4 +125,8 @@ void ProgrammableObject::set_initial_state(){
     expected_y = 0;
     running = false;
     command_index = 0;
+}
+
+void ProgrammableObject::set_initial_position(std::pair<int, int> initial){
+    initial_position = initial;
 }
