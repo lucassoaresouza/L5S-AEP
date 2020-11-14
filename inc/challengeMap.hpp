@@ -18,6 +18,7 @@ class ChallengeMap : public Engine::GameObject{
         int spacing = 1;
         int tile_quad_size = 32;
         std::pair<int, int> possible_positions[15][15];
+        bool completed = false;
 
         bool read_file();
         bool load_tiles();
@@ -40,6 +41,8 @@ class ChallengeMap : public Engine::GameObject{
             return possible_positions[x][y];
         }
         std::pair<std::pair<int, int>,std::pair<int, int>> get_limits();
+        void set_completed(bool status);
+        bool get_completed();
 };
 
 #endif

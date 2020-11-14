@@ -178,3 +178,11 @@ std::pair<std::pair<int, int>,std::pair<int, int>> ChallengeMap::get_limits(){
     );
     return limits;
 }
+
+void ChallengeMap::set_completed(bool status){
+    completed = status;
+}
+
+bool ChallengeMap::get_completed(){
+    return completed;
+}
