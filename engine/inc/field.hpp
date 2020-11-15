@@ -23,6 +23,7 @@ namespace Engine{
             bool is_bold = false;
 
         public:
+            Field(){};
             Field(
                 std::string object_name,
                 std::pair<int, int> object_position,

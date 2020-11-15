@@ -161,9 +161,9 @@ void ProgrammableObject::verify_collisions(){
     std::vector<Engine::GameObject*> objects;
     Engine::Collider& collider = Engine::Collider::get_instance();
     objects = collider.verify(this);
-    for(auto obj : objects){
-        std::cout << "=============================" << std::endl;
-        std::cout << obj->get_name() << std::endl;
-        std::cout << "=============================" << std::endl;
+    for(auto object : objects){
+        if(object->get_name() == "collidable_trail"){
+            object->collide();
+        }
     }
 }

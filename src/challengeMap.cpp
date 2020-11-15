@@ -38,7 +38,7 @@ void ChallengeMap::load_map_info(){
         aux_position.second = (
             position.second + index_line * size_with_spacing
         );
-        aux_field = new Engine::Field(
+        aux_field = new CheckableField(
             tile_name,
             aux_position,
             aux_size

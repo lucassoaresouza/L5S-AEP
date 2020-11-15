@@ -5,10 +5,11 @@
 #include <fstream>
 #include <sstream>
 
-#include "../engine/inc/field.hpp"
 #include "../engine/inc/gameObject.hpp"
 #include "../engine/inc/log.hpp"
 #include "../engine/inc/collider.hpp"
+#include "../engine/inc/field.hpp"
+#include "../inc/checkableField.hpp"
 
 class ChallengeMap : public Engine::GameObject{
     private:

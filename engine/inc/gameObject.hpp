@@ -51,6 +51,7 @@ namespace Engine{
             virtual void free();
             virtual void draw();
             virtual void read_input(SDL_Event *event);
+            virtual void collide(){};
     };
 }
 
