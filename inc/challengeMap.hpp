@@ -8,6 +8,7 @@
 #include "../engine/inc/field.hpp"
 #include "../engine/inc/gameObject.hpp"
 #include "../engine/inc/log.hpp"
+#include "../engine/inc/collider.hpp"
 
 class ChallengeMap : public Engine::GameObject{
     private:

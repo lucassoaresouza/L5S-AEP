@@ -17,6 +17,7 @@ ChallengeMap::ChallengeMap(
 }
 
 void ChallengeMap::load_map_info(){
+    Engine::Collider& collider = Engine::Collider::get_instance();
     int size_with_spacing = tile_quad_size + spacing;
     std::pair<int,int> aux_position;
     std::pair<int, int> aux_size(
@@ -30,12 +31,7 @@ void ChallengeMap::load_map_info(){
     int index_line = 0;
     int index_column = 0;
     for(int i = 0; i < map_info.size(); i++){
-        tile_name += (
-            "tile_" +
-            std::to_string(index_line) +
-            "_" +
-            std::to_string(i)
-        );
+        tile_name = (std::to_string(index_line));
         aux_position.first = (
             position.first + (index_column + 1) * size_with_spacing
         );
@@ -49,10 +45,13 @@ void ChallengeMap::load_map_info(){
         );
         switch(map_info[i]){
             case 'G':
+                aux_field->set_name("grass");
                 aux_field->set_sprite(grass_path);
                 break;
             case 'T':
+                aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(trail_path);
+                collider.add_object(aux_field);
                 break;
             default:
                 break;

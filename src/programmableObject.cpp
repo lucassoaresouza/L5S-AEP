@@ -11,6 +11,8 @@ ProgrammableObject::ProgrammableObject(
     set_size(object_size);
     set_direction("NORTH");
     initial_position = object_position;
+    Engine::Collider& collider = Engine::Collider::get_instance();
+    collider.add_object(this);
 }
 
 void ProgrammableObject::add_commands(
@@ -88,6 +90,7 @@ void ProgrammableObject::move(int distance, int displacement){
     if(!verify_limits()){
         set_initial_state();
     }
+    verify_collisions();
 }
 
 void ProgrammableObject::run_commands(){
@@ -152,4 +155,15 @@ bool ProgrammableObject::verify_limits(){
         return false;
     }
     return true;
+}
+
+void ProgrammableObject::verify_collisions(){
+    std::vector<Engine::GameObject*> objects;
+    Engine::Collider& collider = Engine::Collider::get_instance();
+    objects = collider.verify(this);
+    for(auto obj : objects){
+        std::cout << "=============================" << std::endl;
+        std::cout << obj->get_name() << std::endl;
+        std::cout << "=============================" << std::endl;
+    }
 }

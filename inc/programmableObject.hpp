@@ -9,6 +9,7 @@
 #include "../engine/inc/game.hpp"
 #include "../engine/inc/gameObject.hpp"
 #include "../engine/inc/log.hpp"
+#include "../engine/inc/collider.hpp"
 
 class ProgrammableObject : public Engine::GameObject{
     private:
@@ -22,13 +23,17 @@ class ProgrammableObject : public Engine::GameObject{
         int expected_y = 0;
         int move_displacement = 33;
         int pivot_displacement = 33;
-        std::pair<std::pair<int, int>, std::pair<int, int>> limits = std::make_pair(
+        std::pair<
+            std::pair<int, int>,
+            std::pair<int, int>
+        > limits = std::make_pair(
             std::make_pair(0,0),
             std::make_pair(1024,1024)
         );
 
         void set_initial_state();
         bool verify_limits();
+        void verify_collisions();
 
     public:
         ProgrammableObject(
