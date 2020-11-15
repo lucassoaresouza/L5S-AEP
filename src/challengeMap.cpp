@@ -3,12 +3,14 @@
 ChallengeMap::ChallengeMap(
     std::string map_name,
     std::pair<int, int>position,
-    std::string path
+    std::string info,
+    std::string text
 ){
     set_name(map_name);
     set_position(position);
-    map_path = path;
-    read_file();
+    completed = false;
+    map_info = info;
+    text_info = text;
 }
 
 bool ChallengeMap::read_file(){
@@ -185,4 +187,9 @@ void ChallengeMap::set_completed(bool status){
 
 bool ChallengeMap::get_completed(){
     return completed;
+}
+
+void ChallengeMap::set_obj_initial_position(int x, int y){
+    obj_inital_position.first = x;
+    obj_inital_position.first = y;
 }

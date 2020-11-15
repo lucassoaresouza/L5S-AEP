@@ -12,6 +12,8 @@
 class ChallengeMap : public Engine::GameObject{
     private:
         std::string map_path;
+        std::string map_info;
+        std::string text_info;
         std::vector<Engine::Field*> tiles;
         int columns = 15;
         int lines = 15;
@@ -19,6 +21,7 @@ class ChallengeMap : public Engine::GameObject{
         int tile_quad_size = 32;
         std::pair<int, int> possible_positions[15][15];
         bool completed = false;
+        std::pair<int, int> obj_inital_position;
 
         bool read_file();
         bool load_tiles();
@@ -32,7 +35,8 @@ class ChallengeMap : public Engine::GameObject{
         ChallengeMap(
             std::string map_name,
             std::pair<int, int>position,
-            std::string path
+            std::string info,
+            std::string text
         );
         ~ChallengeMap(){};
         bool load();
@@ -43,6 +47,7 @@ class ChallengeMap : public Engine::GameObject{
         std::pair<std::pair<int, int>,std::pair<int, int>> get_limits();
         void set_completed(bool status);
         bool get_completed();
+        void set_obj_initial_position(int x, int y);
 };
 
 #endif
