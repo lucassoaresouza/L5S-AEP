@@ -1,6 +1,6 @@
 init
 desafio_a
-4
+3
 11
 texto teste a
 GGGGGGGGGGGGGGG
@@ -14,7 +14,7 @@ GGGTGGGGGGGGGGG
 GGGTGGGGGGGGGGG
 GGGTGGGGGGGGGGG
 GGGTGGGGGGGGGGG
-GGGGGGGGGGGGGGG
+GGGTGGGGGGGGGGG
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
@@ -22,7 +22,7 @@ end
 
 init
 desafio_b
-4
+3
 11
 texto teste b
 GGGGGGGGGGGGGGG
@@ -44,7 +44,7 @@ end
 
 init
 desafio_c
-2
+3
 14
 texto teste c
 GGGGGGGGGGGGGGG
@@ -66,8 +66,8 @@ end
 
 init
 desafio_d
-2
-14
+0
+13
 texto teste d
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG

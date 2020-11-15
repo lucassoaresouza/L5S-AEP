@@ -11,67 +11,59 @@ ChallengeMap::ChallengeMap(
     completed = false;
     map_info = info;
     text_info = text;
-}
-
-bool ChallengeMap::read_file(){
-    std::string line;
-    std::ifstream map_file(map_path);
     add_background();
     add_table_border();
-    if(map_file.is_open()){
-        getline(map_file, line);
-        std::istringstream iss(line);
-        int index_line = 0;
-        while(getline(map_file, line)){
-            int size_with_spacing = tile_quad_size + spacing;
-            if(line != "" && line[0] != '#'){
-                std::pair<int,int> aux_position;
-                std::pair<int, int> aux_size(
-                    tile_quad_size,
-                    tile_quad_size
-                );
-                std::string grass_path = "./assets/tiles/grass.png";
-                std::string trail_path = "./assets/tiles/trail.png";
-                std::string tile_name = "";
-                Engine::Field* aux_field = NULL;
-                for(int i = 0; i < columns-1; i++){
-                    tile_name += (
-                        "tile_" +
-                        std::to_string(index_line) +
-                        "_" +
-                        std::to_string(i)
-                    );
-                    aux_position.first = (
-                        position.first + (i + 1) * size_with_spacing
-                    );
-                    aux_position.second = (
-                        position.second + index_line * size_with_spacing
-                    );
-                    aux_field = new Engine::Field(
-                        tile_name,
-                        aux_position,
-                        aux_size
-                    );
-                    switch(line[i]){
-                        case 'G':
-                            aux_field->set_sprite(grass_path);
-                            break;
-                        case 'T':
-                            aux_field->set_sprite(trail_path);
-                            break;
-                        default:
-                            break;
-                    }
-                    tiles.push_back(aux_field);
-                    possible_positions[index_line][i] = aux_position;
-                }
-                index_line += 1;
-            }
+    load_map_info();
+}
+
+void ChallengeMap::load_map_info(){
+    int size_with_spacing = tile_quad_size + spacing;
+    std::pair<int,int> aux_position;
+    std::pair<int, int> aux_size(
+        tile_quad_size,
+        tile_quad_size
+    );
+    std::string grass_path = "./assets/tiles/grass.png";
+    std::string trail_path = "./assets/tiles/trail.png";
+    std::string tile_name = "";
+    Engine::Field* aux_field = NULL;
+    int index_line = 0;
+    int index_column = 0;
+    for(int i = 0; i < map_info.size(); i++){
+        tile_name += (
+            "tile_" +
+            std::to_string(index_line) +
+            "_" +
+            std::to_string(i)
+        );
+        aux_position.first = (
+            position.first + (index_column + 1) * size_with_spacing
+        );
+        aux_position.second = (
+            position.second + index_line * size_with_spacing
+        );
+        aux_field = new Engine::Field(
+            tile_name,
+            aux_position,
+            aux_size
+        );
+        switch(map_info[i]){
+            case 'G':
+                aux_field->set_sprite(grass_path);
+                break;
+            case 'T':
+                aux_field->set_sprite(trail_path);
+                break;
+            default:
+                break;
         }
-        return true;
-    } else {
-        Engine::Log().print("Arquivo de desafio nao encontrado!");
-        return false;
+        tiles.push_back(aux_field);
+        possible_positions[index_column][index_line] = aux_position;
+        index_column += 1;
+        if(index_column == columns - 1){
+            index_column = 0;
+            index_line += 1;
+        }
     }
 }
 
@@ -192,4 +184,8 @@ bool ChallengeMap::get_completed(){
 void ChallengeMap::set_obj_initial_position(int x, int y){
     obj_inital_position.first = x;
     obj_inital_position.first = y;
+}
+
+std::pair<int,int> ChallengeMap::get_possible_position(int x, int y){
+    return possible_positions[x][y];
 }

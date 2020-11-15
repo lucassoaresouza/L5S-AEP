@@ -23,13 +23,13 @@ class ChallengeMap : public Engine::GameObject{
         bool completed = false;
         std::pair<int, int> obj_inital_position;
 
-        bool read_file();
         bool load_tiles();
         void draw_tiles();
         void add_background();
         void add_table_border();
         void line_border();
         void column_border();
+        void load_map_info();
 
     public:
         ChallengeMap(
@@ -41,9 +41,7 @@ class ChallengeMap : public Engine::GameObject{
         ~ChallengeMap(){};
         bool load();
         void draw();
-        std::pair<int,int> get_possible_position(int x, int y){
-            return possible_positions[x][y];
-        }
+        std::pair<int,int> get_possible_position(int x, int y);
         std::pair<std::pair<int, int>,std::pair<int, int>> get_limits();
         void set_completed(bool status);
         bool get_completed();
