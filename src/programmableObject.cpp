@@ -68,6 +68,7 @@ void ProgrammableObject::set_direction(std::string new_direction){
 }
 
 void ProgrammableObject::move(int distance, int displacement){
+    verify_collisions();
     int real_distance = distance * (move_displacement + displacement);
     if(expected_x == 0 && expected_y == 0 ){
         expected_x = position.first + real_distance;
@@ -90,7 +91,6 @@ void ProgrammableObject::move(int distance, int displacement){
     if(!verify_limits()){
         set_initial_state();
     }
-    verify_collisions();
 }
 
 void ProgrammableObject::run_commands(){
@@ -159,7 +159,6 @@ bool ProgrammableObject::verify_limits(){
         position.first > limits.second.first ||
         position.second > limits.second.second
     ){
-        std::cout << "DEU RUIM" << std::endl;
         return false;
     }
     return true;

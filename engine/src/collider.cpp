@@ -27,8 +27,10 @@ std::vector<GameObject*> Collider::verify(GameObject* object){
         );
         if(
             object != collidable_object &&
-            object_position.first == collidable_position.first &&
-            object_position.second == collidable_position.second
+            object_position.first >= collidable_position.first - 3 &&
+            object_position.first <= collidable_position.first + 3 &&
+            object_position.second >= collidable_position.second - 3 &&
+            object_position.second <= collidable_position.second + 3 
         ){
             collisions.push_back(collidable_object);
         }

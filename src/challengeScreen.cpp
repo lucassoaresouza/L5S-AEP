@@ -12,7 +12,6 @@ ChallengeScreen::ChallengeScreen(
 
 void ChallengeScreen::init(){
     //Map initialization
-    std::pair<int, int> map_position(405, 10);
     map = challenge->get_actual_map();
     map->set_position(map_position);
     map->init();
@@ -77,6 +76,12 @@ void ChallengeScreen::draw(){
 
 void ChallengeScreen::verify_programmable_object_status(){
     if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
-        std::cout << "TERMINEI O DESAFIO" << std::endl;
+        if(map->verify_all_trail_checked()){
+            map->set_completed(true);
+            load();
+            std::cout << "ganhei!" << std::endl;
+        } else {
+            std::cout << "perdi!" << std::endl;
+        }
     }
 }
