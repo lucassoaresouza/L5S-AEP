@@ -51,6 +51,7 @@ class ChallengeMap : public Engine::GameObject{
         bool get_completed();
         void set_obj_initial_position(int x, int y);
         bool verify_all_trail_checked();
+        void reset_all_trail_checks();
 };
 
 #endif

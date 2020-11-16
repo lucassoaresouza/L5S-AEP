@@ -29,6 +29,7 @@ namespace Engine {
             void set_name(std::string screen_name);
             std::string get_name();
             void add_object(GameObject* object);
+            void remove_all_objects();
             virtual void draw();
             virtual void load();
 

@@ -11,6 +11,8 @@ ChallengeScreen::ChallengeScreen(
 }
 
 void ChallengeScreen::init(){
+    remove_all_objects();
+
     //Map initialization
     map = challenge->get_actual_map();
     map->set_position(map_position);
@@ -81,7 +83,7 @@ void ChallengeScreen::verify_programmable_object_status(){
             load();
             std::cout << "ganhei!" << std::endl;
         } else {
-            std::cout << "perdi!" << std::endl;
+            map->reset_all_trail_checks();
         }
     }
 }

@@ -197,6 +197,14 @@ bool ChallengeMap::verify_all_trail_checked(){
     return true;
 }
 
+void ChallengeMap::reset_all_trail_checks(){
+    for(auto tile : tiles){
+        if(tile->get_name() == "collidable_trail"){
+            tile->uncheck();
+        }
+    }
+}
+
 std::pair<int, int> ChallengeMap::get_obj_initial_position(){
     return get_possible_position(
         obj_initial_position.first,

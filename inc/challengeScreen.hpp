@@ -15,11 +15,10 @@
 class ChallengeScreen : public Engine::Screen {
     private:
         ProgrammableObject* player_object = NULL;
-        
         Challenge* challenge = NULL;
-        
         ChallengeMap* map = NULL;
         std::pair<int, int> map_position = std::make_pair(405, 10);
+
     public:
         ChallengeScreen(std::string screen_name, Challenge* new_challenge);
         void verify_programmable_object_status();

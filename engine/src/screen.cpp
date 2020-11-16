@@ -34,3 +34,7 @@ void Screen::draw(){
         object->draw();
     }
 }
+
+void Screen::remove_all_objects(){
+    objects.clear();
+}
