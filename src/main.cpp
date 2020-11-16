@@ -4,26 +4,11 @@
 #include <sstream>
 
 #include "../engine/inc/game.hpp"
-#include "../engine/inc/textField.hpp"
-#include "../engine/inc/button.hpp"
-#include "../engine/inc/field.hpp"
-#include "../engine/inc/screen.hpp"
+#include "../inc/challengeCreator.hpp"
+#include "../inc/challengeScreen.hpp"
 
-#include "../compiler/interpreter.hpp"
-#include "../compiler/command.hpp"
-
-#include "compilerButton.hpp"
-#include "aepcompiler.hpp"
-#include "programmableObject.hpp"
-#include "challengeMap.hpp"
-#include "challengeScreen.hpp"
-
-
-#include "../compiler/syntaticTree.hpp"
 
 using namespace Engine;
-using namespace Compiler;
-using namespace std;
 
 int main(int, char**){
     //Game initialization
@@ -31,8 +16,14 @@ int main(int, char**){
     std::pair<int,int> window_size(1024,768);
     Game& game = Game::initialize(game_name, window_size);
     
+    ChallengeCreator* c_creator = new ChallengeCreator();
+    c_creator->create_maps("./levels");
+
     //Test screen
-    ChallengeScreen* screen = new ChallengeScreen("screenTeste");
+    ChallengeScreen* screen = new ChallengeScreen(
+        "screenTeste",
+        c_creator->get_challenge_by_title("challenge_a.aep")
+    );
 
     //Run
     game.add_screen(screen);
@@ -40,12 +31,3 @@ int main(int, char**){
     game.run();
     return 0;
 }
-
-// #include <iostream>
-// #include "../inc/challengeCreator.hpp"
-
-// int main(){
-//     ChallengeCreator* c_creator = new ChallengeCreator();
-//     c_creator->create_maps("./levels");
-//     return 0;
-// }

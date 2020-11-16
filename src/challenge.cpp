@@ -41,3 +41,7 @@ void Challenge::reset_all_maps(){
 void Challenge::add_map(ChallengeMap* map){
     maps.push_back(map);
 }
+
+std::string Challenge::get_title(){
+    return title;
+}

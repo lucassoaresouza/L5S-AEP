@@ -30,6 +30,7 @@ class ProgrammableObject : public Engine::GameObject{
             std::make_pair(0,0),
             std::make_pair(1024,1024)
         );
+        std::string status;
 
         void set_initial_state();
         bool verify_limits();
@@ -45,6 +46,7 @@ class ProgrammableObject : public Engine::GameObject{
         void draw();
         void add_commands(command_list new_commands);
         void run_commands();
+        std::string get_status();
 
         //Basic commands
         void set_initial_position(std::pair<int, int> initial);

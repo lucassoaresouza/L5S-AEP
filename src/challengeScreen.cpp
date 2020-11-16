@@ -2,36 +2,28 @@
 
 using namespace Engine;
 
-ChallengeScreen::ChallengeScreen(std::string screen_name){
+ChallengeScreen::ChallengeScreen(
+    std::string screen_name,
+    Challenge* new_challenge
+){
     set_name(screen_name);
+    challenge = new_challenge;
 }
 
 void ChallengeScreen::init(){
     //Map initialization
-    std::string map_name="challenge";
-    std::pair<int, int> map_posititon(405, 10);
-    std::string map_path = "./levels/level_one/challenge_a.aep";
-    ChallengeMap* map = new ChallengeMap(
-        map_name,
-        map_posititon,
-        "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGTTTTTTTTTGGGGGGTGGGGGGGGGGGGGGTGGGGGGGGGGGGGGTGGGGGGGGGGGGGGTGGGGGGGGGGGGGGTGGGGGGGGGGGGGGTGGGGGGGGGGGGGGTGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
-        "xablau my friend"
-    );
+    std::pair<int, int> map_position(405, 10);
+    map = challenge->get_actual_map();
+    map->set_position(map_position);
+    map->init();
     std::pair<std::pair<int, int>,std::pair<int, int>> limits = map->get_limits();
-
-    // //Console initialization
-    // std::string console_name="console";
-    // std::pair<int, int> console_posititon(405, ((15*32)+15));
-    // std::pair<int, int> console_size(19*32, 181);
-    // Field* console = new Field(console_name, console_posititon, console_size);
-    // console->set_color(0x99, 0x99, 0x99, 0x99);
 
     //Player initialization
     std::string player_object_name="aviao";
     std::pair<int, int> player_object_position;
-    player_object_position = map->get_possible_position(3,10);
+    player_object_position = map->get_obj_initial_position();
     std::pair<int, int> player_object_size(32, 32);
-    ProgrammableObject* player_object = new ProgrammableObject(
+    player_object = new ProgrammableObject(
         player_object_name,
         player_object_position,
         player_object_size
@@ -66,7 +58,6 @@ void ChallengeScreen::init(){
     add_object(map);
     add_object(player_object);
     add_object(text_field);
-    // add_object(console);
     add_object(button);
 }
 
@@ -74,5 +65,18 @@ void ChallengeScreen::load(){
     init();
     for(auto object : objects){
         object->load();
+    }
+}
+
+void ChallengeScreen::draw(){
+    verify_programmable_object_status();
+    for(auto object : objects){
+        object->draw();
+    }
+}
+
+void ChallengeScreen::verify_programmable_object_status(){
+    if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
+        std::cout << "TERMINEI O DESAFIO" << std::endl;
     }
 }

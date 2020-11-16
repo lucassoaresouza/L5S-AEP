@@ -16,14 +16,14 @@ class ChallengeMap : public Engine::GameObject{
         std::string map_path;
         std::string map_info;
         std::string text_info;
-        std::vector<Engine::Field*> tiles;
+        std::vector<CheckableField*> tiles;
         int columns = 15;
         int lines = 15;
         int spacing = 1;
         int tile_quad_size = 32;
         std::pair<int, int> possible_positions[15][15];
         bool completed = false;
-        std::pair<int, int> obj_inital_position;
+        std::pair<int, int> obj_initial_position;
 
         bool load_tiles();
         void draw_tiles();
@@ -41,13 +41,16 @@ class ChallengeMap : public Engine::GameObject{
             std::string text
         );
         ~ChallengeMap(){};
+        void init();
         bool load();
         void draw();
         std::pair<int,int> get_possible_position(int x, int y);
+        std::pair<int, int> get_obj_initial_position();
         std::pair<std::pair<int, int>,std::pair<int, int>> get_limits();
         void set_completed(bool status);
         bool get_completed();
         void set_obj_initial_position(int x, int y);
+        bool verify_all_trail_checked();
 };
 
 #endif

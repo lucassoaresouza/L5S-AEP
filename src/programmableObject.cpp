@@ -95,6 +95,7 @@ void ProgrammableObject::move(int distance, int displacement){
 
 void ProgrammableObject::run_commands(){
     if(running == false){
+        status = "RUNNING_COMMAND_LIST";
         running = true;
     } else {
         Engine::Log().print("Executando a lista de comandos anterior!");
@@ -118,6 +119,12 @@ void ProgrammableObject::execute(){
             set_direction("EAST");
             move(arg, pivot_displacement);
         }
+        if(
+            command_index == commands.size() &&
+            command_index != 0
+        ){
+            status = "FINISHED_COMMAND_LIST";
+        }
     } else {
         set_initial_state();
     }
@@ -131,6 +138,7 @@ void ProgrammableObject::set_initial_state(){
     expected_y = 0;
     running = false;
     command_index = 0;
+    status = "INITIAL_STATE";
 }
 
 void ProgrammableObject::set_initial_position(std::pair<int, int> initial){
@@ -166,4 +174,8 @@ void ProgrammableObject::verify_collisions(){
             object->collide();
         }
     }
+}
+
+std::string ProgrammableObject::get_status(){
+    return status;
 }

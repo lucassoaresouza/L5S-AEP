@@ -27,7 +27,6 @@ void ChallengeCreator::read_folder(){
 void ChallengeCreator::read_files(){
     for(std::string file : file_paths){
         Challenge* new_challenge = new Challenge(file);
-        std::cout << file << std::endl;
         std::string line;
         std::ifstream challenge_file(challenge_paths+"/"+file);
         if(challenge_file.is_open()){
@@ -67,4 +66,17 @@ void ChallengeCreator::read_files(){
         }
         challenges.push_back(new_challenge);
     }
+}
+
+Challenge* ChallengeCreator::get_challenge_by_title(std::string name){
+    for(auto challenge : challenges){
+        if(challenge->get_title() == name){
+            return challenge;
+        }
+    }
+    return NULL;
+}
+
+std::vector<Challenge*> ChallengeCreator::get_all_challenges(){
+    return challenges;
 }

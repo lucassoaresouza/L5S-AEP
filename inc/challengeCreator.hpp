@@ -26,8 +26,9 @@ class ChallengeCreator {
     public:
         ChallengeCreator(){};
         ~ChallengeCreator(){};
-        // std::vector<ChallengeMap*> create_maps(std::string folder);
         void create_maps(std::string folder);
+        std::vector<Challenge*> get_all_challenges();
+        Challenge* get_challenge_by_title(std::string name);
 };
 
 #endif

@@ -11,7 +11,6 @@ CheckableField::CheckableField(
 }
 
 void CheckableField::check(){
-    std::cout << "aquiiii!!" << std::endl;
     checked = true;
 }
 

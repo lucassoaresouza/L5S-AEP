@@ -11,9 +11,6 @@ ChallengeMap::ChallengeMap(
     completed = false;
     map_info = info;
     text_info = text;
-    add_background();
-    add_table_border();
-    load_map_info();
 }
 
 void ChallengeMap::load_map_info(){
@@ -27,7 +24,7 @@ void ChallengeMap::load_map_info(){
     std::string grass_path = "./assets/tiles/grass.png";
     std::string trail_path = "./assets/tiles/trail.png";
     std::string tile_name = "";
-    Engine::Field* aux_field = NULL;
+    CheckableField* aux_field = NULL;
     int index_line = 0;
     int index_column = 0;
     for(int i = 0; i < map_info.size(); i++){
@@ -92,7 +89,7 @@ void ChallengeMap::add_background(){
         position.first - spacing, position.second - spacing
     );
 
-    Engine::Field* background_field = new Engine::Field(
+    CheckableField* background_field = new CheckableField(
         "background_field",
         background_position,
         background_size
@@ -116,7 +113,7 @@ void ChallengeMap::line_border(){
     char aux_index = letter_a_index;
     for(int i = 0; i < lines-1 ; i++){
         border_position.second = position.second + i * 33;
-        Engine::Field* border_line_field = new Engine::Field(
+        CheckableField* border_line_field = new CheckableField(
             "border_field",
             border_position,
             std::pair<int,int>(tile_quad_size,tile_quad_size)
@@ -145,7 +142,7 @@ void ChallengeMap::column_border(){
         border_position.first = (
             position.first + (i + 1) * (tile_quad_size + spacing)
         );
-        Engine::Field* border_column_field = new Engine::Field(
+        CheckableField* border_column_field = new CheckableField(
             "border_field",
             border_position,
             std::pair<int,int>(tile_quad_size,tile_quad_size)
@@ -181,10 +178,34 @@ bool ChallengeMap::get_completed(){
 }
 
 void ChallengeMap::set_obj_initial_position(int x, int y){
-    obj_inital_position.first = x;
-    obj_inital_position.first = y;
+    obj_initial_position.first = x;
+    obj_initial_position.second = y;
 }
 
 std::pair<int,int> ChallengeMap::get_possible_position(int x, int y){
     return possible_positions[x][y];
+}
+
+bool ChallengeMap::verify_all_trail_checked(){
+    for(auto tile : tiles){
+        if(tile->get_name() == "collidable_trail"){
+            if(tile->is_checked() == false){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+std::pair<int, int> ChallengeMap::get_obj_initial_position(){
+    return get_possible_position(
+        obj_initial_position.first,
+        obj_initial_position.second
+    );
+}
+
+void ChallengeMap::init(){
+    add_background();
+    add_table_border();
+    load_map_info();
 }
