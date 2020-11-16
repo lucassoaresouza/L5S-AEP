@@ -11,8 +11,6 @@ ChallengeScreen::ChallengeScreen(
 }
 
 void ChallengeScreen::init(){
-    remove_all_objects();
-
     //Map initialization
     map = challenge->get_actual_map();
     map->set_position(map_position);
@@ -80,7 +78,11 @@ void ChallengeScreen::verify_programmable_object_status(){
     if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
         if(map->verify_all_trail_checked()){
             map->set_completed(true);
+            remove_all_objects();
+            Engine::Collider& collider = Engine::Collider::get_instance();
+            collider.remove_all_objects();
             load();
+            
             std::cout << "ganhei!" << std::endl;
         } else {
             map->reset_all_trail_checks();

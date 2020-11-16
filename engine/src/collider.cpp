@@ -37,3 +37,7 @@ std::vector<GameObject*> Collider::verify(GameObject* object){
     }
     return collisions;
 }
+
+void Collider::remove_all_objects(){
+    objects.clear();
+}

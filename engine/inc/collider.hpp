@@ -16,6 +16,7 @@ namespace Engine{
             static Collider& get_instance();
             std::vector<GameObject*> verify(GameObject* object);
             void add_object(GameObject* object);
+            void remove_all_objects();
     };
 }
 
