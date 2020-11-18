@@ -17,7 +17,9 @@ class ChallengeScreen : public Engine::Screen {
         ProgrammableObject* player_object = NULL;
         Challenge* challenge = NULL;
         ChallengeMap* map = NULL;
-        std::pair<int, int> map_position = std::make_pair(405, 10);
+        std::pair<int, int> map_position = std::make_pair(450, 50);
+        std::pair<int, int> text_field_position = std::make_pair(25, 50);
+        std::pair<int, int> compiler_button_position = std::make_pair(135,700);
 
     public:
         ChallengeScreen(std::string screen_name, Challenge* new_challenge);

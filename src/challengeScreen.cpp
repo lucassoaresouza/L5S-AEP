@@ -15,7 +15,9 @@ void ChallengeScreen::init(){
     map = challenge->get_actual_map();
     map->set_position(map_position);
     map->init();
-    std::pair<std::pair<int, int>,std::pair<int, int>> limits = map->get_limits();
+    std::pair<std::pair<int, int>,std::pair<int, int>> limits = (
+        map->get_limits()
+    );
 
     //Player initialization
     std::string player_object_name="aviao";
@@ -27,13 +29,17 @@ void ChallengeScreen::init(){
         player_object_position,
         player_object_size
     );
-    player_object->set_sprite("./assets/bots/B-25c.png");
+    player_object->set_sprite("./assets/bots/bot_a.png");
     player_object->set_limits(limits.first, limits.second);
 
     //Textfield initialization
     std::string text_field_name="textfield";
-    std::pair<int, int> text_field_position(10, 10);
-    TextField* text_field = new TextField(text_field_name, text_field_position, 35, 40);
+    TextField* text_field = new TextField(
+        text_field_name,
+        text_field_position,
+        35,
+        40
+    );
     text_field->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     text_field->set_font_color(0x00, 0x00, 0x00, 0x00);
 
@@ -42,9 +48,12 @@ void ChallengeScreen::init(){
 
     //Button initialization
     std::string button_name = "button";
-    std::pair<int, int> button_position(120,660);
     std::pair<int, int> button_size(128,64);
-    CompilerButton* button = new CompilerButton(button_name, button_position, button_size);
+    CompilerButton* button = new CompilerButton(
+        button_name,
+        compiler_button_position,
+        button_size
+    );
     button->set_sprites(
         "./assets/buttons/button1.png",
         "./assets/buttons/button2.png"
