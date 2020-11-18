@@ -48,6 +48,7 @@ void ChallengeMap::load_map_info(){
             case 'T':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(trail_path);
+                aux_field->set_checked_texture(grass_path);
                 collider.add_object(aux_field);
                 break;
             default:

@@ -96,5 +96,7 @@ void ChallengeScreen::verify_programmable_object_status(){
         } else {
             map->reset_all_trail_checks();
         }
+    } else if(player_object->get_status() == "INITIAL_STATE"){
+        map->reset_all_trail_checks();
     }
 }

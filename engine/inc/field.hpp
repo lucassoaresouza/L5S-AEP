@@ -11,16 +11,17 @@
 
 namespace Engine{
     class Field : public GameObject {
-        private:
-            SDL_Color color = {0xFF, 0xFF, 0xFF, 0xFF};
-            
+        protected:
             TTF_Font *font = NULL;
-            std::string font_path;
-            SDL_Color color_text = {0x0, 0xF0, 0x0, 0x0};
             SDL_Texture *font_texture = NULL;
             int font_size;
+            SDL_Color color = {0xFF, 0xFF, 0xFF, 0xFF};
+            SDL_Color color_text = {0x0, 0xF0, 0x0, 0x0};
+            std::string font_path;
             std::string text;
             bool is_bold = false;
+
+
 
         public:
             Field(){};
