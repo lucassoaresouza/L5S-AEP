@@ -8,6 +8,9 @@ CheckableField::CheckableField(
     set_name(object_name);
     set_position(object_position);
     set_size(object_size);
+    for(int i = 0; i < 10; i++){
+        font_texture[i] = NULL;
+    }
 }
 
 void CheckableField::check(){
@@ -82,10 +85,10 @@ void CheckableField::draw(){
         SDL_Surface* font_surface = NULL;
         font_surface = TTF_RenderText_Blended(
             font,
-            text.c_str(),
+            text[0].c_str(),
             color
         );
-        SDL_Texture *font_texture = SDL_CreateTextureFromSurface(
+        font_texture[0] = SDL_CreateTextureFromSurface(
             game.get_renderer(),
             font_surface
         );
@@ -98,7 +101,7 @@ void CheckableField::draw(){
         SDL_FreeSurface(font_surface);
         SDL_RenderCopy(
             game.get_renderer(),
-            font_texture,
+            font_texture[0],
             NULL,
             &renderQuad
         );

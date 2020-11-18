@@ -20,12 +20,11 @@ void ChallengeScreen::init(){
     );
 
     //Player initialization
-    std::string player_object_name="aviao";
     std::pair<int, int> player_object_position;
     player_object_position = map->get_obj_initial_position();
     std::pair<int, int> player_object_size(32, 32);
     player_object = new ProgrammableObject(
-        player_object_name,
+        "player_object",
         player_object_position,
         player_object_size
     );
@@ -33,9 +32,8 @@ void ChallengeScreen::init(){
     player_object->set_limits(limits.first, limits.second);
 
     //Textfield initialization
-    std::string text_field_name="textfield";
     TextField* text_field = new TextField(
-        text_field_name,
+        "textfield",
         text_field_position,
         35,
         40
@@ -47,10 +45,9 @@ void ChallengeScreen::init(){
     AEPCompiler* compiler = new AEPCompiler();
 
     //Button initialization
-    std::string button_name = "button";
     std::pair<int, int> button_size(128,64);
     CompilerButton* button = new CompilerButton(
-        button_name,
+        "button",
         compiler_button_position,
         button_size
     );
@@ -62,11 +59,27 @@ void ChallengeScreen::init(){
     button->set_programmable(player_object);
     button->set_text_field(text_field);
 
+    //Console initialization
+    // SDL_Color color = {0x0, 0x0, 0x0, 0x0};
+    std::string console_name = "console";
+    Engine::Field* console = new Engine::Field(
+        "console",
+        console_position,
+        std::make_pair(572,117)
+    );
+    console->set_bold(true);
+    console->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
+    console->set_text_per_line("Desafio:",0);
+    console->set_text_per_line("Dica:",1);
+    console->set_text_per_line("Status:",2);
+    console->set_text_per_line("Campos Cobertos:",3);
+
     // Add objects
     add_object(map);
     add_object(player_object);
     add_object(text_field);
     add_object(button);
+    add_object(console);
 }
 
 void ChallengeScreen::load(){

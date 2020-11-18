@@ -20,7 +20,7 @@ class ChallengeScreen : public Engine::Screen {
         std::pair<int, int> map_position = std::make_pair(450, 50);
         std::pair<int, int> text_field_position = std::make_pair(25, 50);
         std::pair<int, int> compiler_button_position = std::make_pair(135,700);
-
+        std::pair<int, int> console_position = std::make_pair(425, 600);
     public:
         ChallengeScreen(std::string screen_name, Challenge* new_challenge);
         void verify_programmable_object_status();

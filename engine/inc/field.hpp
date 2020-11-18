@@ -13,13 +13,14 @@ namespace Engine{
     class Field : public GameObject {
         protected:
             TTF_Font *font = NULL;
-            SDL_Texture *font_texture = NULL;
+            SDL_Texture *font_texture[10];
             int font_size;
             SDL_Color color = {0xFF, 0xFF, 0xFF, 0xFF};
             SDL_Color color_text = {0x0, 0xF0, 0x0, 0x0};
             std::string font_path;
-            std::string text;
+            std::string text[10];
             bool is_bold = false;
+
 
 
 
@@ -34,6 +35,7 @@ namespace Engine{
             void set_color(Uint64 r, Uint64 g, Uint64 b, Uint64 a);
             void set_font(std::string path, int size);
             void set_text(std::string new_text);
+            void set_text_per_line(std::string new_text, int line);
             void set_bold(bool bold);
             bool load();
             void draw();
