@@ -60,9 +60,7 @@ void ChallengeScreen::init(){
     button->set_text_field(text_field);
 
     //Console initialization
-    // SDL_Color color = {0x0, 0x0, 0x0, 0x0};
-    std::string console_name = "console";
-    Engine::Field* console = new Engine::Field(
+    console = new Engine::Field(
         "console",
         console_position,
         std::make_pair(572,117)
@@ -97,7 +95,30 @@ void ChallengeScreen::draw(){
 }
 
 void ChallengeScreen::verify_programmable_object_status(){
-    if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
+    if(player_object->get_status() == "INITIAL_STATE"){
+        map->reset_all_trail_checks();
+        console->set_text_per_line("Desafio: " + map->get_name(),0);
+        console->set_text_per_line("Dica: " + map->get_text_info(),1);
+        std::string console_status = "Inicializado";
+        console->set_text_per_line("Status: " + console_status,2);
+        console->set_text_per_line(
+            "Campos Cobertos: 0/" + std::to_string(
+                map->get_all_checked_field_count()
+            ),
+            3
+        );
+    } else if(player_object->get_status() == "RUNNING_COMMAND_LIST"){
+        std::string console_status = "Executando comandos!";
+        console->set_text_per_line("Status: " + console_status,2);
+        char bar = '/';
+        console->set_text_per_line(
+            "Campos Cobertos: " +
+            std::to_string(map->get_checked_field_count()) + 
+            bar +
+            std::to_string(map->get_all_checked_field_count()),
+            3
+        );
+    } else if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
         if(map->verify_all_trail_checked()){
             map->set_completed(true);
             remove_all_objects();
@@ -109,7 +130,5 @@ void ChallengeScreen::verify_programmable_object_status(){
         } else {
             map->reset_all_trail_checks();
         }
-    } else if(player_object->get_status() == "INITIAL_STATE"){
-        map->reset_all_trail_checks();
     }
 }

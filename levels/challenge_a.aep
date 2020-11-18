@@ -1,8 +1,8 @@
 init
-desafio_a
+Comandos Simples A
 3
 11
-texto teste a
+Va para o norte e depois para o leste
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
@@ -21,10 +21,10 @@ GGGGGGGGGGGGGGG
 end
 
 init
-desafio_b
+Comandos Simples B
 3
 11
-texto teste b
+Norte, Leste, Sul, Oeste
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
@@ -43,10 +43,10 @@ GGGGGGGGGGGGGGG
 end
 
 init
-desafio_c
+Utilizando 'repita'
 2
 14
-texto teste c
+Repita norte, leste...
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGTTTT
@@ -65,10 +65,10 @@ GGTGGGGGGGGGGGG
 end
 
 init
-desafio_d
+Utilizando 'Se' e 'Senao'
 0
 13
-texto teste d
+Norte leste e depois sul leste...
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG

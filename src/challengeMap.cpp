@@ -50,6 +50,7 @@ void ChallengeMap::load_map_info(){
                 aux_field->set_sprite(trail_path);
                 aux_field->set_checked_texture(grass_path);
                 collider.add_object(aux_field);
+                all_checked_field_count += 1;
                 break;
             default:
                 break;
@@ -217,4 +218,22 @@ void ChallengeMap::init(){
     add_background();
     add_table_border();
     load_map_info();
+}
+
+std::string ChallengeMap::get_text_info(){
+    return text_info;
+}
+
+int ChallengeMap::get_all_checked_field_count(){
+    return all_checked_field_count;
+}
+
+int ChallengeMap::get_checked_field_count(){
+    int count = 0;
+    for(CheckableField* tile : tiles){
+        if(tile->is_checked()==true){
+            count +=1;
+        }
+    }
+    return count;
 }

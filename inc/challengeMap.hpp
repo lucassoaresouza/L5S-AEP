@@ -24,6 +24,7 @@ class ChallengeMap : public Engine::GameObject{
         std::pair<int, int> possible_positions[15][15];
         bool completed = false;
         std::pair<int, int> obj_initial_position;
+        int all_checked_field_count = 0;
 
         bool load_tiles();
         void draw_tiles();
@@ -52,6 +53,9 @@ class ChallengeMap : public Engine::GameObject{
         void set_obj_initial_position(int x, int y);
         bool verify_all_trail_checked();
         void reset_all_trail_checks();
+        std::string get_text_info();
+        int get_all_checked_field_count();
+        int get_checked_field_count();
 };
 
 #endif
