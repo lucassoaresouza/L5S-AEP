@@ -24,6 +24,7 @@ void Screen::add_object(GameObject* object){
 }
 
 void Screen::load(){
+    init();
     for(auto object : objects){
         object->load();
     }

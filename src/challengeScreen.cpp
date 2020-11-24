@@ -85,13 +85,6 @@ void ChallengeScreen::init(){
     add_object(console);
 }
 
-void ChallengeScreen::load(){
-    init();
-    for(auto object : objects){
-        object->load();
-    }
-}
-
 void ChallengeScreen::draw(){
     verify_programmable_object_status();
     for(auto object : objects){

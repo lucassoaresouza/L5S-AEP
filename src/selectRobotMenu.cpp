@@ -85,10 +85,3 @@ void SelectRobotMenu::init(){
 
     add_object(init_button);
 }
-
-void SelectRobotMenu::load(){
-    init();
-    for(auto object : objects){
-        object->load();
-    }
-}

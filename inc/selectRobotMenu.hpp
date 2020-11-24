@@ -27,7 +27,6 @@ class SelectRobotMenu : public Engine::Screen {
         SelectRobotMenu(std::string screen_name);
         void init();
         void to_next_screen();
-        void load();
 };
 
 #endif

@@ -28,7 +28,6 @@ class ChallengeScreen : public Engine::Screen {
         void verify_programmable_object_status();
         void set_player_sprite(std::string path);
         void init();
-        void load();
         void draw();
 };
 
