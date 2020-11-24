@@ -4,8 +4,10 @@
 #include <iostream>
 #include <vector>
 
-#include "../engine/inc/field.hpp"
 #include "../engine/inc/game.hpp"
+#include "../engine/inc/gameObject.hpp"
+#include "../engine/inc/collider.hpp"
+
 
 class Selector : public Engine::GameObject {
     private:
@@ -15,6 +17,8 @@ class Selector : public Engine::GameObject {
         int displacement;
         std::pair<int, int> limit_x;
         std::pair<int, int> limit_y;
+        std::string selected_sprite;
+        
 
     public:
         Selector(
@@ -29,6 +33,8 @@ class Selector : public Engine::GameObject {
         void add_position(std::pair<int, int> position);
         void set_new_position_mouse(int x, int y);
         void read_input(SDL_Event *event);
+        void verify_collisions();
+        std::string get_selected_sprite();
 };
 
 

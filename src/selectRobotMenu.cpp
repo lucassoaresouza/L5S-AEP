@@ -29,6 +29,7 @@ void SelectRobotMenu::init(){
     );
     add_object(selector_field);
 
+    Engine::Collider& collider = Engine::Collider::get_instance();
     std::string robot_base_path = "./assets/sprites/bots/bot_";
     std::pair<int, int> aux_robot_position;
     int line_index = 0;
@@ -52,6 +53,7 @@ void SelectRobotMenu::init(){
             ""
         );
         robots.push_back(aux_field);
+        collider.add_object(aux_field);
         add_object(aux_field);
 
         column_index++;

@@ -98,7 +98,18 @@ void Selector::read_input(SDL_Event *event){
             set_new_position_mouse(x,y);
         }
     }
+    verify_collisions();
 }
 
+void Selector::verify_collisions(){
+    std::vector<Engine::GameObject*> objects;
+    Engine::Collider& collider = Engine::Collider::get_instance();
+    objects = collider.verify(this);
+    for(auto object : objects){
+        selected_sprite = object->get_sprite();
+    }
+}
 
-
+std::string Selector::get_selected_sprite(){
+    return selected_sprite;
+}
