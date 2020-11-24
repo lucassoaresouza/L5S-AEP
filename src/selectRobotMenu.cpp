@@ -67,7 +67,7 @@ void SelectRobotMenu::init(){
 
     //ChallengeCreator initialization
     challenge_creator = new ChallengeCreator();
-    challenge_creator->create_maps("./levels");
+    challenge_creator->create_maps("./data/levels");
 
     //InitButton initialization
     std::pair<int, int> button_size(128,64);
