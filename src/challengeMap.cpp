@@ -21,8 +21,8 @@ void ChallengeMap::load_map_info(){
         tile_quad_size,
         tile_quad_size
     );
-    std::string grass_path = "./assets/tiles/grass.png";
-    std::string trail_path = "./assets/tiles/trail.png";
+    std::string grass_path = "./assets/sprites/tiles/grass.png";
+    std::string trail_path = "./assets/sprites/tiles/trail.png";
     std::string tile_name = "";
     CheckableField* aux_field = NULL;
     int index_line = 0;
@@ -126,7 +126,7 @@ void ChallengeMap::line_border(){
         border_line_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
         border_line_field->set_text(aux_string + aux_index);
         border_line_field->set_color(color.r, color.g, color.b, color.a);
-        border_line_field->set_sprite("./assets/tiles/border.png");
+        border_line_field->set_sprite("./assets/sprites/tiles/border.png");
         tiles.push_back(border_line_field);
     }
 }
@@ -153,7 +153,7 @@ void ChallengeMap::column_border(){
         border_column_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
         border_column_field->set_text(std::to_string(i+1));
         border_column_field->set_color(color.r, color.g, color.b, color.a);
-        border_column_field->set_sprite("./assets/tiles/border.png");
+        border_column_field->set_sprite("./assets/sprites/tiles/border.png");
         tiles.push_back(border_column_field);
     }
 }

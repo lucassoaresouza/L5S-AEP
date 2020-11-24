@@ -28,7 +28,7 @@ void ChallengeScreen::init(){
         player_object_position,
         player_object_size
     );
-    player_object->set_sprite("./assets/bots/bot_a.png");
+    player_object->set_sprite("./assets/sprites/bots/bot_a.png");
     player_object->set_limits(limits.first, limits.second);
 
     //Textfield initialization
@@ -52,8 +52,8 @@ void ChallengeScreen::init(){
         button_size
     );
     button->set_sprites(
-        "./assets/buttons/button1.png",
-        "./assets/buttons/button2.png"
+        "./assets/sprites/buttons/button1.png",
+        "./assets/sprites/buttons/button2.png"
     );
     button->set_compiler(compiler);
     button->set_programmable(player_object);
