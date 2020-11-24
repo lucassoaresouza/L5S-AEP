@@ -133,7 +133,7 @@ void ChallengeMap::add_background(){
         background_position,
         background_size
     );
-    background_field->set_color(0x0, 0x0, 0x0, 0x0);
+    background_field->set_color(0x555, 0x555, 0x555, 0x00);
     tiles.push_back(background_field);
 }
 
