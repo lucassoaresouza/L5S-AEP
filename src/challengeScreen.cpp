@@ -12,7 +12,12 @@ ChallengeScreen::ChallengeScreen(
 
 void ChallengeScreen::init(){
     //Map initialization
-    map = challenge->get_actual_map();
+    if(!challenge->completed()){
+        map = challenge->get_actual_map();
+    } else {
+        Engine::Game& game = Engine::Game::get_instance();
+        game.load_screen("select_robot");
+    }
     map->set_position(map_position);
     map->init();
     std::pair<std::pair<int, int>,std::pair<int, int>> limits = (

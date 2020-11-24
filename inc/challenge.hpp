@@ -18,6 +18,7 @@ class Challenge {
         void reset_all_maps();
         void add_map(ChallengeMap* map);
         std::string get_title();
+        bool completed();
 };
 
 #endif

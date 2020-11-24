@@ -45,3 +45,12 @@ void Challenge::add_map(ChallengeMap* map){
 std::string Challenge::get_title(){
     return title;
 }
+
+bool Challenge::completed(){
+    for(auto map : maps){
+        if(map->get_completed() == false){
+            return false;
+        }
+    }
+    return true;
+}
