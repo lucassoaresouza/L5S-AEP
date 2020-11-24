@@ -9,11 +9,14 @@
 namespace Engine{
     class Button : public GameObject {
         private:
-            bool is_active = false;
             bool pressed = false;
             SDL_Texture* not_pressed_texture = NULL;
             SDL_Texture* pressed_texture = NULL;
             std::string pressed_sprite;
+
+        protected:
+            bool is_active = false;
+
 
         public:
             Button(){};

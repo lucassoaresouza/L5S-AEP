@@ -26,7 +26,7 @@ void CompilerButton::set_text_field(Engine::TextField* field){
 
 void CompilerButton::execute(){
     std::string program;
-    program = text_field->get_current_text();
+    program = text_field->get_current_text() + "\n";
     programmable->add_commands(compiler->run(program));
     programmable->run_commands();
     compiler->clear();

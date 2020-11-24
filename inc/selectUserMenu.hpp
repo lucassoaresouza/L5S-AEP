@@ -5,6 +5,7 @@
 #include "../engine/inc/screen.hpp"
 #include "../engine/inc/field.hpp"
 #include "../engine/inc/textField.hpp"
+#include "initUserButton.hpp"
 
 class SelectUserMenu : public Engine::Screen{
     private:
@@ -16,6 +17,8 @@ class SelectUserMenu : public Engine::Screen{
         std::pair<int, int> description_position = std::make_pair(365,335);
         Engine::TextField* user_input = NULL;
         std::pair<int, int> user_input_position = std::make_pair(385,400);
+        InitUserButton* init_button = NULL;
+        std::pair<int, int> init_button_position = std::make_pair(450,440);
 
     public:
         SelectUserMenu(std::string name);

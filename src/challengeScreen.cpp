@@ -50,7 +50,7 @@ void ChallengeScreen::init(){
     AEPCompiler* compiler = new AEPCompiler();
 
     //Button initialization
-    std::pair<int, int> button_size(128,64);
+    std::pair<int, int> button_size(128,100);
     CompilerButton* button = new CompilerButton(
         "button",
         compiler_button_position,
@@ -63,6 +63,7 @@ void ChallengeScreen::init(){
     button->set_compiler(compiler);
     button->set_programmable(player_object);
     button->set_text_field(text_field);
+    button->activate();
 
     //Console initialization
     console = new Engine::Field(

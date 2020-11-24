@@ -22,7 +22,7 @@ class InitButton : public Engine::Button {
             std::pair<int,int>object_position,
             std::pair<int,int>object_size
         );
-        ~InitButton();
+        ~InitButton(){};
         void set_selector(Selector* p_selector);
         void set_challenge_creator(ChallengeCreator* p_creator);
         void execute();

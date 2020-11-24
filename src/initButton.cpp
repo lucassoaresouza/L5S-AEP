@@ -19,17 +19,20 @@ void InitButton::set_challenge_creator(ChallengeCreator* p_creator){
 }
 
 void InitButton::execute(){
-    if(selector){
-        robot_sprite = selector->get_selected_sprite();
-    }
-    if(challenge_creator){
-        new_challenge = new ChallengeScreen(
-            "desafio-1",
-            challenge_creator->get_challenge_by_title("challenge_a.aep")
-        );
-        new_challenge->set_player_sprite(robot_sprite);
-        Engine::Game& game = Engine::Game::get_instance();
-        game.add_screen(new_challenge);
-        game.load_screen("desafio-1");
+    if(is_active){
+        if(selector){
+            robot_sprite = selector->get_selected_sprite();
+        }
+        if(challenge_creator){
+            new_challenge = new ChallengeScreen(
+                "desafio-1",
+                challenge_creator->get_challenge_by_title("challenge_a.aep")
+            );
+            new_challenge->set_player_sprite(robot_sprite);
+            Engine::Game& game = Engine::Game::get_instance();
+            game.add_screen(new_challenge);
+            game.load_screen("desafio-1");
+            deactivate();
+        }
     }
 }

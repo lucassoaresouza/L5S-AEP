@@ -29,17 +29,21 @@ void Button::deactivate(){
 }
 
 bool Button::was_pressed(int x, int y){
-    std::pair<int, int> current_possition;
-    std::pair<int, int> current_size;
-    current_possition = get_position();
-    current_size = get_size();
-    if(
-        x >= current_possition.first &&
-        x <= current_possition.first + current_size.first &&
-        y >= current_possition.second &&
-        y <= current_possition.second + current_size.second
-    ){
-        return true;
+    if(is_active){
+        std::pair<int, int> current_possition;
+        std::pair<int, int> current_size;
+        current_possition = get_position();
+        current_size = get_size();
+        if(
+            x >= current_possition.first &&
+            x <= current_possition.first + current_size.first &&
+            y >= current_possition.second &&
+            y <= current_possition.second + current_size.second
+        ){
+            return true;
+        } else {
+            return false;
+        }
     } else {
         return false;
     }

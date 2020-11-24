@@ -70,18 +70,19 @@ void SelectRobotMenu::init(){
     challenge_creator->create_maps("./data/levels");
 
     //InitButton initialization
-    std::pair<int, int> button_size(128,64);
-    InitButton* init_button = new InitButton(
-        "button",
+    std::pair<int, int> button_size(128,100);
+    InitButton* init_challenge_button = new InitButton(
+        "init_challenge_button",
         button_position,
         button_size
     );
-    init_button->set_sprites(
+    init_challenge_button->set_sprites(
         "./assets/sprites/buttons/button1.png",
         "./assets/sprites/buttons/button2.png"
     );
-    init_button->set_selector(selector_field);
-    init_button->set_challenge_creator(challenge_creator);
+    init_challenge_button->set_selector(selector_field);
+    init_challenge_button->set_challenge_creator(challenge_creator);
+    init_challenge_button->activate();
 
-    add_object(init_button);
+    add_object(init_challenge_button);
 }

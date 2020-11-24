@@ -157,7 +157,6 @@ std::string TextField::get_current_text(){
             current_text += text_table[i][j];
         }
     }
-    current_text += '\n';
     return current_text;
 }
 

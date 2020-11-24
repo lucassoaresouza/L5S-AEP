@@ -46,6 +46,7 @@ void UsersManage::read_users(){
             }
         }
     }
+    file.close();
 }
 
 User* UsersManage::get_user(std::string name){
@@ -57,3 +58,10 @@ User* UsersManage::get_user(std::string name){
     return NULL;
 }
 
+void UsersManage::add_user(User* user){
+    users.push_back(user);
+}
+
+void UsersManage::set_current_user(User* user){
+    current_user = user;
+}

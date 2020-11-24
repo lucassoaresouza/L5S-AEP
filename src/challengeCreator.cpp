@@ -65,6 +65,7 @@ void ChallengeCreator::read_files(){
             }
         }
         challenges.push_back(new_challenge);
+        challenge_file.close();
     }
 }
 
