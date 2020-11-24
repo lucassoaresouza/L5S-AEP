@@ -143,12 +143,12 @@ void Field::set_text_per_line(std::string new_text, int line){
 void Field::set_sprite(std::string path, std::string orientation){
     sprite = path;
     if(orientation == "UP-LEFT"){
-        rotation = 180;
-    } else if(orientation == "UP-RIGHT"){ //HORIZONTAL
-        rotation = 90;
-    } else if(orientation == "DOWN-LEFT"){
         rotation = 0;
+    } else if(orientation == "DOWN-LEFT"){
+        rotation = 90;
     } else if(orientation == "DOWN-RIGHT"){
+        rotation = 180;
+    } else if(orientation == "UP-RIGHT"){
         rotation = 270;
     } else {
         rotation = 0;
