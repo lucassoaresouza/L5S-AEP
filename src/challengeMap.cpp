@@ -24,6 +24,7 @@ void ChallengeMap::load_map_info(){
     std::string grass_path = "./assets/sprites/tiles/grass.png";
     std::string trail_path = "./assets/sprites/tiles/trail.png";
     std::string curve_trail_path = "./assets/sprites/tiles/curve_trail.png";
+    std::string plant_path = "./assets/sprites/tiles/plant.png";
     std::string tile_name = "";
     CheckableField* aux_field = NULL;
     int index_line = 0;
@@ -49,42 +50,42 @@ void ChallengeMap::load_map_info(){
             case 'V':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(trail_path, "");
-                aux_field->set_checked_texture(grass_path);
+                aux_field->set_checked_texture(plant_path);
                 collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'H':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(trail_path, "UP-RIGHT");
-                aux_field->set_checked_texture(grass_path);
+                aux_field->set_checked_texture(plant_path);
                 collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'C':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "UP-RIGHT");
-                aux_field->set_checked_texture(grass_path);
+                aux_field->set_checked_texture(plant_path);
                 collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'D':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "UP-LEFT");
-                aux_field->set_checked_texture(grass_path);
+                aux_field->set_checked_texture(plant_path);
                 collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'E':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "DOWN-LEFT");
-                aux_field->set_checked_texture(grass_path);
+                aux_field->set_checked_texture(plant_path);
                 collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'F':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "DOWN-RIGHT");
-                aux_field->set_checked_texture(grass_path);
+                aux_field->set_checked_texture(plant_path);
                 collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
