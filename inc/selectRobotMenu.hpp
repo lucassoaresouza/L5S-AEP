@@ -7,10 +7,11 @@
 #include "../engine/inc/screen.hpp"
 #include "../engine/inc/textField.hpp"
 #include "../engine/inc/field.hpp"
+#include "selector.hpp"
 
 class SelectRobotMenu : public Engine::Screen {
     private:
-        Engine::Field* selector_field = NULL;
+        Selector* selector_field = NULL;
         std::pair<int, int> selector_field_position = std::make_pair(360,260);
         Engine::Field* background_field = NULL;
         std::pair<int, int> background_position = std::make_pair(330,230);
@@ -22,7 +23,6 @@ class SelectRobotMenu : public Engine::Screen {
         void init();
         void to_next_screen();
         void load();
-        // void draw();
 };
 
 #endif

@@ -16,14 +16,16 @@ void SelectRobotMenu::init(){
     );
     add_object(background_field);
 
-    selector_field = new Field(
+    selector_field = new Selector(
         "selector_field",
         selector_field_position,
-        std::make_pair(70,70)
+        std::make_pair(70,70),
+        2,
+        3,
+        128
     );
     selector_field->set_sprite(
-        "./assets/sprites/tiles/border.png",
-        ""
+        "./assets/sprites/tiles/border.png"
     );
     add_object(selector_field);
 
@@ -49,7 +51,6 @@ void SelectRobotMenu::init(){
             robot_base_path+aux_letter+".png",
             ""
         );
-        std::cout << robot_base_path+aux_letter+".png" << std::endl;
         robots.push_back(aux_field);
         add_object(aux_field);
 
