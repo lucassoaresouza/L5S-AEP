@@ -7,6 +7,7 @@
 #include "../inc/challengeCreator.hpp"
 #include "../inc/challengeScreen.hpp"
 #include "../inc/selectRobotMenu.hpp"
+#include "../inc/selectUserMenu.hpp"
 
 
 using namespace Engine;
@@ -17,12 +18,15 @@ int main(int, char**){
     std::pair<int,int> window_size(1024,768);
     Game& game = Game::initialize(game_name, window_size);
     
+    // //Select User
+    SelectUserMenu* select_user = new SelectUserMenu("select_user");
     
-    //Screen
+    //Select Robot
     SelectRobotMenu* select_robot = new SelectRobotMenu("select_robot");
 
+    game.add_screen(select_user);
     game.add_screen(select_robot);
-    game.load_screen("select_robot");
+    game.load_screen("select_user");
     game.run();
     return 0;
 }
