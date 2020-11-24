@@ -9,6 +9,7 @@ SelectRobotMenu::SelectRobotMenu(
 }
 
 void SelectRobotMenu::init(){
+    //Robots background initialization
     background_field = new Field(
         "selector_field",
         background_position,
@@ -29,6 +30,7 @@ void SelectRobotMenu::init(){
     );
     add_object(selector_field);
 
+    //Robots options initialization
     Engine::Collider& collider = Engine::Collider::get_instance();
     std::string robot_base_path = "./assets/sprites/bots/bot_";
     std::pair<int, int> aux_robot_position;
@@ -63,6 +65,25 @@ void SelectRobotMenu::init(){
         }
     }
 
+    //ChallengeCreator initialization
+    challenge_creator = new ChallengeCreator();
+    challenge_creator->create_maps("./levels");
+
+    //InitButton initialization
+    std::pair<int, int> button_size(128,64);
+    InitButton* init_button = new InitButton(
+        "button",
+        button_position,
+        button_size
+    );
+    init_button->set_sprites(
+        "./assets/sprites/buttons/button1.png",
+        "./assets/sprites/buttons/button2.png"
+    );
+    init_button->set_selector(selector_field);
+    init_button->set_challenge_creator(challenge_creator);
+
+    add_object(init_button);
 }
 
 void SelectRobotMenu::load(){

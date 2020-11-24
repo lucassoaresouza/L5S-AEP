@@ -21,17 +21,6 @@ int main(int, char**){
     //Screen
     SelectRobotMenu* select_robot = new SelectRobotMenu("select_robot");
 
-    ChallengeCreator* c_creator = new ChallengeCreator();
-    c_creator->create_maps("./levels");
-
-    //Screen Desafio-1
-    ChallengeScreen* screen = new ChallengeScreen(
-        "desafio-1",
-        c_creator->get_challenge_by_title("challenge_a.aep")
-    );
-
-    //Run
-    game.add_screen(screen);
     game.add_screen(select_robot);
     game.load_screen("select_robot");
     game.run();
