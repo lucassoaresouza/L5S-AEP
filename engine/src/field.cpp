@@ -75,7 +75,16 @@ void Field::draw(){
     }
 
     if(texture != NULL){
-        SDL_RenderCopy(game.get_renderer(), texture, NULL, &rect);
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        SDL_RenderCopyEx(
+            game.get_renderer(),
+            texture,
+            NULL,
+            &rect,
+            rotation,
+            NULL,
+            flip
+        );
     }
 
     SDL_Color black_font_color = {0x0, 0x0, 0x0, 0x0};
@@ -129,4 +138,19 @@ void Field::free(){
 
 void Field::set_text_per_line(std::string new_text, int line){
     text[line] = new_text;
+}
+
+void Field::set_sprite(std::string path, std::string orientation){
+    sprite = path;
+    if(orientation == "UP-LEFT"){
+        rotation = 180;
+    } else if(orientation == "UP-RIGHT"){ //HORIZONTAL
+        rotation = 90;
+    } else if(orientation == "DOWN-LEFT"){
+        rotation = 0;
+    } else if(orientation == "DOWN-RIGHT"){
+        rotation = 270;
+    } else {
+        rotation = 0;
+    }
 }

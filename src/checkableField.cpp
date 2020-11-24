@@ -71,10 +71,20 @@ void CheckableField::draw(){
     if(texture != NULL){
         if(checked){
             if(checked_texture){
+                
                 SDL_RenderCopy(game.get_renderer(), checked_texture, NULL, &rect);
             }
         } else {
-            SDL_RenderCopy(game.get_renderer(), texture, NULL, &rect);
+            SDL_RendererFlip flip = SDL_FLIP_NONE;
+            SDL_RenderCopyEx(
+                game.get_renderer(),
+                texture,
+                NULL,
+                &rect,
+                rotation,
+                NULL,
+                flip
+            );
         }
     }
 

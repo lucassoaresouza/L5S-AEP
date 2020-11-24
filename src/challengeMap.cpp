@@ -23,6 +23,7 @@ void ChallengeMap::load_map_info(){
     );
     std::string grass_path = "./assets/sprites/tiles/grass.png";
     std::string trail_path = "./assets/sprites/tiles/trail.png";
+    std::string curve_trail_path = "./assets/sprites/tiles/curve_trail.png";
     std::string tile_name = "";
     CheckableField* aux_field = NULL;
     int index_line = 0;
@@ -43,11 +44,46 @@ void ChallengeMap::load_map_info(){
         switch(map_info[i]){
             case 'G':
                 aux_field->set_name("grass");
-                aux_field->set_sprite(grass_path);
+                aux_field->set_sprite(grass_path, "");
                 break;
-            case 'T':
+            case 'V':
                 aux_field->set_name("collidable_trail");
-                aux_field->set_sprite(trail_path);
+                aux_field->set_sprite(trail_path, "");
+                aux_field->set_checked_texture(grass_path);
+                collider.add_object(aux_field);
+                all_checked_field_count += 1;
+                break;
+            case 'H':
+                aux_field->set_name("collidable_trail");
+                aux_field->set_sprite(trail_path, "UP-RIGHT"); //UP-RIGHT
+                aux_field->set_checked_texture(grass_path);
+                collider.add_object(aux_field);
+                all_checked_field_count += 1;
+                break;
+            case 'C':
+                aux_field->set_name("collidable_trail");
+                aux_field->set_sprite(curve_trail_path, "DOWN-RIGHT");
+                aux_field->set_checked_texture(grass_path);
+                collider.add_object(aux_field);
+                all_checked_field_count += 1;
+                break;
+            case 'D':
+                aux_field->set_name("collidable_trail");
+                aux_field->set_sprite(curve_trail_path, "DOWN-LEFT");
+                aux_field->set_checked_texture(grass_path);
+                collider.add_object(aux_field);
+                all_checked_field_count += 1;
+                break;
+            case 'E':
+                aux_field->set_name("collidable_trail");
+                aux_field->set_sprite(curve_trail_path, "UP-RIGHT");
+                aux_field->set_checked_texture(grass_path);
+                collider.add_object(aux_field);
+                all_checked_field_count += 1;
+                break;
+            case 'F':
+                aux_field->set_name("collidable_trail");
+                aux_field->set_sprite(curve_trail_path, "UP-LEFT");
                 aux_field->set_checked_texture(grass_path);
                 collider.add_object(aux_field);
                 all_checked_field_count += 1;
@@ -126,7 +162,7 @@ void ChallengeMap::line_border(){
         border_line_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
         border_line_field->set_text(aux_string + aux_index);
         border_line_field->set_color(color.r, color.g, color.b, color.a);
-        border_line_field->set_sprite("./assets/sprites/tiles/border.png");
+        border_line_field->set_sprite("./assets/sprites/tiles/border.png", "");
         tiles.push_back(border_line_field);
     }
 }
@@ -153,7 +189,10 @@ void ChallengeMap::column_border(){
         border_column_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
         border_column_field->set_text(std::to_string(i+1));
         border_column_field->set_color(color.r, color.g, color.b, color.a);
-        border_column_field->set_sprite("./assets/sprites/tiles/border.png");
+        border_column_field->set_sprite(
+            "./assets/sprites/tiles/border.png",
+            ""
+        );
         tiles.push_back(border_column_field);
     }
 }

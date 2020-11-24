@@ -20,9 +20,7 @@ namespace Engine{
             std::string font_path;
             std::string text[10];
             bool is_bold = false;
-
-
-
+            int rotation = 0;
 
         public:
             Field(){};
@@ -37,6 +35,7 @@ namespace Engine{
             void set_text(std::string new_text);
             void set_text_per_line(std::string new_text, int line);
             void set_bold(bool bold);
+            void set_sprite(std::string path, std::string orientation);
             bool load();
             void draw();
             void free();
