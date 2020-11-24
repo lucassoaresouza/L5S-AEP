@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "../engine/inc/game.hpp"
+#include "../inc/usersManage.hpp"
 #include "../inc/challengeCreator.hpp"
 #include "../inc/challengeScreen.hpp"
 #include "../inc/selectRobotMenu.hpp"
@@ -17,8 +18,11 @@ int main(int, char**){
     std::string game_name="AEP";
     std::pair<int,int> window_size(1024,768);
     Game& game = Game::initialize(game_name, window_size);
-    
-    // //Select User
+
+    //Users manage initialization
+    UsersManage& user_manage = UsersManage::get_instance();
+
+    //Select User
     SelectUserMenu* select_user = new SelectUserMenu("select_user");
     
     //Select Robot
