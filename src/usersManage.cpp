@@ -65,3 +65,7 @@ void UsersManage::add_user(User* user){
 void UsersManage::set_current_user(User* user){
     current_user = user;
 }
+
+User* UsersManage::get_current_user(){
+    return current_user;
+}
