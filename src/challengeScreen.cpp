@@ -28,7 +28,7 @@ void ChallengeScreen::init(){
         player_object_position,
         player_object_size
     );
-    player_object->set_sprite("./assets/sprites/bots/bot_a.png");
+    player_object->set_sprite(player_sprite);
     player_object->set_limits(limits.first, limits.second);
 
     //Textfield initialization
@@ -131,4 +131,8 @@ void ChallengeScreen::verify_programmable_object_status(){
             map->reset_all_trail_checks();
         }
     }
+}
+
+void ChallengeScreen::set_player_sprite(std::string path){
+    player_sprite = path;
 }

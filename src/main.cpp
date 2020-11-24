@@ -6,6 +6,7 @@
 #include "../engine/inc/game.hpp"
 #include "../inc/challengeCreator.hpp"
 #include "../inc/challengeScreen.hpp"
+#include "../inc/selectRobotMenu.hpp"
 
 
 using namespace Engine;
@@ -16,18 +17,23 @@ int main(int, char**){
     std::pair<int,int> window_size(1024,768);
     Game& game = Game::initialize(game_name, window_size);
     
+    
+    //Screen
+    SelectRobotMenu* select_robot = new SelectRobotMenu("select_robot");
+
     ChallengeCreator* c_creator = new ChallengeCreator();
     c_creator->create_maps("./levels");
 
-    //Test screen
+    //Screen Desafio-1
     ChallengeScreen* screen = new ChallengeScreen(
-        "screenTeste",
+        "desafio-1",
         c_creator->get_challenge_by_title("challenge_a.aep")
     );
 
     //Run
     game.add_screen(screen);
-    game.load_screen(screen->get_name());
+    game.add_screen(select_robot);
+    game.load_screen("select_robot");
     game.run();
     return 0;
 }
