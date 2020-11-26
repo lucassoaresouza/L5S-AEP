@@ -277,3 +277,12 @@ int ChallengeMap::get_checked_field_count(){
     }
     return count;
 }
+
+void ChallengeMap::free(){
+    if(texture){
+        SDL_DestroyTexture(texture);
+    }
+    for(auto tile : tiles){
+        tile->free();
+    }
+}

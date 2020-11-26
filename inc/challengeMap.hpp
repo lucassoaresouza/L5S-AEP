@@ -45,6 +45,7 @@ class ChallengeMap : public Engine::GameObject{
         void init();
         bool load();
         void draw();
+        void free();
         std::pair<int,int> get_possible_position(int x, int y);
         std::pair<int, int> get_obj_initial_position();
         std::pair<std::pair<int, int>,std::pair<int, int>> get_limits();

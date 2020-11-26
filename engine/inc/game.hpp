@@ -30,6 +30,8 @@ namespace Engine {
             ScreenManage* screen_manage = NULL;
             Screen* actual_screen = NULL;
             Timer* timer;
+            Timer* cap_fps_timer;
+            int cap_fps = 1000 / 60;
             int frames_count = 0;
             double fps = 0;
 
@@ -37,6 +39,7 @@ namespace Engine {
             bool init();
             void set_information(std::string, std::pair<int,int>);
             void calculate_fps();
+            void cap_max_fps();
 
         public:
             bool quit = false; //TODO remover essa gambiarra

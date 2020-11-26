@@ -27,6 +27,7 @@ Game& Game::initialize(
         instance->init();
         instance->screen_manage = new ScreenManage();
         instance->timer = new Timer();
+        instance->cap_fps_timer = new Timer();
     }
     return *instance;
 }
@@ -89,6 +90,7 @@ void Game::close(){
 void Game::run(){
     timer->start();
     while(!quit){
+        cap_fps_timer->start();
         read_input();
         SDL_SetRenderDrawColor(renderer, 0xD3, 0xD3, 0xD3, 0x00);
         SDL_RenderClear(renderer);
@@ -96,6 +98,10 @@ void Game::run(){
         SDL_RenderPresent(renderer);
         frames_count++;
         calculate_fps();
+        int frame_ticks = cap_fps_timer->get_ticks();
+        if(frame_ticks < cap_fps){
+            SDL_Delay(cap_fps - frame_ticks);
+        }
     }
     close();
 }
@@ -158,4 +164,11 @@ void Game::calculate_fps(){
         fps = 0;
     }
     std::cout << "FPS: " << fps << std::endl;
+}
+
+void Game::cap_max_fps(){
+    int frame_ticks = cap_fps_timer->get_ticks();
+    if(frame_ticks < cap_fps){
+        SDL_Delay(cap_fps - frame_ticks);
+    }
 }

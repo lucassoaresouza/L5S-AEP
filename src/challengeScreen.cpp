@@ -55,9 +55,8 @@ void ChallengeScreen::verify_programmable_object_status(){
             remove_all_objects();
             Engine::Collider& collider = Engine::Collider::get_instance();
             collider.remove_all_objects();
+            map->free();
             load();
-            
-            std::cout << "ganhei!" << std::endl;
         } else {
             map->reset_all_trail_checks();
         }

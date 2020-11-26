@@ -221,12 +221,12 @@ void SelectRobotMenu::select_challenge(){
             back_aux++;
         }
 
-        if(next_aux >= 25){
+        if(next_aux >= 5){
             challenge_index++;
             next_aux = 0;
         }
 
-        if(back_aux >= 25){
+        if(back_aux >= 5){
             challenge_index--;
             back_aux = 0;
         }
