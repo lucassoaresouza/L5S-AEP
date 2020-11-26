@@ -92,7 +92,6 @@ void Field::draw(){
         if(is_bold){
             TTF_SetFontStyle(font, TTF_STYLE_BOLD);
         }
-        SDL_Texture *font_texture[10];
         for(int i = 0; i < 10; i++){
             if(text[i] != ""){
                 SDL_Surface* font_surface = NULL;
