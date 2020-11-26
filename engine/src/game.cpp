@@ -98,10 +98,7 @@ void Game::run(){
         SDL_RenderPresent(renderer);
         frames_count++;
         calculate_fps();
-        int frame_ticks = cap_fps_timer->get_ticks();
-        if(frame_ticks < cap_fps){
-            SDL_Delay(cap_fps - frame_ticks);
-        }
+        cap_max_fps();
     }
     close();
 }
