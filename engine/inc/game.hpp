@@ -14,6 +14,7 @@
 #include "gameObject.hpp"
 #include "screen.hpp"
 #include "screenManage.hpp"
+#include "timer.hpp"
 
 namespace Engine {
     class Game {
@@ -28,10 +29,14 @@ namespace Engine {
             InputReceiver& input_receiver = InputReceiver::get_instance();
             ScreenManage* screen_manage = NULL;
             Screen* actual_screen = NULL;
+            Timer* timer;
+            int frames_count = 0;
+            double fps = 0;
 
             Game(){};
             bool init();
             void set_information(std::string, std::pair<int,int>);
+            void calculate_fps();
 
         public:
             bool quit = false; //TODO remover essa gambiarra

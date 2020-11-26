@@ -26,6 +26,7 @@ Game& Game::initialize(
         instance->set_information(game_name, window_dimensions);
         instance->init();
         instance->screen_manage = new ScreenManage();
+        instance->timer = new Timer();
     }
     return *instance;
 }
@@ -86,12 +87,15 @@ void Game::close(){
 }
 
 void Game::run(){
+    timer->start();
     while(!quit){
         read_input();
         SDL_SetRenderDrawColor(renderer, 0xD3, 0xD3, 0xD3, 0x00);
         SDL_RenderClear(renderer);
         draw_screen();
         SDL_RenderPresent(renderer);
+        frames_count++;
+        calculate_fps();
     }
     close();
 }
@@ -146,4 +150,12 @@ void Game::read_input(){
 
 void Game::add_screen(Screen* screen){
     screen_manage->add_screen(screen);
+}
+
+void Game::calculate_fps(){
+    fps = frames_count / (timer->get_ticks()/1000.f);
+    if(fps > 2000000){
+        fps = 0;
+    }
+    std::cout << "FPS: " << fps << std::endl;
 }
