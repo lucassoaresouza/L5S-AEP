@@ -10,6 +10,7 @@ SelectRobotMenu::SelectRobotMenu(
 
 void SelectRobotMenu::init(){
     init_background();
+    init_selector();
     init_robots();
     init_challenge_creator();
     init_init_button();
@@ -23,19 +24,6 @@ void SelectRobotMenu::init_background(){
         std::make_pair(390,258)
     );
     add_object(background_field);
-
-    selector_field = new Selector(
-        "selector_field",
-        selector_field_position,
-        std::make_pair(70,70),
-        2,
-        3,
-        128
-    );
-    selector_field->set_sprite(
-        "./assets/sprites/tiles/border.png"
-    );
-    add_object(selector_field);
 }
 
 void SelectRobotMenu::init_selector(){
@@ -45,7 +33,7 @@ void SelectRobotMenu::init_selector(){
         std::make_pair(70,70),
         2,
         3,
-        128
+        100
     );
     selector_field->set_sprite(
         "./assets/sprites/tiles/border.png"

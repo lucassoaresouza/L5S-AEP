@@ -23,8 +23,8 @@ Selector::Selector(
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
             possible_positions.push_back(std::make_pair(
-                    position.first + (j * displacement),
-                    position.second + (i * displacement)
+                    position.first + (j * (displacement + 28)),
+                    position.second + (i * (displacement + 28))
                 )
             );
         }
@@ -107,7 +107,6 @@ void Selector::verify_collisions(){
     objects = collider.verify(this);
     for(auto object : objects){
         selected_sprite = object->get_sprite();
-        std::cout << selected_sprite << std::endl;
     }
 }
 
