@@ -18,23 +18,24 @@
 
 class SelectRobotMenu : public Engine::Screen {
     private:
+        std::pair<int, int> description_position = std::make_pair(345,180);
+        std::pair<int, int> description_2_position = std::make_pair(300,500);
+        std::pair<int, int> operator_name_position = std::make_pair(435,150);
+        std::pair<int, int> next_challenge_button_position = std::make_pair(650,565);
+        std::pair<int, int> back_challenge_button_position = std:: make_pair(350,565);
+        std::pair<int, int> challenge_title_position = std::make_pair(430,550);
+        std::pair<int, int> challenge_progress_position = std::make_pair(385,568);
+        std::pair<int, int> selector_field_position = std::make_pair(360,250);
+        std::pair<int, int> robots_position = std::make_pair(330,220);
+        std::pair<int, int> background_position = std::make_pair(330,220);
+        std::pair<int, int> button_position = std::make_pair(470,650);
         User* current_user = NULL;
         Selector* selector_field = NULL;
-        std::pair<int, int> selector_field_position = std::make_pair(360,260);
         Engine::Field* background_field = NULL;
-        std::pair<int, int> background_position = std::make_pair(330,230);
-        std::pair<int, int> robots_position = std::make_pair(330,230);
         std::vector<Engine::Field*> robots;
         InitButton* init_challenge_button = NULL;
-        std::pair<int, int> button_position = std::make_pair(480,495);
         ChallengeCreator* challenge_creator = NULL;
-        std::pair<int, int> select_bot_position = std::make_pair(355,190);
-        std::pair<int, int> operator_name_position = std::make_pair(485,160);
-        std::pair<int, int> next_challenge_button_position = std::make_pair(650,100);
-        std::pair<int, int> back_challenge_button_position = std:: make_pair(350,100);
-        std::pair<int, int> challenge_title_position = std::make_pair(430,100);
         Engine::Field* challenge_title = NULL;
-        std::pair<int, int> challenge_progress_position = std::make_pair(385,118);
         Engine::Field* challenge_progress = NULL;
         Engine::Button* next_challenge_button = NULL;
         Engine::Button* back_challenge_button = NULL;
