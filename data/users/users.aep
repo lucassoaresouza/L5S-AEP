@@ -1,10 +1,10 @@
 init
 lucas
-challenge_a 0 4
-challenge_b 0 4
+challenge_a.aep 2 4
+challenge_b.aep 0 4
 end
 init
 user_b
-challenge_a 2 4
-challenge_b 3 4
+challenge_a.aep 2 4
+challenge_b.aep 3 4
 end

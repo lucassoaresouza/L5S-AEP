@@ -6,6 +6,7 @@
 #include "selector.hpp"
 #include "challengeCreator.hpp"
 #include "challengeScreen.hpp"
+#include "challenge.hpp"
 
 class InitButton : public Engine::Button {
     private:
@@ -15,6 +16,7 @@ class InitButton : public Engine::Button {
         std::string user_name;
         ChallengeCreator* challenge_creator = NULL;
         ChallengeScreen* new_challenge = NULL;
+        int user_progress = 0;
 
     public:
         InitButton(
@@ -26,6 +28,7 @@ class InitButton : public Engine::Button {
         void set_selector(Selector* p_selector);
         void set_challenge_creator(ChallengeCreator* p_creator);
         void execute();
+        void set_challenge_info(std::string title, int progress);
 };
 
 #endif

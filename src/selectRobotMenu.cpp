@@ -86,7 +86,7 @@ void SelectRobotMenu::init_challenge_creator(){
 
 void SelectRobotMenu::init_init_button(){
     std::pair<int, int> button_size(100,35);
-    InitButton* init_challenge_button = new InitButton(
+    init_challenge_button = new InitButton(
         "init_challenge_button",
         button_position,
         button_size
@@ -148,7 +148,7 @@ void SelectRobotMenu::init_select_challenge_objects(){
 
     std::pair<int, int> button_size(40,40);
     next_challenge_button = new Engine::Button(
-        "init_challenge_button",
+        "next_challenge_button",
         next_challenge_button_position,
         button_size
     );
@@ -184,7 +184,7 @@ void SelectRobotMenu::init_select_challenge_objects(){
     add_object(challenge_progress);
 
     back_challenge_button = new Engine::Button(
-        "init_challenge_button",
+        "back_challenge_button",
         back_challenge_button_position,
         button_size
     );
@@ -254,4 +254,10 @@ void SelectRobotMenu::update_challenge_info(){
         ),
         0
     );
+    if(init_challenge_button){
+        init_challenge_button->set_challenge_info(
+            challenge_name,
+            user_progress.first
+        );
+    }
 }
