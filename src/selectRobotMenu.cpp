@@ -9,7 +9,14 @@ SelectRobotMenu::SelectRobotMenu(
 }
 
 void SelectRobotMenu::init(){
-    //Robots background initialization
+    init_background();
+    init_robots();
+    init_challenge_creator();
+    init_init_button();
+    init_user();
+}
+
+void SelectRobotMenu::init_background(){
     background_field = new Field(
         "selector_field",
         background_position,
@@ -29,8 +36,9 @@ void SelectRobotMenu::init(){
         "./assets/sprites/tiles/border.png"
     );
     add_object(selector_field);
+}
 
-    //Robots options initialization
+void SelectRobotMenu::init_robots(){
     Engine::Collider& collider = Engine::Collider::get_instance();
     std::string robot_base_path = "./assets/sprites/bots/bot_";
     std::pair<int, int> aux_robot_position;
@@ -64,12 +72,14 @@ void SelectRobotMenu::init(){
             column_index=0;
         }
     }
+}
 
-    //ChallengeCreator initialization
+void SelectRobotMenu::init_challenge_creator(){
     challenge_creator = new ChallengeCreator();
     challenge_creator->create_maps("./data/levels");
+}
 
-    //InitButton initialization
+void SelectRobotMenu::init_init_button(){
     std::pair<int, int> button_size(128,100);
     InitButton* init_challenge_button = new InitButton(
         "init_challenge_button",
@@ -83,6 +93,10 @@ void SelectRobotMenu::init(){
     init_challenge_button->set_selector(selector_field);
     init_challenge_button->set_challenge_creator(challenge_creator);
     init_challenge_button->activate();
-
     add_object(init_challenge_button);
+}
+
+void SelectRobotMenu::init_user(){
+    UsersManage& users_manage = UsersManage::get_instance();
+    current_user = users_manage.get_current_user();
 }

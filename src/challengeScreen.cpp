@@ -11,79 +11,11 @@ ChallengeScreen::ChallengeScreen(
 }
 
 void ChallengeScreen::init(){
-    //Map initialization
-    if(!challenge->completed()){
-        map = challenge->get_actual_map();
-    } else {
-        Engine::Game& game = Engine::Game::get_instance();
-        game.load_screen("select_robot");
-    }
-    map->set_position(map_position);
-    map->init();
-    std::pair<std::pair<int, int>,std::pair<int, int>> limits = (
-        map->get_limits()
-    );
-
-    //Player initialization
-    std::pair<int, int> player_object_position;
-    player_object_position = map->get_obj_initial_position();
-    std::pair<int, int> player_object_size(32, 32);
-    player_object = new ProgrammableObject(
-        "player_object",
-        player_object_position,
-        player_object_size
-    );
-    player_object->set_sprite(player_sprite);
-    player_object->set_limits(limits.first, limits.second);
-
-    //Textfield initialization
-    TextField* text_field = new TextField(
-        "textfield",
-        text_field_position,
-        35,
-        40
-    );
-    text_field->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
-    text_field->set_font_color(0x00, 0x00, 0x00, 0x00);
-
-    //Compiler initialization
-    AEPCompiler* compiler = new AEPCompiler();
-
-    //Button initialization
-    std::pair<int, int> button_size(128,100);
-    CompilerButton* button = new CompilerButton(
-        "button",
-        compiler_button_position,
-        button_size
-    );
-    button->set_sprites(
-        "./assets/sprites/buttons/button1.png",
-        "./assets/sprites/buttons/button2.png"
-    );
-    button->set_compiler(compiler);
-    button->set_programmable(player_object);
-    button->set_text_field(text_field);
-    button->activate();
-
-    //Console initialization
-    console = new Engine::Field(
-        "console",
-        console_position,
-        std::make_pair(572,117)
-    );
-    console->set_bold(true);
-    console->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
-    console->set_text_per_line("Desafio:",0);
-    console->set_text_per_line("Dica:",1);
-    console->set_text_per_line("Status:",2);
-    console->set_text_per_line("Campos Cobertos:",3);
-
-    // Add objects
-    add_object(map);
-    add_object(player_object);
-    add_object(text_field);
-    add_object(button);
-    add_object(console);
+    init_map();
+    init_player();
+    init_textfield();
+    init_compiler_objects();
+    init_console();
 }
 
 void ChallengeScreen::draw(){
@@ -134,4 +66,77 @@ void ChallengeScreen::verify_programmable_object_status(){
 
 void ChallengeScreen::set_player_sprite(std::string path){
     player_sprite = path;
+}
+
+void ChallengeScreen::init_map(){
+    if(!challenge->completed()){
+        map = challenge->get_actual_map();
+    } else {
+        Engine::Game& game = Engine::Game::get_instance();
+        game.load_screen("select_robot");
+    }
+    map->set_position(map_position);
+    map->init();
+    limits = map->get_limits();
+    add_object(map);
+}
+
+void ChallengeScreen::init_player(){
+    std::pair<int, int> player_object_position;
+    player_object_position = map->get_obj_initial_position();
+    std::pair<int, int> player_object_size(32, 32);
+    player_object = new ProgrammableObject(
+        "player_object",
+        player_object_position,
+        player_object_size
+    );
+    player_object->set_sprite(player_sprite);
+    player_object->set_limits(limits.first, limits.second);
+    add_object(player_object);
+}
+
+void ChallengeScreen::init_textfield(){
+    text_field = new TextField(
+        "textfield",
+        text_field_position,
+        35,
+        40
+    );
+    text_field->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
+    text_field->set_font_color(0x00, 0x00, 0x00, 0x00);
+    add_object(text_field);
+}
+
+void ChallengeScreen::init_compiler_objects(){
+    AEPCompiler* compiler = new AEPCompiler();
+    std::pair<int, int> button_size(128,100);
+    CompilerButton* button = new CompilerButton(
+        "button",
+        compiler_button_position,
+        button_size
+    );
+    button->set_sprites(
+        "./assets/sprites/buttons/button1.png",
+        "./assets/sprites/buttons/button2.png"
+    );
+    button->set_compiler(compiler);
+    button->set_programmable(player_object);
+    button->set_text_field(text_field);
+    button->activate();
+    add_object(button);
+}
+
+void ChallengeScreen::init_console(){
+    console = new Engine::Field(
+        "console",
+        console_position,
+        std::make_pair(572,117)
+    );
+    console->set_bold(true);
+    console->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
+    console->set_text_per_line("Desafio:",0);
+    console->set_text_per_line("Dica:",1);
+    console->set_text_per_line("Status:",2);
+    console->set_text_per_line("Campos Cobertos:",3);
+    add_object(console);
 }

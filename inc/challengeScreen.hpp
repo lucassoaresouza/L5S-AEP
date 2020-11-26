@@ -18,11 +18,20 @@ class ChallengeScreen : public Engine::Screen {
         Challenge* challenge = NULL;
         ChallengeMap* map = NULL;
         Engine::Field* console = NULL;
+        Engine::TextField* text_field = NULL;
         std::string player_sprite = "./assets/sprites/bots/bot_a.png";
         std::pair<int, int> map_position = std::make_pair(450, 50);
         std::pair<int, int> text_field_position = std::make_pair(25, 50);
         std::pair<int, int> compiler_button_position = std::make_pair(135,690);
         std::pair<int, int> console_position = std::make_pair(425, 600);
+        std::pair<std::pair<int, int>,std::pair<int, int>> limits;
+        void init_map();
+        void init_player();
+        void init_textfield();
+        void init_compiler_objects();
+        void init_console();
+
+
     public:
         ChallengeScreen(std::string screen_name, Challenge* new_challenge);
         void verify_programmable_object_status();

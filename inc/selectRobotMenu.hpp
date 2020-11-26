@@ -10,6 +10,8 @@
 #include "challengeCreator.hpp"
 #include "initButton.hpp"
 #include "selector.hpp"
+#include "usersManage.hpp"
+#include "user.hpp"
 
 class SelectRobotMenu : public Engine::Screen {
     private:
@@ -22,6 +24,12 @@ class SelectRobotMenu : public Engine::Screen {
         InitButton* init_challenge_button = NULL;
         std::pair<int, int> button_position = std::make_pair(465,465);
         ChallengeCreator* challenge_creator = NULL;
+        User* current_user = NULL;
+        void init_background();
+        void init_robots();
+        void init_challenge_creator();
+        void init_init_button();
+        void init_user();
 
     public:
         SelectRobotMenu(std::string screen_name);

@@ -5,7 +5,13 @@ SelectUserMenu::SelectUserMenu(std::string name){
 }
 
 void SelectUserMenu::init(){
-    //background
+    init_background();
+    init_texts();
+    init_user_input();
+    init_init_button();
+}
+
+void SelectUserMenu::init_background(){
     label_background = new Engine::Field(
         "background",
         label_background_position,
@@ -13,8 +19,9 @@ void SelectUserMenu::init(){
     );
     label_background->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(label_background);
+}
 
-    //title
+void SelectUserMenu::init_texts(){
     title = new Engine::Field(
         "title",
         title_position,
@@ -26,7 +33,6 @@ void SelectUserMenu::init(){
     title->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(title);
 
-    //description
     description = new Engine::Field(
         "title",
         description_position,
@@ -38,7 +44,9 @@ void SelectUserMenu::init(){
     description->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(description);
 
-    //user input
+}
+
+void SelectUserMenu::init_user_input(){
     user_input = new Engine::TextField(
         "user_input",
         user_input_position,
@@ -48,8 +56,9 @@ void SelectUserMenu::init(){
     user_input->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     user_input->set_font_color(0x00, 0x00, 0x00, 0x00);
     add_object(user_input);
+}
 
-    //button
+void SelectUserMenu::init_init_button(){
     init_button = new InitUserButton(
         "init_user_button",
         init_button_position,
