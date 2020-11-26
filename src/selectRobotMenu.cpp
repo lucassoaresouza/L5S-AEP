@@ -9,12 +9,13 @@ SelectRobotMenu::SelectRobotMenu(
 }
 
 void SelectRobotMenu::init(){
+    init_user();
     init_background();
+    init_texts();
     init_selector();
     init_robots();
     init_challenge_creator();
     init_init_button();
-    init_user();
 }
 
 void SelectRobotMenu::init_background(){
@@ -102,4 +103,29 @@ void SelectRobotMenu::init_init_button(){
 void SelectRobotMenu::init_user(){
     UsersManage& users_manage = UsersManage::get_instance();
     current_user = users_manage.get_current_user();
+}
+
+void SelectRobotMenu::init_texts(){
+    std::string username = current_user->get_name();
+    Engine::Field* title_robots = new Engine::Field(
+        "title-robts",
+        select_bot_position,
+        std::make_pair(0,0)
+    );
+    title_robots->set_bold(true);
+    title_robots->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
+    title_robots->set_text_per_line("selecione seu trator inteligente:", 0);
+    title_robots->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
+    add_object(title_robots);
+
+    Engine::Field* operator_name = new Engine::Field(
+        "title-robts",
+        operator_name_position,
+        std::make_pair(0,0)
+    );
+    operator_name->set_bold(true);
+    operator_name->set_font("./assets/fonts/larabiefont-rg.ttf", 20);
+    operator_name->set_text_per_line(username + ",", 0);
+    operator_name->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
+    add_object(operator_name);
 }

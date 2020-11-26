@@ -25,8 +25,11 @@ class SelectRobotMenu : public Engine::Screen {
         std::pair<int, int> button_position = std::make_pair(480,495);
         ChallengeCreator* challenge_creator = NULL;
         User* current_user = NULL;
+        std::pair<int, int> select_bot_position = std::make_pair(355,190);
+        std::pair<int, int> operator_name_position = std::make_pair(485,160);
         void init_selector();
         void init_background();
+        void init_texts();
         void init_robots();
         void init_challenge_creator();
         void init_init_button();
