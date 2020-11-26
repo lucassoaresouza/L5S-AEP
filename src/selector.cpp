@@ -52,40 +52,7 @@ void Selector::set_new_position_mouse(int x, int y){
 }
 
 void Selector::read_input(SDL_Event *event){
-    if(event->type == SDL_KEYDOWN){
-        switch (event->key.keysym.sym){
-            case SDLK_UP:
-                if(position.second > limit_y.first){
-                    position.second -= displacement;
-                } else {
-                    position.second = limit_y.second;
-                }
-                break;
-            case SDLK_DOWN:
-                if(position.second < limit_y.second){
-                    position.second += displacement;
-                } else {
-                    position.second = limit_y.first;
-                }
-                break;
-            case SDLK_LEFT:
-                if(position.first > limit_x.first){
-                    position.first -= displacement;
-                } else {
-                    position.first = limit_x.second;
-                }
-                break;
-            case SDLK_RIGHT:
-                if(position.first < limit_x.second){
-                    position.first += displacement;
-                } else {
-                    position.first = limit_x.first;
-                }
-                break;
-            default:
-                break;
-        }
-    } else if(event->type == SDL_MOUSEBUTTONDOWN){
+ if(event->type == SDL_MOUSEBUTTONDOWN){
         int x;
         int y;
         SDL_GetMouseState( &x, &y);

@@ -104,7 +104,7 @@ void ChallengeScreen::init_textfield(){
     );
     text_field->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     text_field->set_font_color(0x00, 0x00, 0x00, 0x00);
-    add_object(text_field);
+    add_object_with_input(text_field);
 }
 
 void ChallengeScreen::init_compiler_objects(){
@@ -123,7 +123,7 @@ void ChallengeScreen::init_compiler_objects(){
     button->set_programmable(player_object);
     button->set_text_field(text_field);
     button->activate();
-    add_object(button);
+    add_object_with_input(button);
 }
 
 void ChallengeScreen::init_console(){

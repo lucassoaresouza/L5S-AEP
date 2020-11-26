@@ -40,7 +40,7 @@ void SelectRobotMenu::init_selector(){
     selector_field->set_sprite(
         "./assets/sprites/tiles/border.png"
     );
-    add_object(selector_field);
+    add_object_with_input(selector_field);
 }
 
 void SelectRobotMenu::init_robots(){
@@ -98,7 +98,7 @@ void SelectRobotMenu::init_init_button(){
     init_challenge_button->set_selector(selector_field);
     init_challenge_button->set_challenge_creator(challenge_creator);
     init_challenge_button->activate();
-    add_object(init_challenge_button);
+    add_object_with_input(init_challenge_button);
 }
 
 void SelectRobotMenu::init_user(){
@@ -157,7 +157,7 @@ void SelectRobotMenu::init_select_challenge_objects(){
         "./assets/sprites/buttons/next2.png"
     );
     next_challenge_button->activate();
-    add_object(next_challenge_button);
+    add_object_with_input(next_challenge_button);
 
     challenge_title = new Engine::Field(
         "challenge_title",
@@ -193,7 +193,7 @@ void SelectRobotMenu::init_select_challenge_objects(){
         "./assets/sprites/buttons/back2.png"
     );
     back_challenge_button->activate();
-    add_object(back_challenge_button);
+    add_object_with_input(back_challenge_button);
 }
 
 void SelectRobotMenu::draw(){

@@ -55,7 +55,7 @@ void SelectUserMenu::init_user_input(){
     );
     user_input->set_font( "./assets/fonts/larabiefont-rg.ttf", 15);
     user_input->set_font_color(0x00, 0x00, 0x00, 0x00);
-    add_object(user_input);
+    add_object_with_input(user_input);
 }
 
 void SelectUserMenu::init_init_button(){
@@ -70,5 +70,5 @@ void SelectUserMenu::init_init_button(){
     );
     init_button->set_user_input(user_input);
     init_button->activate();
-    add_object(init_button);
+    add_object_with_input(init_button);
 }

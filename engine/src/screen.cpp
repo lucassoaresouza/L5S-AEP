@@ -20,6 +20,10 @@ std::string Screen::get_name(){
 
 void Screen::add_object(GameObject* object){
     objects.push_back(object);
+}
+
+void Screen::add_object_with_input(GameObject* object){
+    objects.push_back(object);
     input_receiver.register_observer(object);
 }
 
