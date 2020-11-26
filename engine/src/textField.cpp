@@ -93,31 +93,30 @@ void TextField::draw_text_table(){
         for(int j = 0; j < columns; j++){
             SDL_Surface* provisory_surface = NULL;
             std::string aux_value = text_table[i][j];
-            if(aux_value == "\n" || aux_value == ""){
-                aux_value = " ";
+            if(aux_value != "\n" && aux_value != ""){
+                provisory_surface = TTF_RenderText_Blended(
+                    font,
+                    aux_value.c_str(),
+                    font_color
+                );
+                texture_table[i][j] = SDL_CreateTextureFromSurface(
+                    game.get_renderer(),
+                    provisory_surface
+                );
+                SDL_Rect renderQuad = {
+                    position.first + (provisory_surface->w * j) + 9,
+                    position.second + (provisory_surface->h * i) + 18,
+                    provisory_surface->w,
+                    provisory_surface->h
+                };
+                SDL_FreeSurface(provisory_surface);
+                SDL_RenderCopy(
+                    game.get_renderer(),
+                    texture_table[i][j],
+                    NULL,
+                    &renderQuad
+                );
             }
-            provisory_surface = TTF_RenderText_Blended(
-                font,
-                aux_value.c_str(),
-                font_color
-            );
-            texture_table[i][j] = SDL_CreateTextureFromSurface(
-                game.get_renderer(),
-                provisory_surface
-            );
-            SDL_Rect renderQuad = {
-                position.first + (provisory_surface->w * j) + 9,
-                position.second + (provisory_surface->h * i) + 18,
-                provisory_surface->w,
-                provisory_surface->h
-            };
-            SDL_FreeSurface(provisory_surface);
-            SDL_RenderCopy(
-                game.get_renderer(),
-                texture_table[i][j],
-                NULL,
-                &renderQuad
-            );
         }
     }   
 }
