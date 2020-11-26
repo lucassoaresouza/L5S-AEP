@@ -7,6 +7,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 #include <string>
+#include<vector>
 
 #include "log.hpp"
 #include "gameObject.hpp"
@@ -19,14 +20,15 @@ namespace Engine{
             std::string current_text = "";
             int lines = 0;
             int columns = 0;
-            std::string **text_table;
             SDL_Texture *background;
-            SDL_Texture ***texture_table;
             int spacing_line = 0;
             int spacing_letter = 0;
             SDL_Renderer *renderer;
 
-            std::pair<int, int> pointer_position;
+            std::vector<std::string> texts;
+            std::vector<SDL_Texture*> texts_textures; 
+            std::pair<int,int> current_pointer_position = std::make_pair(0,0);
+
             std::string pointer_pipe = "|";
             SDL_Texture *pointer_texture;
 
@@ -36,9 +38,8 @@ namespace Engine{
             int font_size = 0;
             TTF_Font *font = NULL;
 
-            void allocate_tables();
             void draw_pointer_pipe();
-            void draw_text_table();
+            void draw_texts();
             void draw_background();
             void erase();
             void write(char letter);

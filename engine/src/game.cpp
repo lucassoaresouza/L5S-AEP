@@ -160,7 +160,7 @@ void Game::calculate_fps(){
     if(fps > 2000000){
         fps = 0;
     }
-    std::cout << "FPS: " << fps << std::endl;
+    // std::cout << "FPS: " << fps << std::endl;
 }
 
 void Game::cap_max_fps(){
