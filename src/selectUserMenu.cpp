@@ -43,7 +43,6 @@ void SelectUserMenu::init_texts(){
     description->set_text_per_line("Por favor, insira seu nome:",0);
     description->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(description);
-
 }
 
 void SelectUserMenu::init_user_input(){

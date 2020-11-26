@@ -34,6 +34,7 @@ namespace Engine {
             virtual void init(){};
             virtual void draw();
             virtual void load();
+            virtual void free();
 
     };
 }

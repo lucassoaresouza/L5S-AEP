@@ -42,4 +42,16 @@ void Screen::draw(){
 
 void Screen::remove_all_objects(){
     objects.clear();
+    for(auto object : objects){
+        input_receiver.unregister_observer(
+            object->get_name()
+        );
+    }
+}
+
+void Screen::free(){
+    for(auto object : objects){
+        object->free();
+    }
+    remove_all_objects();
 }

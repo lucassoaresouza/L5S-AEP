@@ -53,7 +53,7 @@ namespace Engine{
                 int max_lines,
                 int max_columns
             );
-            ~TextField();
+            ~TextField(){};
             bool load();
             void draw();
             void free();
