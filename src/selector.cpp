@@ -107,6 +107,7 @@ void Selector::verify_collisions(){
     objects = collider.verify(this);
     for(auto object : objects){
         selected_sprite = object->get_sprite();
+        std::cout << selected_sprite << std::endl;
     }
 }
 

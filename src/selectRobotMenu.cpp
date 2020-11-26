@@ -38,6 +38,21 @@ void SelectRobotMenu::init_background(){
     add_object(selector_field);
 }
 
+void SelectRobotMenu::init_selector(){
+    selector_field = new Selector(
+        "selector_field",
+        selector_field_position,
+        std::make_pair(70,70),
+        2,
+        3,
+        100
+    );
+    selector_field->set_sprite(
+        "./assets/sprites/tiles/border.png"
+    );
+    add_object(selector_field);
+}
+
 void SelectRobotMenu::init_robots(){
     Engine::Collider& collider = Engine::Collider::get_instance();
     std::string robot_base_path = "./assets/sprites/bots/bot_";
