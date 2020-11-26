@@ -22,7 +22,7 @@ class SelectRobotMenu : public Engine::Screen {
         std::pair<int, int> robots_position = std::make_pair(330,230);
         std::vector<Engine::Field*> robots;
         InitButton* init_challenge_button = NULL;
-        std::pair<int, int> button_position = std::make_pair(465,465);
+        std::pair<int, int> button_position = std::make_pair(480,495);
         ChallengeCreator* challenge_creator = NULL;
         User* current_user = NULL;
         void init_selector();

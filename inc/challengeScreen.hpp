@@ -22,7 +22,7 @@ class ChallengeScreen : public Engine::Screen {
         std::string player_sprite = "./assets/sprites/bots/bot_a.png";
         std::pair<int, int> map_position = std::make_pair(450, 50);
         std::pair<int, int> text_field_position = std::make_pair(25, 50);
-        std::pair<int, int> compiler_button_position = std::make_pair(135,690);
+        std::pair<int, int> compiler_button_position = std::make_pair(165,720);
         std::pair<int, int> console_position = std::make_pair(425, 600);
         std::pair<std::pair<int, int>,std::pair<int, int>> limits;
         void init_map();

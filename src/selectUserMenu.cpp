@@ -62,7 +62,7 @@ void SelectUserMenu::init_init_button(){
     init_button = new InitUserButton(
         "init_user_button",
         init_button_position,
-        std::make_pair(128,100)
+        std::make_pair(100,35)
     );
     init_button->set_sprites(
         "./assets/sprites/buttons/button1.png",

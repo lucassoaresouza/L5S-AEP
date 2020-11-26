@@ -45,7 +45,7 @@ void SelectRobotMenu::init_selector(){
         std::make_pair(70,70),
         2,
         3,
-        100
+        128
     );
     selector_field->set_sprite(
         "./assets/sprites/tiles/border.png"
@@ -95,7 +95,7 @@ void SelectRobotMenu::init_challenge_creator(){
 }
 
 void SelectRobotMenu::init_init_button(){
-    std::pair<int, int> button_size(128,100);
+    std::pair<int, int> button_size(100,35);
     InitButton* init_challenge_button = new InitButton(
         "init_challenge_button",
         button_position,

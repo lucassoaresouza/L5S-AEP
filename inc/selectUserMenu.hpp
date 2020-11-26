@@ -18,7 +18,7 @@ class SelectUserMenu : public Engine::Screen{
         Engine::TextField* user_input = NULL;
         std::pair<int, int> user_input_position = std::make_pair(385,400);
         InitUserButton* init_button = NULL;
-        std::pair<int, int> init_button_position = std::make_pair(450,440);
+        std::pair<int, int> init_button_position = std::make_pair(465,480);
         void init_background();
         void init_texts();
         void init_user_input();

@@ -109,7 +109,7 @@ void ChallengeScreen::init_textfield(){
 
 void ChallengeScreen::init_compiler_objects(){
     AEPCompiler* compiler = new AEPCompiler();
-    std::pair<int, int> button_size(128,100);
+    std::pair<int, int> button_size(100,35);
     CompilerButton* button = new CompilerButton(
         "button",
         compiler_button_position,
