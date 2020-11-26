@@ -13,8 +13,12 @@
 #include "usersManage.hpp"
 #include "user.hpp"
 
+
+#include "../engine/inc/button.hpp"
+
 class SelectRobotMenu : public Engine::Screen {
     private:
+        User* current_user = NULL;
         Selector* selector_field = NULL;
         std::pair<int, int> selector_field_position = std::make_pair(360,260);
         Engine::Field* background_field = NULL;
@@ -24,9 +28,19 @@ class SelectRobotMenu : public Engine::Screen {
         InitButton* init_challenge_button = NULL;
         std::pair<int, int> button_position = std::make_pair(480,495);
         ChallengeCreator* challenge_creator = NULL;
-        User* current_user = NULL;
         std::pair<int, int> select_bot_position = std::make_pair(355,190);
         std::pair<int, int> operator_name_position = std::make_pair(485,160);
+        std::pair<int, int> next_challenge_button_position = std::make_pair(650,100);
+        std::pair<int, int> back_challenge_button_position = std:: make_pair(350,100);
+        std::pair<int, int> challenge_title_position = std::make_pair(430,100);
+        Engine::Field* challenge_title = NULL;
+        std::pair<int, int> challenge_progress_position = std::make_pair(385,118);
+        Engine::Field* challenge_progress = NULL;
+        Engine::Button* next_challenge_button = NULL;
+        Engine::Button* back_challenge_button = NULL;
+        int next_aux = 0;
+        int back_aux = 0;
+        int challenge_index = 0;
         void init_selector();
         void init_background();
         void init_texts();
@@ -34,10 +48,14 @@ class SelectRobotMenu : public Engine::Screen {
         void init_challenge_creator();
         void init_init_button();
         void init_user();
+        void init_select_challenge_objects();
+        void select_challenge();
+        void update_challenge_info();
 
     public:
         SelectRobotMenu(std::string screen_name);
         void init();
+        void draw();
         void to_next_screen();
 };
 

@@ -109,3 +109,7 @@ bool Button::load(){
     set_texture(not_pressed_texture);
     return not_pressed_texture != NULL && pressed_texture != NULL;
 }
+
+bool Button::get_pressed(){
+    return pressed;
+}

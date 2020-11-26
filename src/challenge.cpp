@@ -54,3 +54,7 @@ bool Challenge::completed(){
     }
     return true;
 }
+
+int Challenge::get_maps_count(){
+    return maps.size();
+}

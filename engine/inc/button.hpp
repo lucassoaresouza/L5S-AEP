@@ -37,6 +37,7 @@ namespace Engine{
                 std::string sprite_not_pressed,
                 std::string sprite_pressed
             );
+            bool get_pressed();
     };
 }
 

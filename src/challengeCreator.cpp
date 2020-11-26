@@ -64,6 +64,7 @@ void ChallengeCreator::read_files(){
                 }
             }
         }
+        challenge_titles.push_back(new_challenge->get_title());
         challenges.push_back(new_challenge);
         challenge_file.close();
     }
@@ -80,4 +81,18 @@ Challenge* ChallengeCreator::get_challenge_by_title(std::string name){
 
 std::vector<Challenge*> ChallengeCreator::get_all_challenges(){
     return challenges;
+}
+
+std::string ChallengeCreator::get_challenge_title(int index){
+    return challenge_titles[index];
+}
+
+int ChallengeCreator::get_challenge_count(){
+    return challenges.size();
+}
+
+int ChallengeCreator::get_challenge_maps_count(std::string name){
+    return (
+        get_challenge_by_title(name)->get_maps_count()
+    );
 }
