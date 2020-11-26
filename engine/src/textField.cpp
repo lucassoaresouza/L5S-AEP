@@ -142,6 +142,7 @@ void TextField::draw_background(){
 
 void TextField::free(){
     SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(pointer_texture);
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
             SDL_DestroyTexture(texture_table[i][j]);
