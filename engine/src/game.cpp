@@ -77,8 +77,8 @@ bool Game::init(){
 }
 
 void Game::close(){
-    SDL_DestroyTexture(current_texture);
-    current_texture = NULL;
+    SDL_DestroyTexture(game_background);
+    game_background = NULL;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     window = NULL;
@@ -92,8 +92,8 @@ void Game::run(){
     while(!quit){
         cap_fps_timer->start();
         read_input();
-        SDL_SetRenderDrawColor(renderer, 0xD3, 0xD3, 0xD3, 0x00);
         SDL_RenderClear(renderer);
+        draw_background();
         draw_screen();
         SDL_RenderPresent(renderer);
         frames_count++;
@@ -167,5 +167,33 @@ void Game::cap_max_fps(){
     int frame_ticks = cap_fps_timer->get_ticks();
     if(frame_ticks < cap_fps){
         SDL_Delay(cap_fps - frame_ticks);
+    }
+}
+
+void Game::set_game_background(std::string path){
+    if(renderer){
+        std::cout << "AQUI :)" << std::endl;
+        SDL_Surface* surface = IMG_Load(path.c_str());
+        if(surface == NULL){
+            Log().print("Nao foi possivel carregar o sprite!");
+        } else {
+            game_background = SDL_CreateTextureFromSurface(renderer, surface);
+            if(game_background == NULL){
+                Log().print(SDL_GetError());
+            }
+            SDL_FreeSurface(surface);
+        }
+    }
+}
+
+void Game::draw_background(){
+    if(game_background){
+        SDL_Rect ret = {
+            0,
+            0,
+            window_dimensions.first,
+            window_dimensions.second
+        };
+        SDL_RenderCopy(renderer, game_background, NULL, &ret); 
     }
 }

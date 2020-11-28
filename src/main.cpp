@@ -18,6 +18,7 @@ int main(int, char**){
     std::string game_name="AEP";
     std::pair<int,int> window_size(1024,768);
     Game& game = Game::initialize(game_name, window_size);
+    game.set_game_background("./assets/sprites/tiles/background.png");
 
     //Users manage initialization
     UsersManage& user_manage = UsersManage::get_instance();
