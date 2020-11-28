@@ -5,10 +5,11 @@ SelectUserMenu::SelectUserMenu(std::string name){
 }
 
 void SelectUserMenu::init(){
+    std::cout << "load load load" << std::endl;
     init_background();
     init_texts();
-    init_user_input();
-    init_init_button();
+    // init_user_input();
+    // init_init_button();
 }
 
 void SelectUserMenu::init_background(){

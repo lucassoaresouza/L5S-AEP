@@ -208,7 +208,7 @@ void ProgrammableObject::set_label_name(){
     );
     label_name->set_bold(true);
     label_name->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
-    label_name->set_text(name);
+    label_name->set_text_per_line(name, 0);
     label_name->load();
     
 }
