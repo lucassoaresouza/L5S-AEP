@@ -1,6 +1,5 @@
 #include "../inc/challengeCreator.hpp"
 
-// std::vector<ChallengeMap*> ChallengeCreator::create_maps(std::string folder){
 void ChallengeCreator::create_maps(std::string folder){
     challenge_paths = folder;
     read_folder();
@@ -12,7 +11,6 @@ void ChallengeCreator::read_folder(){
     if(dir != NULL){
         std::string delimiter = "/";
         while( (lsdir = readdir(dir)) != NULL ){
-            // std::cout << lsdir->d_name << std::endl;
             std::string aux_string;
             aux_string = "";
             std::string file_std_string = lsdir->d_name + aux_string;

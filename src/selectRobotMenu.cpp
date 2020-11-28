@@ -9,6 +9,7 @@ SelectRobotMenu::SelectRobotMenu(
 }
 
 void SelectRobotMenu::init(){
+    std::cout << "TO INICILIAZANDO" << std::endl;
     init_user();
     init_challenge_creator();
     init_background();
@@ -221,12 +222,12 @@ void SelectRobotMenu::select_challenge(){
             back_aux++;
         }
 
-        if(next_aux >= 5){
+        if(next_aux >= 7){
             challenge_index++;
             next_aux = 0;
         }
 
-        if(back_aux >= 5){
+        if(back_aux >= 7){
             challenge_index--;
             back_aux = 0;
         }

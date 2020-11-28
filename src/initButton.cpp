@@ -19,6 +19,7 @@ void InitButton::set_challenge_creator(ChallengeCreator* p_creator){
 }
 
 void InitButton::execute(){
+    std::cout << "CHALLENGE NAME: " << challenge_name << std::endl;
     if(is_active){
         if(selector){
             robot_sprite = selector->get_selected_sprite();
@@ -30,14 +31,15 @@ void InitButton::execute(){
             for(int i = 0; i < user_progress; i++){
                 current_challenge->set_map_complete(i);
             }
+            std::cout << "AQUI" << std::endl;
             new_challenge = new ChallengeScreen(
-                "desafio-1",
+                challenge_name,
                 challenge_creator->get_challenge_by_title(challenge_name)
             );
             new_challenge->set_player_sprite(robot_sprite);
             Engine::Game& game = Engine::Game::get_instance();
             game.add_screen(new_challenge);
-            game.load_screen("desafio-1");
+            game.load_screen(challenge_name);
             deactivate();
         }
     }
