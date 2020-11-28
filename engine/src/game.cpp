@@ -98,7 +98,7 @@ void Game::run(){
         SDL_RenderPresent(renderer);
         frames_count++;
         calculate_fps();
-        // cap_max_fps();
+        cap_max_fps();
     }
     close();
 }
