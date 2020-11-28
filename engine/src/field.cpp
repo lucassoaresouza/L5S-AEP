@@ -83,9 +83,6 @@ void Field::draw(){
         );
     }
 
-    if(is_bold){
-        TTF_SetFontStyle(font, TTF_STYLE_BOLD);
-    }
     for(int i = 0; i < 10; i++){
         if(font_texture[i]){
             SDL_RenderCopy(
@@ -117,6 +114,9 @@ void Field::set_text_per_line(std::string new_text, int line){
     text[line] = new_text;
     SDL_Color black_font_color = {0x0, 0x0, 0x0, 0x0};
     if(text[line] != ""){
+        if(is_bold){
+            TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+        }
         SDL_Surface* font_surface = NULL;
         font_surface = TTF_RenderText_Blended(
             font,
