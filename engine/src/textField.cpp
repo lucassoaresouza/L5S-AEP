@@ -15,6 +15,11 @@ TextField::TextField(
     position = object_position;
     lines = max_lines;
     columns = max_columns;
+    for(int i = 0; i < lines; i++){
+        texts.push_back("");
+        texts_textures.push_back(NULL);
+        texts_rects.push_back({0,0,0,0,});
+    }
 }
 
 void TextField::set_font(std::string path, int size){
@@ -35,57 +40,8 @@ bool TextField::load(){
 
     for(int i = 0; i < lines; i++){
         texts.push_back("");
-        // texts_textures.push_back(NULL);
     }
 
-    return true;
-}
-
-void TextField::draw(){
-    free();
-    draw_background();
-    draw_pointer_pipe();
-    draw_texts();
-}
-
-void TextField::draw_texts(){
-    Game& game = Game::get_instance();
-    int index_line = 0;
-    for(std::string line : texts){
-        if(line.size() > 0){
-            SDL_Surface* provisory_surface = NULL;
-            provisory_surface = TTF_RenderText_Blended(
-                font,
-                line.c_str(),
-                font_color
-            );
-            SDL_Texture* line_texture = SDL_CreateTextureFromSurface(
-                game.get_renderer(),
-                provisory_surface
-            );
-            texts_textures.push_back(line_texture);
-            SDL_Rect renderQuad = {
-                position.first + 10,
-                position.second + (
-                     provisory_surface->h * index_line
-                ) + 15,
-                provisory_surface->w,
-                provisory_surface->h
-            };
-            SDL_FreeSurface(provisory_surface);
-            SDL_RenderCopy(
-                game.get_renderer(),
-                line_texture,
-                NULL,
-                &renderQuad
-            );
-        }
-        index_line++;
-    }
-}
-
-void TextField::draw_pointer_pipe(){
-    Game& game = Game::get_instance();
     SDL_Surface* provisory_surface = NULL;
     provisory_surface = TTF_RenderText_Blended(
         font,
@@ -96,17 +52,45 @@ void TextField::draw_pointer_pipe(){
         game.get_renderer(),
         provisory_surface
     );
+    SDL_FreeSurface(provisory_surface);
+
+    return true;
+}
+
+void TextField::draw(){
+    draw_background();
+    draw_pointer_pipe();
+    draw_texts();
+}
+
+void TextField::draw_texts(){
+    Game& game = Game::get_instance();
+    int index_line = 0;
+    for(std::string line : texts){
+        if(line.size() > 0){
+            SDL_RenderCopy(
+                game.get_renderer(),
+                texts_textures[index_line],
+                NULL,
+                &texts_rects[index_line]
+            );
+        }
+        index_line++;
+    }
+}
+
+void TextField::draw_pointer_pipe(){
+    Game& game = Game::get_instance();
     SDL_Rect renderQuad = {
         position.first + (
-            provisory_surface->w * current_pointer_position.second
+            9 * current_pointer_position.second
         ) + 7,
         position.second + (
-            provisory_surface->h * current_pointer_position.first
+            18 * current_pointer_position.first
         ) + 15,
-        provisory_surface->w,
-        provisory_surface->h
+        9,
+        18
     };
-    SDL_FreeSurface(provisory_surface);
     SDL_RenderCopy(
         game.get_renderer(),
         pointer_texture,
@@ -150,6 +134,7 @@ void TextField::write(char letter){
             auto line_it = texts[current_pointer_position.first].begin() + current_pointer_position.second;
             texts[current_pointer_position.first].insert(line_it, letter);
             current_pointer_position.second++;
+            update_line();
         } else {
             //got to next line
             if(current_pointer_position.first + 1 < lines){
@@ -166,6 +151,7 @@ void TextField::erase(){
             (current_pointer_position.second - 1)
         );
         current_pointer_position.second--;
+        update_line();
     }
 }
 
@@ -257,5 +243,33 @@ void TextField::read_input(SDL_Event *event){
             std::string input = event->text.text;
             write(input[0]);
         }
+    }
+}
+
+void TextField::update_line(){
+    Game& game = Game::get_instance();
+    int line = current_pointer_position.first;
+    if(texts[line] != ""){
+        SDL_Surface* provisory_surface = NULL;
+        provisory_surface = TTF_RenderText_Blended(
+            font,
+            texts[line].c_str(),
+            font_color
+        );
+        SDL_Texture* line_texture = SDL_CreateTextureFromSurface(
+            game.get_renderer(),
+            provisory_surface
+        );
+        texts_textures[line] = line_texture;
+        SDL_Rect renderQuad = {
+            position.first + 10,
+            position.second + (
+                    provisory_surface->h * line
+            ) + 15,
+            provisory_surface->w,
+            provisory_surface->h
+        };
+        texts_rects[line] = renderQuad;
+        SDL_FreeSurface(provisory_surface);
     }
 }

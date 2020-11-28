@@ -26,7 +26,8 @@ namespace Engine{
             SDL_Renderer *renderer;
 
             std::vector<std::string> texts;
-            std::vector<SDL_Texture*> texts_textures; 
+            std::vector<SDL_Texture*> texts_textures;
+            std::vector<SDL_Rect> texts_rects;
             std::pair<int,int> current_pointer_position = std::make_pair(0,0);
 
             std::string pointer_pipe = "|";
@@ -46,6 +47,7 @@ namespace Engine{
             void add_endline();
             void move_pointer(std::string code);
             int locate_eol(int line);
+            void update_line();
 
         public:
             TextField(
