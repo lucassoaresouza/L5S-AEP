@@ -34,12 +34,10 @@ class ProgrammableObject : public Engine::GameObject{
         );
         std::string status;
         std::pair<int, int> name_displacement = std::make_pair(28,38);
-        Engine::Field* label_name = NULL;
 
         void set_initial_state();
         bool verify_limits();
         void verify_collisions();
-        void set_label_name();
 
     public:
         ProgrammableObject(

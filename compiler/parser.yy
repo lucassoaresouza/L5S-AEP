@@ -107,11 +107,11 @@ context     : {
                 $1.push_back($2);
                 $$ = $1;
             };
-            | context ifblock SEMICOLON {
+            | context ifblock {
                 $1.push_back($2);
                 $$ = $1;
             };
-            | context repeatblock SEMICOLON {
+            | context repeatblock {
                 $1.push_back($2);
                 $$ = $1;
             };

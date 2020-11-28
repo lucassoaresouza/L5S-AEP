@@ -11,7 +11,6 @@ ProgrammableObject::ProgrammableObject(
     set_size(object_size);
     set_direction("NORTH");
     initial_position = object_position;
-    set_label_name();
     Engine::Collider& collider = Engine::Collider::get_instance();
     collider.add_object(this);
 }
@@ -23,7 +22,6 @@ void ProgrammableObject::add_commands(
 }
 
 void ProgrammableObject::draw(){
-    label_name->draw();
     Engine::Game& game = Engine::Game::get_instance();
     SDL_Rect ret = {
         position.first,
@@ -90,12 +88,7 @@ void ProgrammableObject::move(int distance, int displacement){
         expected_x = 0;
         expected_y = 0;
     }
-    label_name->set_position(
-        std::make_pair(
-            position.first - name_displacement.first,
-            position.second - name_displacement.second
-        )
-    );
+
     if(!verify_limits()){
         set_initial_state();
     }
@@ -146,14 +139,6 @@ void ProgrammableObject::set_initial_state(){
     expected_y = 0;
     running = false;
     command_index = 0;
-    if(label_name){
-        label_name->set_position(
-            std::make_pair(
-                position.first - name_displacement.first,
-                position.second - name_displacement.second
-            )
-        );
-    }
     status = "INITIAL_STATE";
 }
 
@@ -193,22 +178,4 @@ void ProgrammableObject::verify_collisions(){
 
 std::string ProgrammableObject::get_status(){
     return status;
-}
-
-void ProgrammableObject::set_label_name(){
-    UsersManage& user_manage = UsersManage::get_instance();
-    std::string name = user_manage.get_current_user()->get_name();
-    label_name = new Engine::Field(
-        "label-name",
-        std::make_pair(
-            position.first - name_displacement.first,
-            position.second - name_displacement.second
-        ),
-        std::make_pair(0,0)
-    );
-    label_name->set_bold(true);
-    label_name->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
-    label_name->set_text_per_line(name, 0);
-    label_name->load();
-    
 }
