@@ -15,3 +15,12 @@ Screen* ScreenManage::get_screen(std::string screen_name){
     Log().print("Screen not found!");
     return NULL;
 }
+
+bool ScreenManage::search_screen(std::string screen_name){
+    for(auto screen : screens){
+        if(screen_name == screen->get_name()){
+            return true;
+        }
+    }
+    return false;
+}

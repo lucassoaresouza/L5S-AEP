@@ -19,27 +19,30 @@ void InitButton::set_challenge_creator(ChallengeCreator* p_creator){
 }
 
 void InitButton::execute(){
-    std::cout << "CHALLENGE NAME: " << challenge_name << std::endl;
     if(is_active){
         if(selector){
             robot_sprite = selector->get_selected_sprite();
         }
         if(challenge_creator){
-            Challenge* current_challenge = (
-                challenge_creator->get_challenge_by_title(challenge_name)
-            );
-            for(int i = 0; i < user_progress; i++){
-                current_challenge->set_map_complete(i);
-            }
-            std::cout << "AQUI" << std::endl;
-            new_challenge = new ChallengeScreen(
-                challenge_name,
-                challenge_creator->get_challenge_by_title(challenge_name)
-            );
-            new_challenge->set_player_sprite(robot_sprite);
             Engine::Game& game = Engine::Game::get_instance();
-            game.add_screen(new_challenge);
-            game.load_screen(challenge_name);
+            if(game.search_screen(challenge_name)){
+                std::cout << "achei!" << std::endl;
+                game.load_screen(challenge_name);
+            } else {
+                Challenge* current_challenge = (
+                    challenge_creator->get_challenge_by_title(challenge_name)
+                );
+                for(int i = 0; i < user_progress; i++){
+                    current_challenge->set_map_complete(i);
+                }
+                new_challenge = new ChallengeScreen(
+                    challenge_name,
+                    challenge_creator->get_challenge_by_title(challenge_name)
+                );
+                new_challenge->set_player_sprite(robot_sprite);
+                game.add_screen(new_challenge);
+                game.load_screen(challenge_name);
+            }
             deactivate();
         }
     }

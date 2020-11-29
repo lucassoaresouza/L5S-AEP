@@ -17,6 +17,7 @@ namespace Engine {
             ScreenManage(){};
             void add_screen(Screen* screen);
             Screen* get_screen(std::string screen_name);
+            bool search_screen(std::string screen_name);
     };
 }
 

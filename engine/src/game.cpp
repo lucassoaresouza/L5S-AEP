@@ -197,3 +197,7 @@ void Game::draw_background(){
         SDL_RenderCopy(renderer, game_background, NULL, &ret); 
     }
 }
+
+bool Game::search_screen(std::string screen_name){
+    return screen_manage->search_screen(screen_name);
+}

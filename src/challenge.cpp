@@ -17,13 +17,9 @@ int Challenge::get_actual_map_number(){
 }
 
 ChallengeMap* Challenge::get_actual_map(){
-    int count = 0;
-    for(auto map : maps){
-        if(map->get_completed() == false){
-            return map;
-        }
-    }
-    return maps[0];
+    int index = get_actual_map_number();
+    std::cout << "Index: " << index << std::endl;
+    return maps[index];
 }
 
 void Challenge::set_map_complete(int map_index){

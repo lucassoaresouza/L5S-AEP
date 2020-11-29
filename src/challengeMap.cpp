@@ -285,4 +285,5 @@ void ChallengeMap::free(){
     for(auto tile : tiles){
         tile->free();
     }
+    tiles.clear();
 }

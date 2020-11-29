@@ -60,6 +60,7 @@ namespace Engine {
 
             void add_screen(Screen* screen);
             void load_screen(std::string screen_name);
+            bool search_screen(std::string screen_name);
             void draw_screen();
             void read_input();
     };

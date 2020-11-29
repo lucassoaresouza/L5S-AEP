@@ -9,7 +9,6 @@ SelectRobotMenu::SelectRobotMenu(
 }
 
 void SelectRobotMenu::init(){
-    std::cout << "TO INICILIAZANDO" << std::endl;
     init_user();
     init_challenge_creator();
     init_background();
@@ -44,8 +43,6 @@ void SelectRobotMenu::init_background(){
     );
     background_field_2->set_color(179, 102, 0, 0);
     add_object(background_field_2);
-
-
 }
 
 void SelectRobotMenu::init_selector(){

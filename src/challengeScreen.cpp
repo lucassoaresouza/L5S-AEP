@@ -72,7 +72,6 @@ void ChallengeScreen::init_map(){
     if(!challenge->completed()){
         map = challenge->get_actual_map();
     } else {
-        std::cout << "TO COMPLETO" << std::endl;
         Engine::Game& game = Engine::Game::get_instance();
         game.load_screen("select_robot");
     }
