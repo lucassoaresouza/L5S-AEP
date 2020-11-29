@@ -3,6 +3,7 @@
 
 #include "../engine/inc/game.hpp"
 #include "../engine/inc/button.hpp"
+#include "../engine/inc/collider.hpp"
 #include "selector.hpp"
 #include "challengeCreator.hpp"
 #include "challengeScreen.hpp"

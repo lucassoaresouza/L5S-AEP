@@ -20,6 +20,8 @@ void InitButton::set_challenge_creator(ChallengeCreator* p_creator){
 
 void InitButton::execute(){
     if(is_active){
+        Engine::Collider& collider = Engine::Collider::get_instance();
+        collider.remove_all_objects();
         if(selector){
             robot_sprite = selector->get_selected_sprite();
         }

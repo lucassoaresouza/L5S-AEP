@@ -14,7 +14,6 @@ ChallengeMap::ChallengeMap(
 }
 
 void ChallengeMap::load_map_info(){
-    Engine::Collider& collider = Engine::Collider::get_instance();
     int size_with_spacing = tile_quad_size + spacing;
     std::pair<int,int> aux_position;
     std::pair<int, int> aux_size(
@@ -51,42 +50,36 @@ void ChallengeMap::load_map_info(){
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(trail_path, "");
                 aux_field->set_checked_texture(plant_path);
-                collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'H':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(trail_path, "UP-RIGHT");
                 aux_field->set_checked_texture(plant_path);
-                collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'C':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "UP-RIGHT");
                 aux_field->set_checked_texture(plant_path);
-                collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'D':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "UP-LEFT");
                 aux_field->set_checked_texture(plant_path);
-                collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'E':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "DOWN-LEFT");
                 aux_field->set_checked_texture(plant_path);
-                collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             case 'F':
                 aux_field->set_name("collidable_trail");
                 aux_field->set_sprite(curve_trail_path, "DOWN-RIGHT");
                 aux_field->set_checked_texture(plant_path);
-                collider.add_object(aux_field);
                 all_checked_field_count += 1;
                 break;
             default:
@@ -103,8 +96,12 @@ void ChallengeMap::load_map_info(){
 }
 
 bool ChallengeMap::load(){
+    Engine::Collider& collider = Engine::Collider::get_instance();
     for(auto tile : tiles){
         tile->load();
+        if(tile->get_name() == "collidable_trail"){
+            collider.add_object(tile);
+        }
     }
     return true;
 }
@@ -240,6 +237,7 @@ bool ChallengeMap::verify_all_trail_checked(){
 }
 
 void ChallengeMap::reset_all_trail_checks(){
+    Engine::Collider& collider = Engine::Collider::get_instance();
     for(auto tile : tiles){
         if(tile->get_name() == "collidable_trail"){
             tile->uncheck();

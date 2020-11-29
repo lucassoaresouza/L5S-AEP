@@ -71,14 +71,14 @@ void ChallengeScreen::set_player_sprite(std::string path){
 void ChallengeScreen::init_map(){
     if(!challenge->completed()){
         map = challenge->get_actual_map();
+        map->set_position(map_position);
+        map->init();
+        limits = map->get_limits();
+        add_object(map);
     } else {
         Engine::Game& game = Engine::Game::get_instance();
         game.load_screen("select_robot");
     }
-    map->set_position(map_position);
-    map->init();
-    limits = map->get_limits();
-    add_object(map);
 }
 
 void ChallengeScreen::init_player(){

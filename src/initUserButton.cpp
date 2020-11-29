@@ -16,6 +16,8 @@ void InitUserButton::set_user_input(Engine::TextField* input){
 
 void InitUserButton::execute(){
     if(is_active){
+        Engine::Collider& collider = Engine::Collider::get_instance();
+        collider.remove_all_objects();
         std::string user_name = user_input->get_current_text();
         if(user_name != ""){
             UsersManage& user_manage = UsersManage::get_instance();

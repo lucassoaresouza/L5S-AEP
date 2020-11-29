@@ -3,6 +3,7 @@
 
 #include "../engine/inc/button.hpp"
 #include "../engine/inc/game.hpp"
+#include "../engine/inc/collider.hpp"
 
 class ToScreenButton : public Engine::Button {
     private:

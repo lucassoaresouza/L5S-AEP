@@ -5,6 +5,7 @@
 #include "../engine/inc/button.hpp"
 #include "../engine/inc/game.hpp"
 #include "../engine/inc/textField.hpp"
+#include "../engine/inc/collider.hpp"
 #include "selectRobotMenu.hpp"
 #include "usersManage.hpp"
 #include "user.hpp"

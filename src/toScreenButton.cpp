@@ -16,6 +16,8 @@ void ToScreenButton::set_screen_name(std::string name){
 
 void ToScreenButton::execute(){
     if(is_active && screen_name != ""){
+        Engine::Collider& collider = Engine::Collider::get_instance();
+        collider.remove_all_objects();
         Engine::Game& game = Engine::Game::get_instance();
         game.load_screen(screen_name);
         deactivate();
