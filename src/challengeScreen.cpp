@@ -132,6 +132,7 @@ void ChallengeScreen::init_console(){
         console_position,
         std::make_pair(572,117)
     );
+    console->set_color(219, 166, 80, 0x00);
     console->set_bold(true);
     console->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
     console->set_text_per_line("Desafio:",0);

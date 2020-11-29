@@ -15,9 +15,9 @@ void SelectUserMenu::init_background(){
     label_background = new Engine::Field(
         "background",
         label_background_position,
-        std::make_pair(350, 175)
+        std::make_pair(350, 225)
     );
-    label_background->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
+    label_background->set_color(219, 166, 80, 0);
     add_object(label_background);
 }
 
@@ -25,7 +25,7 @@ void SelectUserMenu::init_texts(){
     title = new Engine::Field(
         "title",
         title_position,
-        std::make_pair(10,10)
+        std::make_pair(0,0)
     );
     title->set_bold(true);
     title->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
@@ -36,7 +36,7 @@ void SelectUserMenu::init_texts(){
     description = new Engine::Field(
         "title",
         description_position,
-        std::make_pair(10,10)
+        std::make_pair(0,0)
     );
     description->set_bold(true);
     description->set_font("./assets/fonts/larabiefont-rg.ttf", 15);

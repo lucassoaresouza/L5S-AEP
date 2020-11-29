@@ -21,12 +21,31 @@ void SelectRobotMenu::init(){
 }
 
 void SelectRobotMenu::init_background(){
-    background_field = new Field(
+    Field* box_field = new Field(
+        "box_field",
+        box_position,
+        std::make_pair(455,725)
+    );
+    box_field->set_color(219, 166, 80, 0);
+    add_object(box_field);
+
+    Field* background_field = new Field(
         "selector_field",
         background_position,
         std::make_pair(390,258)
     );
+    background_field->set_color(179, 102, 0, 0);
     add_object(background_field);
+
+    Field* background_field_2 = new Field(
+        "challenge_selector_field",
+        background_position_2,
+        std::make_pair(390,80)
+    );
+    background_field_2->set_color(179, 102, 0, 0);
+    add_object(background_field_2);
+
+
 }
 
 void SelectRobotMenu::init_selector(){
