@@ -18,7 +18,6 @@ int Challenge::get_actual_map_number(){
 
 ChallengeMap* Challenge::get_actual_map(){
     int index = get_actual_map_number();
-    std::cout << "Index: " << index << std::endl;
     return maps[index];
 }
 

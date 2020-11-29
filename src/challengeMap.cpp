@@ -256,7 +256,6 @@ std::pair<int, int> ChallengeMap::get_obj_initial_position(){
 
 void ChallengeMap::init(){
     if(tiles.size() == 0){
-        std::cout << "ahahahah" << std::endl;
         add_background();
         add_table_border();
         load_map_info();

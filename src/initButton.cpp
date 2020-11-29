@@ -26,7 +26,6 @@ void InitButton::execute(){
         if(challenge_creator){
             Engine::Game& game = Engine::Game::get_instance();
             if(game.search_screen(challenge_name)){
-                std::cout << "achei!" << std::endl;
                 game.load_screen(challenge_name);
             } else {
                 Challenge* current_challenge = (
