@@ -17,6 +17,7 @@ void SelectRobotMenu::init(){
     init_robots();
     init_select_challenge_objects();
     init_init_button();
+    update_challenge_info();
 }
 
 void SelectRobotMenu::init_background(){
