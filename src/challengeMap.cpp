@@ -255,9 +255,12 @@ std::pair<int, int> ChallengeMap::get_obj_initial_position(){
 }
 
 void ChallengeMap::init(){
-    add_background();
-    add_table_border();
-    load_map_info();
+    if(tiles.size() == 0){
+        std::cout << "ahahahah" << std::endl;
+        add_background();
+        add_table_border();
+        load_map_info();
+    }
 }
 
 std::string ChallengeMap::get_text_info(){
@@ -285,5 +288,4 @@ void ChallengeMap::free(){
     for(auto tile : tiles){
         tile->free();
     }
-    tiles.clear();
 }
