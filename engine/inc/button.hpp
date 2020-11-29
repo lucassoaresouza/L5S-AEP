@@ -31,7 +31,6 @@ namespace Engine{
             virtual void execute(){};
             bool was_pressed(int x, int y);
             void read_input(SDL_Event *event);
-            // void draw();
             bool load();
             void set_sprites(
                 std::string sprite_not_pressed,

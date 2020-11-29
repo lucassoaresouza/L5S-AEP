@@ -16,6 +16,7 @@ void ChallengeScreen::init(){
     init_textfield();
     init_compiler_objects();
     init_console();
+    init_back_button();
 }
 
 void ChallengeScreen::draw(){
@@ -140,4 +141,19 @@ void ChallengeScreen::init_console(){
     console->set_text_per_line("Status:",2);
     console->set_text_per_line("Campos Cobertos:",3);
     add_object(console);
+}
+
+void ChallengeScreen::init_back_button(){
+    ToScreenButton* back_button = new ToScreenButton(
+        "back_button",
+        back_button_position,
+        std::make_pair(32,32)
+    );
+    back_button->set_sprites(
+        "./assets/sprites/buttons/back1.png",
+        "./assets/sprites/buttons/back2.png"
+    );
+    back_button->set_screen_name("select_robot");
+    back_button->activate();
+    add_object_with_input(back_button);
 }
