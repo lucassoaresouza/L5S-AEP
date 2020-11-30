@@ -57,6 +57,7 @@ class ProgrammableObject : public Engine::GameObject{
         void move(int distance, int displacement);
         void set_limits(std::pair<int, int> min, std::pair<int,int> max);
         void execute();
+        void set_status(std::string new_status);
 };
 
 #endif

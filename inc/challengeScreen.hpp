@@ -26,6 +26,8 @@ class ChallengeScreen : public Engine::Screen {
         std::pair<int, int> console_position = std::make_pair(425, 600);
         std::pair<int, int> back_button_position = std::make_pair(25, 15);
         std::pair<std::pair<int, int>,std::pair<int, int>> limits;
+        int check_checked_fields = 0;
+        std::string console_status;
         void init_map();
         void init_player();
         void init_textfield();

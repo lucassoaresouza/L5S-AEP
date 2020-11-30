@@ -83,6 +83,11 @@ void Field::draw(){
         );
     }
 
+    draw_texts();
+}
+
+void Field::draw_texts(){
+    Game& game = Game::get_instance();
     for(int i = 0; i < 10; i++){
         if(font_texture[i]){
             SDL_RenderCopy(
@@ -93,7 +98,6 @@ void Field::draw(){
             );
         }
     }
-
 }
 
 void Field::set_bold(bool bold){

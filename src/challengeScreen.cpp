@@ -28,28 +28,35 @@ void ChallengeScreen::draw(){
 
 void ChallengeScreen::verify_programmable_object_status(){
     if(player_object->get_status() == "INITIAL_STATE"){
-        map->reset_all_trail_checks();
-        console->set_text_per_line("Desafio: " + map->get_name(),0);
-        console->set_text_per_line("Dica: " + map->get_text_info(),1);
-        std::string console_status = "Inicializado";
-        console->set_text_per_line("Status: " + console_status,2);
-        console->set_text_per_line(
-            "Campos Cobertos: 0/" + std::to_string(
-                map->get_all_checked_field_count()
-            ),
-            3
-        );
+        if(console_status != "Inicializado"){
+            map->reset_all_trail_checks();
+            console->set_text_per_line("Desafio: " + map->get_name(),0);
+            console->set_text_per_line("Dica: " + map->get_text_info(),1);
+            console_status = "Inicializado";
+            console->set_text_per_line("Status: " + console_status,2);
+            console->set_text_per_line(
+                "Campos Cobertos: 0/" + std::to_string(
+                    map->get_all_checked_field_count()
+                ),
+                3
+            );
+        }
     } else if(player_object->get_status() == "RUNNING_COMMAND_LIST"){
-        std::string console_status = "Executando comandos!";
-        console->set_text_per_line("Status: " + console_status,2);
-        char bar = '/';
-        console->set_text_per_line(
-            "Campos Cobertos: " +
-            std::to_string(map->get_checked_field_count()) + 
-            bar +
-            std::to_string(map->get_all_checked_field_count()),
-            3
-        );
+        if(console_status != "Executando comandos!"){
+            console_status = "Executando comandos!";
+            console->set_text_per_line("Status: " + console_status,2);
+        }
+        if(check_checked_fields != map->get_checked_field_count()){
+            check_checked_fields = map->get_checked_field_count();
+            char bar = '/';
+            console->set_text_per_line(
+                "Campos Cobertos: " +
+                std::to_string(map->get_checked_field_count()) + 
+                bar +
+                std::to_string(map->get_all_checked_field_count()),
+                3
+            );
+        }
     } else if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
         if(map->verify_all_trail_checked()){
             map->set_completed(true);

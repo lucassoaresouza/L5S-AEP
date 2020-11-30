@@ -86,33 +86,5 @@ void CheckableField::draw(){
             }
         }
     }
-
-    if(font != NULL){
-        if(is_bold){
-            TTF_SetFontStyle(font, TTF_STYLE_BOLD);
-        }
-        SDL_Surface* font_surface = NULL;
-        font_surface = TTF_RenderText_Blended(
-            font,
-            text[0].c_str(),
-            color
-        );
-        font_texture[0] = SDL_CreateTextureFromSurface(
-            game.get_renderer(),
-            font_surface
-        );
-        SDL_Rect renderQuad = {
-            position.first + (size.first / 2) - (font_surface->w / 2),
-            position.second + (size.second / 2) - (font_surface->h / 2),
-            font_surface->w,
-            font_surface->h
-        };
-        SDL_FreeSurface(font_surface);
-        SDL_RenderCopy(
-            game.get_renderer(),
-            font_texture[0],
-            NULL,
-            &renderQuad
-        );
-    }
+    draw_texts();
 }

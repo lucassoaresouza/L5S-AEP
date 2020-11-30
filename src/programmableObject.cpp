@@ -176,6 +176,10 @@ void ProgrammableObject::verify_collisions(){
     }
 }
 
+void ProgrammableObject::set_status(std::string new_status){
+    status = new_status;
+}
+
 std::string ProgrammableObject::get_status(){
     return status;
 }

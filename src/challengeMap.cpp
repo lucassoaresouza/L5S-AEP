@@ -144,22 +144,13 @@ void ChallengeMap::line_border(){
     std::pair<int, int> border_position(
         position.first, position.second
     );
-    char letter_a_index = 65;
-    std::string aux_string;
-    char aux_index = letter_a_index;
-    for(int i = 0; i < lines-1 ; i++){
+    for(int i = 0; i < lines ; i++){
         border_position.second = position.second + i * 33;
         CheckableField* border_line_field = new CheckableField(
             "border_field",
             border_position,
             std::pair<int,int>(tile_quad_size,tile_quad_size)
         );
-        aux_string = "";
-        aux_index = letter_a_index + i;
-        border_line_field->set_bold(true);
-        border_line_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
-        border_line_field->set_text_per_line(aux_string + aux_index, 0);
-        border_line_field->set_color(color.r, color.g, color.b, color.a);
         border_line_field->set_sprite("./assets/sprites/tiles/border.png", "");
         tiles.push_back(border_line_field);
     }
@@ -183,10 +174,6 @@ void ChallengeMap::column_border(){
             border_position,
             std::pair<int,int>(tile_quad_size,tile_quad_size)
         );
-        border_column_field->set_bold(true);
-        border_column_field->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
-        border_column_field->set_text_per_line(std::to_string(i+1), 0);
-        border_column_field->set_color(color.r, color.g, color.b, color.a);
         border_column_field->set_sprite(
             "./assets/sprites/tiles/border.png",
             ""

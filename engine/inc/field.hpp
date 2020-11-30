@@ -22,6 +22,7 @@ namespace Engine{
             std::string font_path;
             bool is_bold = false;
             int rotation = 0;
+            void draw_texts();
 
         public:
             Field(){};

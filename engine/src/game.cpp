@@ -172,7 +172,6 @@ void Game::cap_max_fps(){
 
 void Game::set_game_background(std::string path){
     if(renderer){
-        std::cout << "AQUI :)" << std::endl;
         SDL_Surface* surface = IMG_Load(path.c_str());
         if(surface == NULL){
             Log().print("Nao foi possivel carregar o sprite!");
