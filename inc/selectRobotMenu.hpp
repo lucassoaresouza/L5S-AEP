@@ -40,6 +40,7 @@ class SelectRobotMenu : public Engine::Screen {
         Engine::Field* challenge_progress = NULL;
         Engine::Button* next_challenge_button = NULL;
         Engine::Button* back_challenge_button = NULL;
+        std::string challenge_name;
         int next_aux = 0;
         int back_aux = 0;
         int challenge_index = 0;

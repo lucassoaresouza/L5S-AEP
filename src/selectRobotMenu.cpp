@@ -9,6 +9,7 @@ SelectRobotMenu::SelectRobotMenu(
 }
 
 void SelectRobotMenu::init(){
+    std::cout << "select robot menu" << std::endl;
     init_user();
     init_challenge_creator();
     init_background();
@@ -18,6 +19,7 @@ void SelectRobotMenu::init(){
     init_select_challenge_objects();
     init_init_button();
     update_challenge_info();
+    challenge_name = "";
 }
 
 void SelectRobotMenu::init_background(){
@@ -222,11 +224,13 @@ void SelectRobotMenu::draw(){
 }
 
 void SelectRobotMenu::select_challenge(){
+    if(challenge_name == ""){
+        update_challenge_info();
+    }
     if( 
         challenge_creator &&
         current_user
     ){
-        update_challenge_info();
         if(
             next_challenge_button->get_pressed() &&
             challenge_index < challenge_creator->get_challenge_count() -1
@@ -242,17 +246,19 @@ void SelectRobotMenu::select_challenge(){
         if(next_aux >= 7){
             challenge_index++;
             next_aux = 0;
+            update_challenge_info();
         }
 
         if(back_aux >= 7){
             challenge_index--;
             back_aux = 0;
+            update_challenge_info();
         }
     }
 }
 
 void SelectRobotMenu::update_challenge_info(){
-    std::string challenge_name = (
+    challenge_name = (
         challenge_creator->get_challenge_title(challenge_index)
     );
 
