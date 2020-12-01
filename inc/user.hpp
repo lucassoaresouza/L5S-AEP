@@ -18,6 +18,8 @@ class User {
         int get_challenge_progress(std::string challenge_title);
         std::string get_name();
         void set_map_progress(std::string challenge_name);
+        std::vector<std::pair<std::string, int>> get_all_challenges();
+        int search_challenge_progresss(std::string challenge_title);
 
 };
 

@@ -23,6 +23,7 @@ class UsersManage {
         void add_user(User* user);
         void set_current_user(User* user);
         User* get_current_user();
+        void save_users_status();
 };
 
 #endif

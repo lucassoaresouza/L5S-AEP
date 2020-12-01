@@ -14,12 +14,12 @@ void User::set_challenge(std::string title, int done){
 }
 
 int User::get_challenge_progress(std::string challenge_title){
-    for(auto challenge : challenges){
-        if(challenge.first == challenge_title){
-            return challenge.second;
-        }
+    int index = search_challenge_progresss(challenge_title);
+    if(index >= 0){
+        return challenges[index].second;
+    } else {
+        return 0;
     }
-    return 0;
 }
 
 std::string User::get_name(){
@@ -27,9 +27,28 @@ std::string User::get_name(){
 }
 
 void User::set_map_progress(std::string challenge_title){
-    for(int i = 0; i < challenges.size(); i++){
-        if(challenges[i].first == challenge_title){
-            challenges[i].second++;
+    int index = search_challenge_progresss(challenge_title);
+    if(index >= 0){
+        challenges[index].second++;
+    } else {
+        challenges.push_back(
+            std::make_pair(challenge_title, 1)
+        );
+    }
+}
+
+std::vector<std::pair<std::string, int>> User::get_all_challenges(){
+    return challenges;
+}
+
+int User::search_challenge_progresss(std::string challenge_title){
+    int count = 0;
+    for(auto challenge : challenges){
+        if(challenge.first == challenge_title){
+            return count;
+        } else {
+            count++;
         }
     }
+    return -1;
 }

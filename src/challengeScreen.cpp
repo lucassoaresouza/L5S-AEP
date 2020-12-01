@@ -156,7 +156,8 @@ void ChallengeScreen::init_back_button(){
     ToScreenButton* back_button = new ToScreenButton(
         "back_button",
         back_button_position,
-        std::make_pair(32,32)
+        std::make_pair(32,32),
+        true
     );
     back_button->set_sprites(
         "./assets/sprites/buttons/back1.png",

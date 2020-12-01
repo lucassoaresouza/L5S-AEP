@@ -68,3 +68,19 @@ void UsersManage::set_current_user(User* user){
 User* UsersManage::get_current_user(){
     return current_user;
 }
+
+void UsersManage::save_users_status(){
+    std::ofstream file(user_file_path);
+    if(file.is_open()){
+        for(User* user : users){
+            file << "init" << std::endl;
+            file << user->get_name() << std::endl;
+            for(auto challenge : user->get_all_challenges()){
+                file << challenge.first << " ";
+                file << challenge.second << std::endl;
+            }
+            file << "end" << std::endl;
+        }
+        file.close();
+    }
+}
