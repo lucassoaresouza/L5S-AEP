@@ -25,6 +25,7 @@ namespace Engine{
             void register_observer(GameObject* observer);
             void unregister_observer(std::string name);
             void notify_observers(SDL_Event *event);
+            void clear_observers();
     };
 }
 

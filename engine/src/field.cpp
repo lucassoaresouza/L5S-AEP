@@ -114,8 +114,6 @@ void Field::free(){
 }
 
 void Field::set_text_per_line(std::string new_text, int line){
-    std::cout << "add linhas" << std::endl;
-    std::cout << new_text << std::endl;
     Game& game = Game::get_instance();
     text[line] = new_text;
     SDL_Color black_font_color = {0x0, 0x0, 0x0, 0x0};

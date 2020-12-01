@@ -11,7 +11,7 @@ TextField::TextField(
     int max_lines,
     int max_columns
 ){
-    name = object_name;
+    set_name(object_name);
     position = object_position;
     lines = max_lines;
     columns = max_columns;

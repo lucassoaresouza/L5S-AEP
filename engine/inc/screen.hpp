@@ -12,6 +12,7 @@
 #include "log.hpp"
 #include "gameObject.hpp"
 #include "inputReceiver.hpp"
+#include "collider.hpp"
 
 namespace Engine {
     class Screen {

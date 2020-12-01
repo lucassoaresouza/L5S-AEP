@@ -50,3 +50,7 @@ void InputReceiver::notify_observers(SDL_Event *event){
         observer->read_input(event);
     }
 }
+
+void InputReceiver::clear_observers(){
+    observers.clear();
+}

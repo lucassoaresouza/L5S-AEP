@@ -28,6 +28,11 @@ void Screen::add_object_with_input(GameObject* object){
 }
 
 void Screen::load(){
+    Collider& collider = Collider::get_instance();
+    collider.remove_all_objects();
+    InputReceiver& input_receiver = InputReceiver::get_instance();
+    input_receiver.clear_observers();
+    remove_all_objects();
     init();
     for(auto object : objects){
         object->load();

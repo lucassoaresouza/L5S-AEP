@@ -60,9 +60,6 @@ void ChallengeScreen::verify_programmable_object_status(){
     } else if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
         if(map->verify_all_trail_checked()){
             map->set_completed(true);
-            remove_all_objects();
-            Engine::Collider& collider = Engine::Collider::get_instance();
-            collider.remove_all_objects();
             map->free();
             load();
         } else {
