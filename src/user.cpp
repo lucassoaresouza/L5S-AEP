@@ -4,24 +4,32 @@ User::User(std::string username){
     name = username;
 }
 
-void User::set_challenge(std::string name, int done, int total){
-    std::pair<std::string, std::pair<int, int>> challenge;
+void User::set_challenge(std::string title, int done){
+    std::pair<std::string, int> challenge;
     challenge = std::make_pair(
-        name,
-        std::make_pair(done,total)
+        title,
+        done
     );
     challenges.push_back(challenge);
 }
 
-std::pair<int, int> User::get_challenge_progress(std::string name){
+int User::get_challenge_progress(std::string challenge_title){
     for(auto challenge : challenges){
-        if(challenge.first == name){
+        if(challenge.first == challenge_title){
             return challenge.second;
         }
     }
-    return std::make_pair(0,0);
+    return 0;
 }
 
 std::string User::get_name(){
     return name;
+}
+
+void User::set_map_progress(std::string challenge_title){
+    for(int i = 0; i < challenges.size(); i++){
+        if(challenges[i].first == challenge_title){
+            challenges[i].second++;
+        }
+    }
 }

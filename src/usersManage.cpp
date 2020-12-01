@@ -32,12 +32,11 @@ void UsersManage::read_users(){
                         getline(file, line);
                         if(line != "end"){
                             std::string name;
-                            int done, total;
+                            int done;
                             std::istringstream iss(line);
                             iss >> name;
                             iss >> done;
-                            iss >> total;
-                            new_user->set_challenge(name, done, total);
+                            new_user->set_challenge(name, done);
                         } else {
                             users.push_back(new_user);
                         }

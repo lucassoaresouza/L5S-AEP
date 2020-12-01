@@ -17,6 +17,7 @@ void ChallengeScreen::init(){
     init_compiler_objects();
     init_console();
     init_back_button();
+    init_current_user();
 }
 
 void ChallengeScreen::draw(){
@@ -61,6 +62,11 @@ void ChallengeScreen::verify_programmable_object_status(){
         if(map->verify_all_trail_checked()){
             map->set_completed(true);
             map->free();
+            if(current_user){
+                current_user->set_map_progress(challenge->get_title());
+            } else {
+                std::cout << "Current user not found!" << std::endl;
+            }
             load();
         } else {
             map->reset_all_trail_checks();
@@ -159,4 +165,9 @@ void ChallengeScreen::init_back_button(){
     back_button->set_screen_name("select_robot");
     back_button->activate();
     add_object_with_input(back_button);
+}
+
+void ChallengeScreen::init_current_user(){
+    UsersManage& users_manage = UsersManage::get_instance();
+    current_user = users_manage.get_current_user();
 }

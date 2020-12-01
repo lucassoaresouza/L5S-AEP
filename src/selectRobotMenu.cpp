@@ -263,13 +263,13 @@ void SelectRobotMenu::update_challenge_info(){
     );
 
     challenge_title->set_text_per_line(challenge_name, 0);
-    std::pair<int, int> user_progress = (
+    int user_progress = (
         current_user->get_challenge_progress(challenge_name)
     );
 
     challenge_progress->set_text_per_line(
         "realizados: " +
-        std::to_string(user_progress.first) + 
+        std::to_string(user_progress) + 
         " | total: " +
         std::to_string(
             challenge_creator->get_challenge_maps_count(
@@ -281,7 +281,7 @@ void SelectRobotMenu::update_challenge_info(){
     if(init_challenge_button){
         init_challenge_button->set_challenge_info(
             challenge_name,
-            user_progress.first
+            user_progress
         );
     }
 }

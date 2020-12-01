@@ -11,6 +11,8 @@
 #include "challenge.hpp"
 #include "challengeMap.hpp"
 #include "toScreenButton.hpp"
+#include "usersManage.hpp"
+#include "user.hpp"
 
 class ChallengeScreen : public Engine::Screen {
     private:
@@ -28,13 +30,14 @@ class ChallengeScreen : public Engine::Screen {
         std::pair<std::pair<int, int>,std::pair<int, int>> limits;
         int check_checked_fields = 0;
         std::string console_status;
+        User* current_user = NULL;
         void init_map();
         void init_player();
         void init_textfield();
         void init_compiler_objects();
         void init_console();
         void init_back_button();
-
+        void init_current_user();
 
     public:
         ChallengeScreen(std::string screen_name, Challenge* new_challenge);
