@@ -9,7 +9,6 @@ SelectRobotMenu::SelectRobotMenu(
 }
 
 void SelectRobotMenu::init(){
-    std::cout << "select robot menu" << std::endl;
     init_user();
     init_challenge_creator();
     init_background();
@@ -135,7 +134,6 @@ void SelectRobotMenu::init_texts(){
     description->set_bold(true);
     description->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
     description->set_text_per_line("Selecione seu trator inteligente:", 0);
-    description->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(description);
 
     std::string username = current_user->get_name();
@@ -147,7 +145,6 @@ void SelectRobotMenu::init_texts(){
     operator_name->set_bold(true);
     operator_name->set_font("./assets/fonts/larabiefont-rg.ttf", 20);
     operator_name->set_text_per_line("Oi, " + username + "!!!", 0);
-    operator_name->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(operator_name);
 }
 
@@ -163,7 +160,6 @@ void SelectRobotMenu::init_select_challenge_objects(){
         "Agora, por gentileza, selecione o desafio:",
         0
     );
-    description_2->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(description_2);
 
     std::pair<int, int> button_size(40,40);
@@ -190,7 +186,6 @@ void SelectRobotMenu::init_select_challenge_objects(){
         challenge_creator->get_challenge_title(challenge_index),
         0
     );
-    challenge_title->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(challenge_title);
 
     challenge_progress = new Engine::Field(
@@ -200,7 +195,6 @@ void SelectRobotMenu::init_select_challenge_objects(){
     );
     challenge_progress->set_bold(true);
     challenge_progress->set_font("./assets/fonts/larabiefont-rg.ttf", 15);
-    challenge_progress->set_color(0xAAA, 0xAAA, 0xAAA, 0x00);
     add_object(challenge_progress);
 
     back_challenge_button = new Engine::Button(

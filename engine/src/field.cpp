@@ -32,7 +32,10 @@ bool Field::load(){
         if(provisory_surface == NULL){
             Log().print("Nao foi possivel carregar o sprite!");
         } else {
-            in_load_texture = SDL_CreateTextureFromSurface(game.get_renderer(), provisory_surface);
+            in_load_texture = SDL_CreateTextureFromSurface(
+                game.get_renderer(),
+                provisory_surface
+            );
             if(in_load_texture == NULL){
                 Log().print(SDL_GetError());
             }

@@ -16,12 +16,15 @@ void ChallengeScreen::init(){
     init_textfield();
     init_compiler_objects();
     init_console();
-    init_back_button();
     init_current_user();
+    init_back_button();
+    init_dialog_box();
+    update_console_initial_info();
 }
 
 void ChallengeScreen::draw(){
     verify_programmable_object_status();
+    show_dialog_box_to_next_map();
     for(auto object : objects){
         object->draw();
     }
@@ -30,44 +33,14 @@ void ChallengeScreen::draw(){
 void ChallengeScreen::verify_programmable_object_status(){
     if(player_object->get_status() == "INITIAL_STATE"){
         if(console_status != "Inicializado"){
-            map->reset_all_trail_checks();
-            console->set_text_per_line("Desafio: " + map->get_name(),0);
-            console->set_text_per_line("Dica: " + map->get_text_info(),1);
-            console_status = "Inicializado";
-            console->set_text_per_line("Status: " + console_status,2);
-            console->set_text_per_line(
-                "Campos Cobertos: 0/" + std::to_string(
-                    map->get_all_checked_field_count()
-                ),
-                3
-            );
+            update_console_initial_info();
         }
     } else if(player_object->get_status() == "RUNNING_COMMAND_LIST"){
-        if(console_status != "Executando comandos!"){
-            console_status = "Executando comandos!";
-            console->set_text_per_line("Status: " + console_status,2);
-        }
-        if(check_checked_fields != map->get_checked_field_count()){
-            check_checked_fields = map->get_checked_field_count();
-            char bar = '/';
-            console->set_text_per_line(
-                "Campos Cobertos: " +
-                std::to_string(map->get_checked_field_count()) + 
-                bar +
-                std::to_string(map->get_all_checked_field_count()),
-                3
-            );
-        }
+        update_console_running_info();
     } else if(player_object->get_status() == "FINISHED_COMMAND_LIST"){
         if(map->verify_all_trail_checked()){
-            map->set_completed(true);
-            map->free();
-            if(current_user){
-                current_user->set_map_progress(challenge->get_title());
-            } else {
-                std::cout << "Current user not found!" << std::endl;
-            }
-            load();
+            dialog_box->activate();
+            timer->start();
         } else {
             map->reset_all_trail_checks();
         }
@@ -171,4 +144,76 @@ void ChallengeScreen::init_back_button(){
 void ChallengeScreen::init_current_user(){
     UsersManage& users_manage = UsersManage::get_instance();
     current_user = users_manage.get_current_user();
+}
+
+void ChallengeScreen::init_dialog_box(){
+    dialog_box = new DialogBox(
+        "dialog-box-object",
+        dialog_box_position,
+        std::make_pair(380,110)
+    );
+    dialog_box->set_color(179, 102, 0, 0);
+    dialog_box->set_text(
+        "Percurso realizado com sucesso!",
+        std::make_pair(15,15)
+    );
+    add_object(dialog_box);
+    dialog_box->set_icon(
+        "./assets/sprites/objects/medalha.png",
+        std::make_pair(165, 50),
+        std::make_pair(32,64)
+    );
+}
+
+void ChallengeScreen::show_dialog_box_to_next_map(){
+    if(dialog_box->is_active()){
+        if(timer->get_ticks()/1000.f > 3){
+            map->set_completed(true);
+            map->free();
+            if(current_user){
+                current_user->set_map_progress(challenge->get_title());
+            } else {
+                std::cout << "Current user not found!" << std::endl;
+            }
+            timer->stop();
+            dialog_box->deactivate();
+            load();
+        }
+    }
+}
+
+void ChallengeScreen::update_console_initial_info(){
+    if(map && console){
+        map->reset_all_trail_checks();
+        console->set_text_per_line("Desafio: " + map->get_name(),0);
+        console->set_text_per_line("Dica: " + map->get_text_info(),1);
+        console_status = "Inicializado";
+        console->set_text_per_line("Status: " + console_status,2);
+        console->set_text_per_line(
+            "Campos Cobertos: 0/" + std::to_string(
+                map->get_all_checked_field_count()
+            ),
+            3
+        );
+    } else {
+        std::cout << "Map and console not found!" << std::endl;
+    }
+}
+
+void ChallengeScreen::update_console_running_info(){
+    if(console_status != "Executando comandos!"){
+        console_status = "Executando comandos!";
+        console->set_text_per_line("Status: " + console_status,2);
+    }
+    if(check_checked_fields != map->get_checked_field_count()){
+        check_checked_fields = map->get_checked_field_count();
+        char bar = '/';
+        console->set_text_per_line(
+            "Campos Cobertos: " +
+            std::to_string(map->get_checked_field_count()) + 
+            bar +
+            std::to_string(map->get_all_checked_field_count()),
+            3
+        );
+    }
 }

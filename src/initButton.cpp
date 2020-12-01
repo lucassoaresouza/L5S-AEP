@@ -34,7 +34,6 @@ void InitButton::execute(){
                 for(int i = 0; i < user_progress; i++){
                     current_challenge->set_map_complete(i);
                 }
-                std::cout << "só verificando" << std::endl;
                 new_challenge = new ChallengeScreen(
                     challenge_name,
                     challenge_creator->get_challenge_by_title(challenge_name)

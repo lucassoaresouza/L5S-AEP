@@ -157,9 +157,6 @@ void Game::add_screen(Screen* screen){
 
 void Game::calculate_fps(){
     fps = frames_count / (timer->get_ticks()/1000.f);
-    if(fps > 2000000){
-        fps = 0;
-    }
     // std::cout << "FPS: " << fps << std::endl;
 }
 
