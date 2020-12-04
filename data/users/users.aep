@@ -1,9 +1,21 @@
 init
 lucas
-challenge_a.aep 3
+challenge_a.aep 4
 challenge_b.aep 1
 end
 init
 joaquim
+challenge_a.aep 2
+end
+init
+eduarda
+challenge_a.aep 4
+end
+init
+gabriel
+challenge_a.aep 2
+end
+init
+TurmaA
 challenge_a.aep 2
 end
