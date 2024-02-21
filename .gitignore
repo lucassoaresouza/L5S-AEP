@@ -2,6 +2,9 @@ bin/*.*
 bin/aep
 obj/*.*
 log/*.txt
+build/*.*
+build
+compiler/location.hh
 CMakeCache.txt
 CMakeFiles/*
 INPUT_TESTE
@@ -17,6 +20,7 @@ compiler/scanner.cpp
 compiler/stack.hh
 compiler/parser.hpp
 compiler/parser.cpp
+compiler/location.hh
 engine/CMakeFiles/*
 engine/Makefile
 engine/cmake_install.cmake
