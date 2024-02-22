@@ -3,6 +3,15 @@ project(aep LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)                                                                                                                                 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Set the output binary directory
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
+
+# Make sure the binary directory exists
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR})
+
+# Tell CMake to put executables in the binary directory
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+
 # Creating variables
 set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc")
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
