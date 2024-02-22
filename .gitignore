@@ -25,3 +25,4 @@ engine/CMakeFiles/*
 engine/Makefile
 engine/cmake_install.cmake
 engine/libengine.a
+engine/obj/*.o
