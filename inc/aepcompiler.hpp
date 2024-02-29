@@ -6,20 +6,18 @@
 #include <string>
 #include <vector>
 
-#include "../compiler/interpreter.hpp"
 #include "../compiler/command.hpp"
+#include "../compiler/interpreter.hpp"
 
-class AEPCompiler{
+class AEPCompiler {
+ private:
+  Compiler::Interpreter interpreter;
 
-    private:
-        Compiler::Interpreter interpreter;
-
-    public:
-        AEPCompiler(){};
-        ~AEPCompiler(){};
-        command_list run(std::string);
-        void clear();
-
+ public:
+  AEPCompiler() {};
+  ~AEPCompiler() {};
+  command_list run(std::string);
+  void clear();
 };
 
 #endif
