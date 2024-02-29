@@ -6,38 +6,31 @@
 #include "game.hpp"
 #include "gameObject.hpp"
 
-namespace Engine{
-    class Button : public GameObject {
-        private:
-            bool pressed = false;
-            SDL_Texture* not_pressed_texture = NULL;
-            SDL_Texture* pressed_texture = NULL;
-            std::string pressed_sprite;
+namespace Engine {
+class Button : public GameObject {
+ private:
+  bool pressed = false;
+  SDL_Texture* not_pressed_texture = NULL;
+  SDL_Texture* pressed_texture = NULL;
+  std::string pressed_sprite;
 
-        protected:
-            bool is_active = false;
+ protected:
+  bool is_active = false;
 
-
-        public:
-            Button(){};
-            Button(
-                std::string object_name,
-                std::pair<int,int>object_position,
-                std::pair<int,int>object_size
-            );
-            ~Button(){};
-            virtual void activate();
-            virtual void deactivate();
-            virtual void execute(){};
-            bool was_pressed(int x, int y);
-            void read_input(SDL_Event *event);
-            bool load();
-            void set_sprites(
-                std::string sprite_not_pressed,
-                std::string sprite_pressed
-            );
-            bool get_pressed();
-    };
-}
+ public:
+  Button() {};
+  Button(std::string object_name, std::pair<int, int> object_position,
+         std::pair<int, int> object_size);
+  ~Button() {};
+  virtual void activate();
+  virtual void deactivate();
+  virtual void execute() {};
+  bool was_pressed(int x, int y);
+  void read_input(SDL_Event* event);
+  bool load();
+  void set_sprites(std::string sprite_not_pressed, std::string sprite_pressed);
+  bool get_pressed();
+};
+}  // namespace Engine
 
 #endif
