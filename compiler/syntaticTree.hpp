@@ -193,14 +193,14 @@ class NodeRepeat : public Node {
   }
 };
 
-class TreeManage {
+class TreeManager {
  public:
   typedef std::map<std::string, double> variablemap_type;
   std::vector<Node*> nodes;
   variablemap_type variables;
   command_list commands;
 
-  ~TreeManage();
+  ~TreeManager();
   void clearNodes();
   bool existsVariable(const std::string& variable_name);
   double getVariable(const std::string& variable_name);
@@ -212,13 +212,13 @@ class NodeAssignment : public Node {
  private:
   std::string name;
   Node* value;
-  TreeManage* manage;
+  TreeManager* manage;
 
  public:
-  NodeAssignment(std::string _name, Node* _value, TreeManage* _manage) {
+  NodeAssignment(std::string _name, Node* _value, TreeManager* _manager) {
     name = _name;
     value = _value;
-    manage = _manage;
+    manage = _manager;
   }
   double evaluate() {
     manage->variables[name] = value->evaluate();
@@ -229,12 +229,12 @@ class NodeAssignment : public Node {
 class NodeVariable : public Node {
  private:
   std::string name;
-  TreeManage* manage;
+  TreeManager* manage;
 
  public:
-  NodeVariable(std::string _name, TreeManage* _manage) {
+  NodeVariable(std::string _name, TreeManager* _manager) {
     name = _name;
-    manage = _manage;
+    manage = _manager;
   }
   double evaluate() {
     std::cout << "Qtd: " << manage->variables.size() << std::endl;
@@ -250,18 +250,18 @@ class NodeCommand : public Node {
  private:
   Node* atribute;
   std::string type;
-  TreeManage* manage;
+  TreeManager* manage;
 
  public:
-  NodeCommand(Node* _atribute, std::string _type, TreeManage* _manage) {
+  NodeCommand(Node* _atribute, std::string _type, TreeManager* _manager) {
     atribute = _atribute;
     type = _type;
-    manage = _manage;
+    manage = _manager;
   }
-  NodeCommand(std::string _type, TreeManage* _manage) {
+  NodeCommand(std::string _type, TreeManager* _manager) {
     atribute = NULL;
     type = _type;
-    manage = _manage;
+    manage = _manager;
   }
   std::string get_type() { return type; }
   double evaluate() {

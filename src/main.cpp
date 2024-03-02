@@ -20,7 +20,7 @@ int main(int, char**) {
   game.set_game_background("./assets/sprites/tiles/background.png");
 
   // Users manage initialization
-  UsersManage& user_manage = UsersManage::get_instance();
+  UsersManage& user_manager = UsersManage::get_instance();
 
   // Select User
   SelectUserMenu* select_user = new SelectUserMenu("select_user");

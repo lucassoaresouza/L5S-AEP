@@ -16,13 +16,13 @@ void InitUserButton::execute() {
   if (is_active) {
     std::string user_name = user_input->get_current_text();
     if (user_name != "") {
-      UsersManage& user_manage = UsersManage::get_instance();
-      User* user = user_manage.get_user(user_name);
+      UsersManage& user_manager = UsersManage::get_instance();
+      User* user = user_manager.get_user(user_name);
       if (!user) {
         user = new User(user_name);
-        user_manage.add_user(user);
+        user_manager.add_user(user);
       }
-      user_manage.set_current_user(user);
+      user_manager.set_current_user(user);
       Engine::Game& game = Engine::Game::get_instance();
       game.load_screen("select_robot");
       deactivate();

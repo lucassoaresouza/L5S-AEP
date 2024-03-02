@@ -23,7 +23,7 @@ Game& Game::initialize(std::string game_name,
     instance = new Game();
     instance->set_information(game_name, window_dimensions);
     instance->init();
-    instance->screen_manage = new ScreenManage();
+    instance->screen_manager = new ScreenManage();
     instance->timer = new Timer();
     instance->cap_fps_timer = new Timer();
   }
@@ -112,7 +112,7 @@ void Game::load_screen(std::string screen_name) {
     actual_screen->free();
     actual_screen = NULL;
   }
-  actual_screen = screen_manage->get_screen(screen_name);
+  actual_screen = screen_manager->get_screen(screen_name);
   if (actual_screen) {
     actual_screen->load();
   } else {
@@ -135,7 +135,7 @@ void Game::read_input() {
   }
 }
 
-void Game::add_screen(Screen* screen) { screen_manage->add_screen(screen); }
+void Game::add_screen(Screen* screen) { screen_manager->add_screen(screen); }
 
 void Game::calculate_fps() {
   fps = frames_count / (timer->get_ticks() / 1000.f);
@@ -172,5 +172,5 @@ void Game::draw_background() {
 }
 
 bool Game::search_screen(std::string screen_name) {
-  return screen_manage->search_screen(screen_name);
+  return screen_manager->search_screen(screen_name);
 }

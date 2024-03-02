@@ -154,23 +154,23 @@ repeatblock     : REPEAT LEFTPAR expr RIGHTPAR block {
                 };
 
 command     : NORTH LEFTPAR expr RIGHTPAR {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeCommand($3, "NORTH", manage);
             };
             | EAST LEFTPAR expr RIGHTPAR {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeCommand($3, "EAST", manage);
             };
             | WEST LEFTPAR expr RIGHTPAR {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeCommand($3, "WEST", manage);
             };
             | SOUTH LEFTPAR expr RIGHTPAR {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeCommand($3, "SOUTH", manage);
             };
             | ACTIVATE LEFTPAR RIGHTPAR {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeCommand("ACTIVATE", manage);
             }
 
@@ -189,16 +189,16 @@ boolean     : TRUE {
             };
 
 variable    : STRING {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeVariable($1, manage);
             };
 
 assignment  : STRING ASSIGNER expr {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeAssignment($1, $3, manage);
             };
             | STRING ASSIGNER logicalexp {
-                TreeManage* manage = driver.get_manage();
+                TreeManager* manage = driver.get_manager();
                 $$ = new NodeAssignment($1, $3, manage);
             };
 

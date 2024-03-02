@@ -118,8 +118,8 @@ void ChallengeScreen::init_back_button() {
 }
 
 void ChallengeScreen::init_current_user() {
-  UsersManage& users_manage = UsersManage::get_instance();
-  current_user = users_manage.get_current_user();
+  UsersManage& users_manager = UsersManage::get_instance();
+  current_user = users_manager.get_current_user();
 }
 
 void ChallengeScreen::init_dialog_box() {

@@ -27,7 +27,7 @@ class Game {
   SDL_Renderer* renderer = NULL;
   SDL_Texture* game_background = NULL;
   InputReceiver& input_receiver = InputReceiver::get_instance();
-  ScreenManage* screen_manage = NULL;
+  ScreenManage* screen_manager = NULL;
   Screen* actual_screen = NULL;
   Timer* timer;
   Timer* cap_fps_timer;

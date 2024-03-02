@@ -2,9 +2,9 @@
 
 using namespace Compiler;
 
-TreeManage::~TreeManage() { clearNodes(); }
+TreeManager::~TreeManager() { clearNodes(); }
 
-void TreeManage::clearNodes() {
+void TreeManager::clearNodes() {
   for (int i = 0; i < nodes.size(); i++) {
     delete nodes[i];
   }
@@ -13,11 +13,11 @@ void TreeManage::clearNodes() {
   commands.clear();
 }
 
-bool TreeManage::existsVariable(const std::string &variable_name) {
+bool TreeManager::existsVariable(const std::string &variable_name) {
   return variables.find(variable_name) != variables.end();
 }
 
-double TreeManage::getVariable(const std::string &variable_name) {
+double TreeManager::getVariable(const std::string &variable_name) {
   variablemap_type::const_iterator vi = variables.find(variable_name);
   if (vi == variables.end()) {
     std::cout << "Variável não encontrada!" << std::endl;
@@ -29,9 +29,9 @@ double TreeManage::getVariable(const std::string &variable_name) {
   }
 }
 
-command_list TreeManage::getCommands() { return commands; }
+command_list TreeManager::getCommands() { return commands; }
 
-void TreeManage::run() {
+void TreeManager::run() {
   std::cout << "Inicializando leitura dos nós" << std::endl;
   for (int i = 0; i < nodes.size(); i++) {
     nodes[i]->evaluate();

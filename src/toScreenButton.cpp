@@ -16,8 +16,8 @@ void ToScreenButton::execute() {
     Engine::Game& game = Engine::Game::get_instance();
     game.load_screen(screen_name);
     if (save_users) {
-      UsersManage& users_manage = UsersManage::get_instance();
-      users_manage.save_users_status();
+      UsersManage& users_manager = UsersManage::get_instance();
+      users_manager.save_users_status();
     }
     deactivate();
   }

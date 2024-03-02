@@ -90,8 +90,8 @@ void SelectRobotMenu::init_init_button() {
 }
 
 void SelectRobotMenu::init_user() {
-  UsersManage& users_manage = UsersManage::get_instance();
-  current_user = users_manage.get_current_user();
+  UsersManage& users_manager = UsersManage::get_instance();
+  current_user = users_manager.get_current_user();
 }
 
 void SelectRobotMenu::init_texts() {

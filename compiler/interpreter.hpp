@@ -16,7 +16,7 @@ class Interpreter {
   Scanner m_scanner;
   Parser m_parser;
   std::vector<Command> m_commands;
-  TreeManage* manage = NULL;
+  TreeManager* manage = NULL;
   unsigned int m_location;
   void increaseLocation(unsigned int loc);
   unsigned int location() const;
@@ -25,7 +25,7 @@ class Interpreter {
   Interpreter();
   int parse();
   void clear();
-  TreeManage* get_manage();
+  TreeManager* get_manager();
   std::string str() const;
   void switchInputStream(std::istream* is);
   command_list get_commands();
